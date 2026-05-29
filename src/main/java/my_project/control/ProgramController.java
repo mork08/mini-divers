@@ -1,7 +1,8 @@
 package my_project.control;
 
 import KAGO_framework.control.ViewController;
-import my_project.model.House;
+
+import my_project.model.Tilesystem.Map;
 
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern.
@@ -18,7 +19,8 @@ public class ProgramController {
 
     // Referenzen
     private final ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
-    private House firstHouse; // deklariert eine Referenz für ein Objekt der Klasse House
+    private Map testmap; // deklariert eine Referenz für ein Objekt der Klasse House
+    private Mouse mouse;
 
     /**
      * Konstruktor
@@ -37,9 +39,12 @@ public class ProgramController {
      */
     public void startProgram() {
         // Erstelle ein Objekt der Klasse House und initialisiere damit die Referenz house1
-        firstHouse = new House();
+        testmap = new Map(10);
+        mouse = new Mouse();
         // Teile dem ViewController-Objekt mit, dass das House-Objekt gezeichnet werden soll
-        viewController.draw(firstHouse);
+        viewController.draw(testmap);
+        viewController.draw(mouse);
+        viewController.register(mouse);
     }
 
     /**
