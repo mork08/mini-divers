@@ -1,11 +1,10 @@
-package my_project.model.Tilesystem;
+package my_project.model.modes.planet.Tilesystem;
 
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
-import my_project.control.Mouse;
 
 public class Tile extends GraphicalObject {
-    private Map map;
+    private TileMap tileMap;
     public static final int TILE_SIZE = 32;
     int levelHeight; // in range [-1, 1]
     int indexX;
@@ -26,8 +25,8 @@ public class Tile extends GraphicalObject {
         this.y = indexY *  TILE_SIZE;
     }
 
-    public void setMap(Map map){
-        this.map = map;
+    public void setMap(TileMap tileMap){
+        this.tileMap = tileMap;
     }
 
     @Override
@@ -45,12 +44,12 @@ public class Tile extends GraphicalObject {
     }
 
     public Tile getRelative(int rx, int ry){
-        if (map != null){
-            if(map.getTile(indexX, indexY) == this){
-                return  map.getTile(indexX + rx, indexY + ry);
+        if (tileMap != null){
+            if(tileMap.getTile(indexX, indexY) == this){
+                return  tileMap.getTile(indexX + rx, indexY + ry);
             }
         }
-        return null; //TODO figure out good way to give Tile acces to Map
+        return null; //TODO figure out good way to give Tile acces to TileMap
     }
     public Tile[] getRelatives(){
         return new Tile[]{
@@ -74,6 +73,7 @@ public class Tile extends GraphicalObject {
         };
     }
     private void adjustHeight(){
+        /*
         Tile[] tiles = getRelatives(false);
         if (this.levelHeight == 1) {
             for (int i = 0; i < tiles.length; i++) {
@@ -85,6 +85,8 @@ public class Tile extends GraphicalObject {
                 }
             }
         }
+
+         */
     }
 
 }

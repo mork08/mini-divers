@@ -2,8 +2,6 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 
-import my_project.model.Tilesystem.Map;
-
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern.
  * Hinweise:
