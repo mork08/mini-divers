@@ -16,10 +16,11 @@ package KAGO_framework.model.abitur.datenstrukturen;
  * @author Qualitaets- und UnterstuetzungsAgentur - Landesinstitut fuer Schule
  * @version Oktober 2015
  */
-public class Vertex{
+public class Vertex<CT>{
   //Einmalige ID des Knotens und Markierung
   private String id;
   private boolean mark;
+  private CT content;
   
   /**
   * Ein neues Objekt vom Typ Vertex wird erstellt. Seine Markierung hat den Wert false.
@@ -49,5 +50,7 @@ public class Vertex{
   public boolean isMarked(){
     return mark;
   }
-  
+
+  public void setContent(CT pContent){content = pContent;}
+  public CT getContent(){return content;}
 }
