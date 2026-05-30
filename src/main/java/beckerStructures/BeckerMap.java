@@ -10,6 +10,7 @@ public class BeckerMap<KT extends Comparable, RT> {
         nodes = new BinarySearchTree<>();
     }
     public RT get(KT key){
+        if (key == null) return null;
         BinarySearchTree<MapNode> current = nodes;
         boolean hasEnded = false;
         while (!current.isEmpty()){
@@ -24,6 +25,10 @@ public class BeckerMap<KT extends Comparable, RT> {
     public void add(KT key, RT value){
         nodes.insert(new MapNode(key, value));
     };
+
+    public boolean contains(KT currentMode) {
+        return get(currentMode) != null;
+    }
 
     private class MapNode implements ComparableContent<MapNode> {
         KT key;

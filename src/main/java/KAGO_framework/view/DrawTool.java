@@ -355,7 +355,7 @@ public class DrawTool {
      * @param y2 Die y-Koordinate des zweiten Punkts
      */
     public void drawLine(double x1, double y1, double x2, double y2){
-        Line2D.Double line = new Line2D.Double(x1,y1,x2,y2);
+        Line2D.Double line = new Line2D.Double(translateAndScaleX(x1),translateAndScaleY(y1),translateAndScaleX(x2),translateAndScaleY(y2));
         if (graphics2D!= null) graphics2D.draw(line);
     }
 
@@ -398,7 +398,7 @@ public class DrawTool {
      */
     public void drawArc(double x, double y, double radius, double startingAngle, double endingAngle, int type){
         if (type > 2)  throw new IllegalArgumentException("must be in a 0 - 2 scope");
-        Arc2D.Double arc = new Arc2D.Double(x,y,radius,radius,startingAngle,endingAngle,type);
+        Arc2D.Double arc = new Arc2D.Double(translateAndScaleX(x),translateAndScaleY(y),scaleX(radius),scaleY(radius),startingAngle,endingAngle,type);
         if (graphics2D!= null) graphics2D.draw(arc);
     }
 

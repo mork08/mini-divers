@@ -19,7 +19,7 @@ public class ProgramController {
 
     // Referenzen
     private final ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
-    private Map testmap; // deklariert eine Referenz für ein Objekt der Klasse House
+    private ModeController modeController; // deklariert eine Referenz für ein Objekt der Klasse House
     private Mouse mouse;
 
     /**
@@ -39,10 +39,10 @@ public class ProgramController {
      */
     public void startProgram() {
         // Erstelle ein Objekt der Klasse House und initialisiere damit die Referenz house1
-        testmap = new Map(10);
+        modeController = new ModeController();
         mouse = new Mouse();
         // Teile dem ViewController-Objekt mit, dass das House-Objekt gezeichnet werden soll
-        viewController.draw(testmap);
+        viewController.draw(modeController);
         viewController.draw(mouse);
         viewController.register(mouse);
     }

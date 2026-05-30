@@ -1,0 +1,6 @@
+package my_project.model.modes.start;
+
+import my_project.model.modes.Mode;
+
+public class StartMode extends Mode {
+}
