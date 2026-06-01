@@ -2,7 +2,7 @@ package my_project.control;
 
 import KAGO_framework.control.ViewController;
 
-import my_project.model.Tilesystem.Map;
+
 import my_project.model.modes.map.PlanetController;
 import my_project.view.InputManager;
 
@@ -53,7 +53,7 @@ public class ProgramController {
         viewController.draw(mouse);
         viewController.register(mouse);
         viewController.register(inputManager);
-        viewController.draw(planetController);
+        //viewController.draw(planetController);
     }
 
     /**

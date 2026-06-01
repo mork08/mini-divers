@@ -26,6 +26,21 @@ import java.util.function.Consumer;
  * @author Joshua Becker
  */
 public class BeckerList<ContentType> {
+    public void set(int index, ContentType image) {
+        if (index >= length || index < 0){
+            System.err.println("Index " + index + "out of punds for BeckerList with the length of " + length);
+            return;
+        }
+        while (currentIndex != index){
+            if (index < currentIndex){
+                previous();
+            }else{
+                next();
+            }
+        }
+        current.setContentObject(image);
+    }
+
 
     /* --------- Anfang der privaten inneren Klasse -------------- */
 

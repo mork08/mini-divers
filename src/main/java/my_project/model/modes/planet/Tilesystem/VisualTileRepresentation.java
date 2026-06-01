@@ -1,13 +1,14 @@
 package my_project.model.modes.planet.Tilesystem;
 
 import KAGO_framework.view.DrawTool;
+import my_project.model.spritesheetSystem.*;
 
 import java.awt.image.BufferedImage;
 
 public class VisualTileRepresentation {
     private Tile tile;
     private static final int BORDER_SIZE = 8;
-    private static BufferedImage texture = DrawTool.getNewImage("src/main/resources/graphic/tilesheets/debug.png");
+    private static PlanetSheet planetSheet = TileTextureContainer.getDebugPlanet();
     public VisualTileRepresentation(Tile tile){
         setTile(tile);
     }
@@ -18,16 +19,23 @@ public class VisualTileRepresentation {
 
     }
     public void drawAt(DrawTool dt, double x, double y){
+        TileSheet currentHeightSheet;
         if (tile != null){
             switch (tile.levelHeight){
                 case -1:
                     dt.setCurrentColor(255, 0, 0, 255);
+                    currentHeightSheet = planetSheet.getTileSheet(2);
                 break;
                 case 0:
                     dt.setCurrentColor(0, 255, 0, 255);
+                    currentHeightSheet = planetSheet.getTileSheet(1);
                 break;
                 case 1:
                     dt.setCurrentColor(0, 0, 255, 255);
+                    currentHeightSheet = planetSheet.getTileSheet(0);
+                break;
+                default:
+                    currentHeightSheet = planetSheet.getTileSheet(0);
                 break;
             }
 
@@ -113,6 +121,11 @@ public class VisualTileRepresentation {
             dt.drawRectangle(x + Tile.TILE_SIZE - BORDER_SIZE, y + Tile.TILE_SIZE - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE);
             //bottom left corner
             dt.drawRectangle(x, y + Tile.TILE_SIZE - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE);
+
+
+            //Center
+            dt.drawImageToSize(currentHeightSheet.getCenter(), x + BORDER_SIZE, y + BORDER_SIZE, Tile.TILE_SIZE - BORDER_SIZE * 2,Tile.TILE_SIZE - BORDER_SIZE * 2);
+
         }
     }
 }
