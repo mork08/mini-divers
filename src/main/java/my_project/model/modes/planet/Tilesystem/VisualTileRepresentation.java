@@ -124,7 +124,13 @@ public class VisualTileRepresentation {
 
 
             //Center
-            dt.drawImageToSize(currentHeightSheet.getCenter(), x + BORDER_SIZE, y + BORDER_SIZE, Tile.TILE_SIZE - BORDER_SIZE * 2,Tile.TILE_SIZE - BORDER_SIZE * 2);
+            dt.drawImage(currentHeightSheet.getCenter(), x + BORDER_SIZE, y + BORDER_SIZE);
+
+            //Edges
+            dt.drawImage(currentHeightSheet.getEdge("up", 0), x + BORDER_SIZE, y);
+            dt.drawImage(currentHeightSheet.getEdge("down", 0), x + BORDER_SIZE, y + Tile.TILE_SIZE - BORDER_SIZE);
+            dt.drawImage(currentHeightSheet.getEdge("left", 0), x, y + BORDER_SIZE);
+            dt.drawImage(currentHeightSheet.getEdge("right", 0), x + Tile.TILE_SIZE - BORDER_SIZE, y + BORDER_SIZE);
         }
     }
 }

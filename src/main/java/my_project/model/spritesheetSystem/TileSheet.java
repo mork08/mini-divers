@@ -15,63 +15,83 @@ public class TileSheet extends QuadSheet{
     }
     private void generate(){
 
-        //[1] center
+        //[0] center
         addQuad(borderSize, borderSize, centerSize, centerSize);
-/*
+
         //- same layer -
-        //[2] top-left convex corner
+        //[1] top-left convex corner
         addQuad(borderSize, borderSize, borderSize, borderSize);
-        //[3] top edge
+        //[2] top edge
         addQuad(borderSize, 0, centerSize, borderSize);
-        //[4] top-right convex corner
+        //[3] top-right convex corner
         addQuad(centerSize + borderSize, borderSize, borderSize, borderSize);
-        //[5] right edge
+        //[4] right edge
         addQuad(centerSize + borderSize, borderSize, borderSize, centerSize);
-        //[6] bottom-right convex corner
+        //[5] bottom-right convex corner
         addQuad(borderSize, borderSize, borderSize, borderSize);
-        //[7] bottom edge
+        //[6] bottom edge
         addQuad(borderSize, centerSize + borderSize, centerSize, borderSize);
-        //[8] bottom-left convex corner
+        //[7] bottom-left convex corner
         addQuad(borderSize, borderSize, borderSize, borderSize);
-        //[9] left edge
+        //[8] left edge
         addQuad(0, borderSize, borderSize, centerSize);
 
         //- lower layer -
-        //[10] top-left convex corner
-        //[11] top edge
-        //[12] top-rightconvex corner
-        //[13] right edge
-        //[14] bottom-rightconvex corner
-        //[15] bottom edge
-        //[16] bottom-left convex corner
-        //[17] left edge
+        //[9] top-left convex corner
+        //[10] top edge
+        //[11] top-rightconvex corner
+        //[12] right edge
+        //[13] bottom-rightconvex corner
+        //[14] bottom edge
+        //[15] bottom-left convex corner
+        //[16] left edge
 
         //- higher layer -
-        //[10] top-left convex corner
-        //[11] top edge
-        //[12] top-rightconvex corner
-        //[13] right edge
-        //[14] bottom-rightconvex corner
-        //[15] bottom edge
-        //[16] bottom-left convex corner
-        //[17] left edge
+        //[17] top-left convex corner
+        //[18] top edge
+        //[19] top-rightconvex corner
+        //[20] right edge
+        //[21] bottom-rightconvex corner
+        //[22] bottom edge
+        //[23] bottom-left convex corner
+        //[24] left edge
 
         //- concave corners -
         //    > upper layer
-        //[18]
-        //[19]
-        //[20]
-        //[21]
-        //    > lower layer
-        //[22]
-        //[23]
-        //[24]
         //[25]
+        //[26]
+        //[27]
+        //[28]
+        //    > lower layer
+        //[29]
+        //[30]
+        //[31]
+        //[32]
 
- */
     }
 
     public BufferedImage getCenter(){
         return getSprite(0);
+    }
+
+    /**
+     *
+     * @param direction either "left", "right", "up" or "down"
+     * @param heightdifference not currently used
+     * @return
+     */
+    public BufferedImage getEdge(String direction, int heightdifference) {
+        switch (direction) {
+            case "left":
+                return getSprite(8);
+            case "right":
+                return getSprite(4);
+            case "up":
+                return getSprite(2);
+            case "down":
+                return getSprite(6);
+
+        }
+        return null;
     }
 }
