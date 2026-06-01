@@ -1,4 +1,4 @@
-package my_project.model.Tilesystem;
+package my_project.model.modes.planet.Tilesystem;
 
 import KAGO_framework.view.DrawTool;
 

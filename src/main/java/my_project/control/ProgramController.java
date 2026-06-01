@@ -3,6 +3,8 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 
 import my_project.model.Tilesystem.Map;
+import my_project.model.modes.map.PlanetController;
+import my_project.view.InputManager;
 
 /**
  * Ein Objekt der Klasse ProgramController dient dazu das Programm zu steuern.
@@ -15,12 +17,15 @@ import my_project.model.Tilesystem.Map;
 public class ProgramController {
 
     //Attribute
-
+    private double translateX, translateY;
 
     // Referenzen
     private final ViewController viewController;  // diese Referenz soll auf ein Objekt der Klasse viewController zeigen. Über dieses Objekt wird das Fenster gesteuert.
-    private Map testmap; // deklariert eine Referenz für ein Objekt der Klasse House
+    private ModeController modeController; // deklariert eine Referenz für ein Objekt der Klasse House
     private Mouse mouse;
+    private InputManager inputManager;
+
+    private PlanetController planetController;
 
     /**
      * Konstruktor
@@ -39,12 +44,16 @@ public class ProgramController {
      */
     public void startProgram() {
         // Erstelle ein Objekt der Klasse House und initialisiere damit die Referenz house1
-        testmap = new Map(10);
+        modeController = new ModeController();
         mouse = new Mouse();
+        inputManager = new InputManager(this);
+        planetController = new PlanetController(this);
         // Teile dem ViewController-Objekt mit, dass das House-Objekt gezeichnet werden soll
-        viewController.draw(testmap);
+        viewController.draw(modeController);
         viewController.draw(mouse);
         viewController.register(mouse);
+        viewController.register(inputManager);
+        viewController.draw(planetController);
     }
 
     /**
@@ -54,4 +63,9 @@ public class ProgramController {
     public void updateProgram(double dt){
 
     }
+
+    public double getTranslateX(){return translateX;}
+    public double getTranslateY(){return translateY;}
+    public void setTranslateX(double translateX){this.translateX = translateX;}
+    public void setTranslateY(double translateY){this.translateY = translateY;}
 }
