@@ -26,20 +26,6 @@ import java.util.function.Consumer;
  * @author Joshua Becker
  */
 public class BeckerList<ContentType> {
-    public void set(int index, ContentType image) {
-        if (index >= length || index < 0){
-            System.err.println("Index " + index + "out of punds for BeckerList with the length of " + length);
-            return;
-        }
-        while (currentIndex != index){
-            if (index < currentIndex){
-                previous();
-            }else{
-                next();
-            }
-        }
-        current.setContentObject(image);
-    }
 
 
     /* --------- Anfang der privaten inneren Klasse -------------- */
@@ -140,6 +126,7 @@ public class BeckerList<ContentType> {
         first = null;
         last = null;
         current = null;
+        currentIndex = -1;
     }
 
     /**
@@ -409,23 +396,43 @@ public class BeckerList<ContentType> {
             System.err.println("Index " + index + "out of punds for BeckerList with the length of " + length);
             return null;
         }
-        while (currentIndex != index){
-            if (index < currentIndex){
+        toFirst();
+        for (int i = 0; i < index; i++) {
+            next();
+        }
+        if (current != null) return current.getContentObject();
+        return null;
+
+    }
+
+    public void set(int index, ContentType image) {
+        if (index >= length || index < 0){
+            System.err.println("Index " + index + "out of punds for BeckerList with the length of " + length);
+            return;
+        }
+        if(index == 0){
+            toFirst();
+            current.setContentObject(image);
+            return;
+        }
+        toFirst();
+        for (int i = 0; i < index; i++) {
+            next();
+        }
+        if (current != null) current.setContentObject(image);
+    }
+
+    public void forEach(Consumer<? super ContentType> action){
+        //still needss to do stuff
+    }
+    public void moveCurrent(int difference){
+        for (int i = 0; i < Math.abs(difference); i++) {
+            if (difference < 0){
                 previous();
             }else{
                 next();
             }
         }
-        return current.getContentObject();
-    }
-    public void forEach(Consumer<? super ContentType> action){
-        int savedIndex = currentIndex;
-        toFirst();
-        while(hasAccess()){
-            action.accept(current.contentObject);
-            next();
-        }
-        get(currentIndex);
     }
 
 }

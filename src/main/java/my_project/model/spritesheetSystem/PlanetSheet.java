@@ -13,7 +13,7 @@ public class PlanetSheet {
         this.borderSize = borderSize;
         tileSheets = new TileSheet[heights];
         for (int i = 0; i < heights; i++) {
-            tileSheets[i] = new TileSheet(mainImage.getSubimage(0, (mainImage.getHeight()/heights) * i, mainImage.getWidth(), 64), 64, borderSize);
+            tileSheets[i] = new TileSheet(mainImage.getSubimage(0, 32, mainImage.getWidth(), 32), 32, borderSize);
 
         }
     }

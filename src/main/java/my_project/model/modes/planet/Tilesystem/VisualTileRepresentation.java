@@ -125,7 +125,6 @@ public class VisualTileRepresentation {
 
             //Center
             dt.drawImageToSize(currentHeightSheet.getCenter(), x + BORDER_SIZE, y + BORDER_SIZE, Tile.TILE_SIZE - BORDER_SIZE * 2,Tile.TILE_SIZE - BORDER_SIZE * 2);
-
         }
     }
 }
