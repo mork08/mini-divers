@@ -2,6 +2,7 @@ package my_project.view;
 
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.ProgramController;
+import my_project.model.modes.map.MapMode;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -25,10 +26,10 @@ public class InputManager extends InteractiveGraphicalObject {
 
     @Override
     public void keyPressed(int key) {
-        if(key == KeyEvent.VK_LEFT){programController.setTranslateX(programController.getTranslateX() + 10);}
-        else if(key == KeyEvent.VK_RIGHT){programController.setTranslateX(programController.getTranslateX() - 10);}
-        else if(key == KeyEvent.VK_UP){programController.setTranslateY(programController.getTranslateY() + 10);}
-        else if(key == KeyEvent.VK_DOWN){programController.setTranslateY(programController.getTranslateY() - 10);}
+        if(key == KeyEvent.VK_LEFT){MapMode.setTranslateX(MapMode.getTranslateX() + 10);}
+        else if(key == KeyEvent.VK_RIGHT){MapMode.setTranslateX(MapMode.getTranslateX() - 10);}
+        else if(key == KeyEvent.VK_UP){MapMode.setTranslateY(MapMode.getTranslateY() + 10);}
+        else if(key == KeyEvent.VK_DOWN){MapMode.setTranslateY(MapMode.getTranslateY() - 10);}
     }
 
     @Override

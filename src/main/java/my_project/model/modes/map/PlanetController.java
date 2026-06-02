@@ -17,11 +17,9 @@ public class PlanetController extends GraphicalObject {
     public Graph<Planet> planets;
     private List<Vertex<Planet>> planetList;
     private List<Edge<Planet>> planetEdgeList;
-    private ProgramController programController;
     private int planetCount = 10;
 
-    public PlanetController(ProgramController programController) {
-        this.programController = programController;
+    public PlanetController() {
         planets = new Graph<Planet>();
         for(int i = 0;i < planetCount;i++) {
             Vertex<Planet> planet = new Vertex<>(String.valueOf(i));
@@ -49,7 +47,7 @@ public class PlanetController extends GraphicalObject {
         drawTool.drawFilledRectangle(0,0,1000,1000);
 
         drawTool.push();
-        drawTool.setTranslate(programController.getTranslateX(),  programController.getTranslateY());
+        drawTool.setTranslate(MapMode.getTranslateX(),  MapMode.getTranslateY());
 
         planetEdgeList.toFirst();
         drawTool.setCurrentColor(new Color(122, 222, 253));
