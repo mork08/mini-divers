@@ -23,8 +23,25 @@ public class PlanetController extends GraphicalObject {
         planets = new Graph<Planet>();
         for(int i = 0;i < planetCount;i++) {
             Vertex<Planet> planet = new Vertex<>(String.valueOf(i));
-            planet.setContent(new Planet(Math.random()*1000, Math.random()*1000));
-            planets.addVertex(planet);
+            boolean fitting = false;
+            while(!fitting) {
+                fitting = true;
+                Planet newPlanet = new Planet(Math.random() * 1000, Math.random() * 1000, Math.random() * 30 + 20);
+                planetList = planets.getVertices();
+                planetList.toFirst();
+                while(!planetList.isEmpty() || planetList.hasAccess()) {
+                    Planet checkingPlanet = planetList.getContent().getContent();
+                    if(newPlanet.getDistanceTo(checkingPlanet) < (newPlanet.getRadius() + checkingPlanet.getRadius()) * 1) {
+                        fitting = false;
+                        break;
+                    }
+                    planetList.next();
+                }
+                if(fitting) {
+                    planet.setContent(newPlanet);
+                    planets.addVertex(planet);
+                }
+            }
         }
         planetList = planets.getVertices();
 

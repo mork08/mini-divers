@@ -26,15 +26,18 @@ public class InputManager extends InteractiveGraphicalObject {
 
     @Override
     public void keyPressed(int key) {
-        if(key == KeyEvent.VK_LEFT){MapMode.setTranslateX(MapMode.getTranslateX() + 10);}
-        else if(key == KeyEvent.VK_RIGHT){MapMode.setTranslateX(MapMode.getTranslateX() - 10);}
-        else if(key == KeyEvent.VK_UP){MapMode.setTranslateY(MapMode.getTranslateY() + 10);}
-        else if(key == KeyEvent.VK_DOWN){MapMode.setTranslateY(MapMode.getTranslateY() - 10);}
+        if(key == KeyEvent.VK_LEFT){MapMode.setTranslateX(1);}
+        else if(key == KeyEvent.VK_RIGHT){MapMode.setTranslateX(-1);}
+        else if(key == KeyEvent.VK_UP){MapMode.setTranslateY(1);}
+        else if(key == KeyEvent.VK_DOWN){MapMode.setTranslateY(-1);}
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-
+    public void keyReleased(int key) {
+        if(key == KeyEvent.VK_LEFT){MapMode.setTranslateX(0);}
+        else if(key == KeyEvent.VK_RIGHT){MapMode.setTranslateX(0);}
+        else if(key == KeyEvent.VK_UP){MapMode.setTranslateY(0);}
+        else if(key == KeyEvent.VK_DOWN){MapMode.setTranslateY(0);}
     }
 
 }

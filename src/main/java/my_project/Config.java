@@ -18,6 +18,6 @@ public class Config {
     public final static boolean useSound = true;
 
     public final static boolean DEBUG = true;
-    public final static String STARTING_MODE = "Planet";
+    public final static String STARTING_MODE = "Map";
 
 }
