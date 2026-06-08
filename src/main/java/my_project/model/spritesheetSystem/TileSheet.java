@@ -93,12 +93,12 @@ public class TileSheet extends QuadSheet{
     /**
      *
      * @param direction either "left", "right", "up" or "down"
-     * @param heightdifference not currently used
+     * @param heightDifference not currently used
      * @return
      */
-    public BufferedImage getEdge(String direction, int heightdifference) {
-        //heightdifference = 0;
-        if (heightdifference == 0){
+    public BufferedImage getEdge(String direction, int heightDifference) {
+        //heightDifference = 0;
+        if (heightDifference == 0){
             switch (direction) {
                 case "left":
                     return getSprite(8);
@@ -109,7 +109,7 @@ public class TileSheet extends QuadSheet{
                 case "down":
                     return getSprite(6);
             }
-        } else if (heightdifference < 0) {
+        } else if (heightDifference < 0) {
             switch (direction) {
                 case "left":
                     return getSprite(16);
@@ -134,4 +134,23 @@ public class TileSheet extends QuadSheet{
         }
         return null;
     }
+
+    public BufferedImage getCorner(String Direction, int heightDifference1, int heightDifference2){
+        boolean sameHeight = heightDifference1 == 0 && heightDifference2 == 0;
+        if (sameHeight) {
+            switch (Direction) {
+                case "topLeft":
+                    return getSprite(1);
+                case "topRight":
+                    return getSprite(3);
+                case "downRight":
+                    return getSprite(5);
+                case "downLeft":
+                    return getSprite(7);
+
+            }
+        }
+        return getSprite(23);
+    }
+
 }

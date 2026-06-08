@@ -127,22 +127,28 @@ public class VisualTileRepresentation {
             dt.drawImage(currentHeightSheet.getCenter(), x + BORDER_SIZE, y + BORDER_SIZE);
             ///*
             //Edges
-
             // > Up
-            int heightDifferenceUp = tile.getRelative(0, -1) != null ? tile.getRelative(0, -1).getLevelHeight() - tile.getLevelHeight() : 0;
+            int heightDifferenceUp = tile.getRelative(0, -1) != null ? tile.getRelative(0, -1).getLevelHeight() - tile.getLevelHeight() : 1;
             dt.drawImage(currentHeightSheet.getEdge("up", heightDifferenceUp), x + BORDER_SIZE, y);
             // > Down
-            int heightDifferenceDown = tile.getRelative(0, 1) != null ? tile.getRelative(0, 1).getLevelHeight() - tile.getLevelHeight() : 0;
+            int heightDifferenceDown = tile.getRelative(0, 1) != null ? tile.getRelative(0, 1).getLevelHeight() - tile.getLevelHeight() : 1;
             dt.drawImage(currentHeightSheet.getEdge("down", heightDifferenceDown), x + BORDER_SIZE, y + Tile.TILE_SIZE - BORDER_SIZE);
             // > Left
-            int heightDifferenceLeft = tile.getRelative(-1, 0) != null ? tile.getRelative(-1, 0).getLevelHeight() - tile.getLevelHeight() : 0;
+            int heightDifferenceLeft = tile.getRelative(-1, 0) != null ? tile.getRelative(-1, 0).getLevelHeight() - tile.getLevelHeight() : 1;
             dt.drawImage(currentHeightSheet.getEdge("left", heightDifferenceLeft), x, y + BORDER_SIZE);
             // > Right
-            int heightDifferenceRight = tile.getRelative(1, 0) != null ? tile.getRelative(1, 0).getLevelHeight() - tile.getLevelHeight() : 0;
+            int heightDifferenceRight = tile.getRelative(1, 0) != null ? tile.getRelative(1, 0).getLevelHeight() - tile.getLevelHeight() : 1;
             dt.drawImage(currentHeightSheet.getEdge("right", heightDifferenceRight), x + Tile.TILE_SIZE - BORDER_SIZE, y + BORDER_SIZE);
-
             //*/
-        }
+            //Corners
+            int heightDifferenceUpLeft = tile.getRelative(-1, -1) != null ? tile.getRelative(-1, -1).getLevelHeight() - tile.getLevelHeight() : 1;
+            int heightDifferenceUpRight = tile.getRelative(1, -1) != null ? tile.getRelative(1, -1).getLevelHeight() - tile.getLevelHeight() : 1;
+            int heightDifferenceDownLeft = tile.getRelative(-1, 1) != null ? tile.getRelative(-1, 1).getLevelHeight() - tile.getLevelHeight() : 1;
+            int heightDifferenceDownRight = tile.getRelative(1, 1) != null ? tile.getRelative(1, 1).getLevelHeight() - tile.getLevelHeight() : 1;
 
+            dt.drawImage(currentHeightSheet.getCorner("topLeft", heightDifferenceLeft, heightDifferenceUp), x, y);
+
+
+        }
     }
 }
