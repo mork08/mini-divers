@@ -1,0 +1,123 @@
+package my_project;
+
+import KAGO_framework.model.GraphicalObject;
+import KAGO_framework.model.abitur.datenstrukturen.ComparableContent;
+import KAGO_framework.model.abitur.datenstrukturen.Graph;
+import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Vertex;
+import beckerStructures.BeckerList;
+import davStructures.DavHeap;
+import my_project.model.modes.map.Planet;
+
+/**
+ * The AStar algorithm finds the shortest path in a Graph from the startNode to the endNode;
+ * @param <ContentType>
+ */
+public class AStar <ContentType extends GraphicalObject>{
+    private Graph<ContentType> graph;
+    private AStarNode startNode;
+    private AStarNode endNode;
+
+    /**
+     * A node for handling the path finding inside the AStar-Algorithm.
+     */
+    private class AStarNode implements ComparableContent<AStarNode> {
+        private double distance;
+        private double heuristic;
+        private double value;
+        private AStarNode prev;
+        private Vertex graphNode;
+
+        public AStarNode(double distance, double heuristic, AStarNode prev, Vertex<ContentType> pGraphNode){
+            this.distance = distance;
+            this.heuristic = heuristic;
+            this.prev = prev;
+            this.value = this.distance + this.heuristic;
+            this.graphNode = pGraphNode;
+        }
+
+        private boolean isGreater(ContentType pContent){return value > pContent.value();}
+
+        private boolean isLess(ContentType pContent){}
+
+        private boolean isEqual(ContentType pContent){}
+    }
+
+    public AStar(Graph<ContentType> graph, Vertex<ContentType> start, Vertex<ContentType> end){
+        this.graph = graph;
+        double heuristic = start.getContent().getDistanceTo(end.getContent());
+        this.startNode = new AStarNode(0, heuristic, null, start);
+        this.endNode = new AStarNode(Double.MAX_VALUE, 0, null, end);
+    }
+
+    private List<Vertex> findPath(){
+        DavHeap<? extends ComparableContent<AStarNode>> openNodes = new DavHeap(true);
+        BeckerList<AStarNode> closedNodes = new BeckerList<>();
+
+
+        return new List<>();
+    }
+
+    /*private Stack<Tile> findPath(){
+        List<PathNode> openList = new List<>();
+        List<PathNode> closedList = new List<>();
+
+        Tile start = control.getDungeon().getTileFromCoordinates(x,y);
+        Tile goal = control.getDungeon().getTileFromCoordinates(control.getDungeonPlayer().getX(), control.getDungeonPlayer().getY());
+
+        PathNode startNode = new PathNode(start, goal);
+        openList.append(startNode);
+        startNode.setDistance(0);
+        startNode.calculateCost();
+        startNode.setParent(null);
+
+        while (!openList.isEmpty()){
+            // Node with least cost is going to be examined, is the new current
+            openList.toFirst();
+            PathNode current = openList.getContent();
+
+            // If node is goalNode, return found path
+            if (current.getTile() == goal) {
+                System.out.println("Path updated");
+                return reconstructPath(current);
+            }
+
+            closedList.append(current);
+            openList.remove();
+
+            Tile[] neighbors = current.getNotSolidNeighboringTiles();
+            outer:
+            for (Tile neighbor : neighbors){
+
+                // Check if pathNode is already closed, meaning that its evaluated (and its neighbors in openList)
+                closedList.toFirst();
+                while (closedList.hasAccess()){
+                    if (closedList.getContent().getTile() == neighbor) continue outer; // Jumps to next tile bcs this one already in closedList
+                    closedList.next();
+                }
+
+                double tentativeDistance = current.getDistance() + current.getTile().getDistanceTo(neighbor);
+
+                // Check if pathNode already visited, meaning if inside openList
+                openList.toFirst();
+                boolean insideOpenList = false;
+                while (openList.hasAccess()){
+                    if (openList.getContent().getTile() == neighbor) insideOpenList = true;
+                    openList.next();
+                }
+
+                PathNode neighborNode = new PathNode(neighbor, goal);
+                if (!insideOpenList){
+                    insertByCost(openList, neighborNode);
+                } else if (tentativeDistance >= neighborNode.getDistance()) continue; // This path is not shorter
+
+                // Calculate neighboring pathTiles values or update them, if its parent is set to current bcs then path to this pathTile is shorter
+                neighborNode.setDistance(tentativeDistance);
+                neighborNode.setParent(current);
+                neighborNode.calculateCost();
+            }
+        }
+        return null; // No path found
+    }*/
+
+}
