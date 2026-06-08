@@ -1,6 +1,5 @@
 package beckerStructures;
 
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
@@ -422,9 +421,34 @@ public class BeckerList<ContentType> {
         if (current != null) current.setContentObject(image);
     }
 
-    public void forEach(Consumer<? super ContentType> action){
-        //still needss to do stuff
+    public void forEach(Consumer<ListNode> action) {
+        this.toFirst();
+        while (this.hasAccess()) {
+            action.accept(this.current);
+            this.next();
+        }
     }
+
+    /***
+     * Foreach Schleife, aber der vorherige Index wird wieder hergestellt
+     * Funktioniert unter der Vorraussetzung, dass action nichts an der Liste verändert
+     * @param action
+     */
+    public void forEachSaveIndex(Consumer<ListNode> action) {
+        final int saveIndex = this.currentIndex;
+        this.forEach(action);
+
+        this.toFirst();
+        while (this.hasAccess()) {
+            if (this.currentIndex < saveIndex) {
+                this.next();
+
+            } else {
+                break;
+            }
+        }
+    }
+
     public void moveCurrent(int difference){
         for (int i = 0; i < Math.abs(difference); i++) {
             if (difference < 0){
