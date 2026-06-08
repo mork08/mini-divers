@@ -30,6 +30,8 @@ public class InputManager extends InteractiveGraphicalObject {
         else if(key == KeyEvent.VK_RIGHT){MapMode.setTranslateX(-1);}
         else if(key == KeyEvent.VK_UP){MapMode.setTranslateY(1);}
         else if(key == KeyEvent.VK_DOWN){MapMode.setTranslateY(-1);}
+        else if(key == KeyEvent.VK_PLUS){MapMode.setScale(1);}
+        else if(key == KeyEvent.VK_MINUS){MapMode.setScale(-1);}
     }
 
     @Override
@@ -38,6 +40,8 @@ public class InputManager extends InteractiveGraphicalObject {
         else if(key == KeyEvent.VK_RIGHT){MapMode.setTranslateX(0);}
         else if(key == KeyEvent.VK_UP){MapMode.setTranslateY(0);}
         else if(key == KeyEvent.VK_DOWN){MapMode.setTranslateY(0);}
+        else if(key == KeyEvent.VK_PLUS){MapMode.setScale(0);}
+        else if(key == KeyEvent.VK_MINUS){MapMode.setScale(0);}
     }
 
 }

@@ -10,6 +10,8 @@ public class MapMode extends Mode {
     PlanetController planetController;
     private static double translateX, translateY;
     private static int xTranslationDirection, yTranslationDirection;
+    private static double scale = 1;
+    private static int scaleDirection = 0;
 
     public MapMode() {
         this.planetController = new PlanetController();
@@ -25,10 +27,13 @@ public class MapMode extends Mode {
     @Override
     public void update(double dt) {
         if(xTranslationDirection != 0) {
-            translateX += xTranslationDirection * dt * 200;
+            translateX += xTranslationDirection * dt * 200 / scale;
         }
         if(yTranslationDirection != 0) {
-            translateY += yTranslationDirection * dt * 200;
+            translateY += yTranslationDirection * dt * 200 / scale;
+        }
+        if(scaleDirection != 0) {
+            scale += scaleDirection * dt * 1 * scale;
         }
         planetController.update(dt);
     }
@@ -41,4 +46,6 @@ public class MapMode extends Mode {
     public static double getTranslateY(){return translateY;}
     public static void setTranslateX(int x){xTranslationDirection = x;}
     public static void setTranslateY(int y){yTranslationDirection = y;}
+    public static double getScale() {return scale;}
+    public static void setScale(int s) {scaleDirection = s;}
 }
