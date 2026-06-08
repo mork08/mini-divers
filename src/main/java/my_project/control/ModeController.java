@@ -10,6 +10,7 @@ import my_project.model.modes.planet.PlanetMode;
 import my_project.model.modes.start.StartMode;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class ModeController extends InteractiveGraphicalObject {
     double fps;
@@ -53,5 +54,17 @@ public class ModeController extends InteractiveGraphicalObject {
     public void selectMode(String mode){
         currentModeKey = mode;
         currentMode = modes.get(mode);
+    }
+
+    public String getCurrentModeKey(){
+        return currentModeKey;
+    }
+    @Override
+    public void mousePressed(MouseEvent e){
+        if(e.getButton() == 1){
+            if(currentModeKey.equals("Map")){
+                ((MapMode)modes.get("Map")).manageMouse(e);
+            }
+        }
     }
 }

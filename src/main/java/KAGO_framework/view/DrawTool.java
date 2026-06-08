@@ -110,10 +110,10 @@ public class DrawTool {
         stack.top().scaleX = s;
         stack.top().scaleY = s;
     }
-    private double translateAndScaleX(double x){
+    public double translateAndScaleX(double x){
         return scaleX(x + stack.top().translateX);
     }
-    private double translateAndScaleY(double y) {
+    public double translateAndScaleY(double y) {
         return scaleY(y + stack.top().translateY);
     }
     private double scaleX(double x){

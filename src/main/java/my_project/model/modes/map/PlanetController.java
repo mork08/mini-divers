@@ -12,12 +12,14 @@ import my_project.control.ProgramController;
 import my_project.model.*;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class PlanetController extends GraphicalObject {
     public Graph<Planet> planets;
     private List<Vertex<Planet>> planetList;
     private List<Edge<Planet>> planetEdgeList;
     private int planetCount = 10;
+    private DrawTool drawTool;
 
     public PlanetController() {
         planets = new Graph<Planet>();
@@ -29,7 +31,7 @@ public class PlanetController extends GraphicalObject {
                 Planet newPlanet = new Planet(Math.random() * 1000, Math.random() * 1000, Math.random() * 30 + 20);
                 planetList = planets.getVertices();
                 planetList.toFirst();
-                while(!planetList.isEmpty() || planetList.hasAccess()) {
+                while(!planetList.isEmpty() && planetList.hasAccess()) {
                     Planet checkingPlanet = planetList.getContent().getContent();
                     if(newPlanet.getDistanceTo(checkingPlanet) < (newPlanet.getRadius() + checkingPlanet.getRadius()) * 1) {
                         fitting = false;
@@ -60,10 +62,8 @@ public class PlanetController extends GraphicalObject {
 
     @Override
     public void draw(DrawTool drawTool) {
-        drawTool.setCurrentColor(new Color(0,0,0));
-        drawTool.drawFilledRectangle(0,0,1000,1000);
+        this.drawTool = drawTool;
 
-        drawTool.push();
         drawTool.setTranslate(MapMode.getTranslateX(),  MapMode.getTranslateY());
 
         planetEdgeList.toFirst();
@@ -79,8 +79,6 @@ public class PlanetController extends GraphicalObject {
             planetList.getContent().getContent().draw(drawTool);
             planetList.next();
         }
-
-        drawTool.pop();
     }
 
     @Override
@@ -142,6 +140,20 @@ public class PlanetController extends GraphicalObject {
                 list.next();
             }
             queue.dequeue();
+        }
+    }
+
+    public void checkForContact(MouseEvent e) {
+        double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
+        double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
+        planetList.toFirst();
+        while(planetList.hasAccess()) {
+            Planet p = planetList.getContent().getContent();
+            if(Math.sqrt( Math.pow(mouseX-p.getX(), 2) + Math.pow(mouseY-p.getY(),2)) <= p.getRadius()) {
+                System.out.println(mouseX+","+mouseY+","+p.getRadius());
+
+            }
+            planetList.next();
         }
     }
 }
