@@ -1,10 +1,61 @@
 package my_project;
 
+import KAGO_framework.model.GraphicalObject;
+import KAGO_framework.model.abitur.datenstrukturen.ComparableContent;
 import KAGO_framework.model.abitur.datenstrukturen.Graph;
+import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Vertex;
+import beckerStructures.BeckerList;
+import davStructures.DavHeap;
+import my_project.model.modes.map.Planet;
 
-public class AStar {
-    public AStar(Graph graph){
+/**
+ * The AStar algorithm finds the shortest path in a Graph from the startNode to the endNode;
+ * @param <ContentType>
+ */
+public class AStar <ContentType extends GraphicalObject>{
+    private Graph<ContentType> graph;
+    private AStarNode startNode;
+    private AStarNode endNode;
 
+    /**
+     * A node for handling the path finding inside the AStar-Algorithm.
+     */
+    private class AStarNode implements ComparableContent<AStarNode> {
+        private double distance;
+        private double heuristic;
+        private double value;
+        private AStarNode prev;
+        private Vertex graphNode;
+
+        public AStarNode(double distance, double heuristic, AStarNode prev, Vertex<ContentType> pGraphNode){
+            this.distance = distance;
+            this.heuristic = heuristic;
+            this.prev = prev;
+            this.value = this.distance + this.heuristic;
+            this.graphNode = pGraphNode;
+        }
+
+        private boolean isGreater(ContentType pContent){return value > pContent.value();}
+
+        private boolean isLess(ContentType pContent){}
+
+        private boolean isEqual(ContentType pContent){}
+    }
+
+    public AStar(Graph<ContentType> graph, Vertex<ContentType> start, Vertex<ContentType> end){
+        this.graph = graph;
+        double heuristic = start.getContent().getDistanceTo(end.getContent());
+        this.startNode = new AStarNode(0, heuristic, null, start);
+        this.endNode = new AStarNode(Double.MAX_VALUE, 0, null, end);
+    }
+
+    private List<Vertex> findPath(){
+        DavHeap<? extends ComparableContent<AStarNode>> openNodes = new DavHeap(true);
+        BeckerList<AStarNode> closedNodes = new BeckerList<>();
+
+
+        return new List<>();
     }
 
     /*private Stack<Tile> findPath(){
