@@ -14,23 +14,12 @@ MainProgram.java
  MainProgram
 KAGO_framework/model/abitur/datenstrukturen/Graph.java
  KAGO_framework.model.abitur.datenstrukturen.Graph
-beckerStructures/BeckerMap.java
- beckerStructures.BeckerMap
- beckerStructures.BeckerMap$MapNode
-KAGO_framework/model/InteractiveGraphicalObject.java
- KAGO_framework.model.InteractiveGraphicalObject
 KAGO_framework/model/abitur/datenbanken/msaccess/QueryResult.java
  KAGO_framework.model.abitur.datenbanken.msaccess.QueryResult
-KAGO_framework/control/Drawable.java
- KAGO_framework.control.Drawable
+KAGO_framework/model/InteractiveGraphicalObject.java
+ KAGO_framework.model.InteractiveGraphicalObject
 KAGO_framework/Config.java
  KAGO_framework.Config
-KAGO_framework/model/abitur/netz/Client.java
- KAGO_framework.model.abitur.netz.Client
- KAGO_framework.model.abitur.netz.Client$MessageHandler
- KAGO_framework.model.abitur.netz.Client$MessageHandler$SocketWrapper
-my_project/Config.java
- my_project.Config
 KAGO_framework/model/abitur/datenstrukturen/List.java
  KAGO_framework.model.abitur.datenstrukturen.List
  KAGO_framework.model.abitur.datenstrukturen.List$ListNode
@@ -44,21 +33,13 @@ KAGO_framework/model/abitur/datenbanken/sqllite/DatabaseConnector.java
  KAGO_framework.model.abitur.datenbanken.sqllite.DatabaseConnector
 KAGO_framework/model/abitur/datenstrukturen/Edge.java
  KAGO_framework.model.abitur.datenstrukturen.Edge
-KAGO_framework/view/DrawingPanel.java
- KAGO_framework.view.DrawingPanel
-beckerStructures/BeckerList.java
- beckerStructures.BeckerList
- beckerStructures.BeckerList$ListNode
-my_project/model/House.java
- my_project.model.House
+my_project/control/Mouse.java
+ my_project.control.Mouse
 KAGO_framework/view/DrawTool.java
  KAGO_framework.view.DrawTool
-KAGO_framework/model/abitur/datenbanken/mysql/QueryResult.java
- KAGO_framework.model.abitur.datenbanken.mysql.QueryResult
+ KAGO_framework.view.DrawTool$Translation
 KAGO_framework/model/abitur/datenstrukturen/Vertex.java
  KAGO_framework.model.abitur.datenstrukturen.Vertex
-KAGO_framework/model/package-info.java
- KAGO_framework.model.package-info
 KAGO_framework/model/abitur/package-info.java
  KAGO_framework.model.abitur.package-info
 KAGO_framework/model/abitur/netz/Server.java
@@ -68,21 +49,16 @@ KAGO_framework/model/abitur/netz/Server.java
  KAGO_framework.model.abitur.netz.Server$NewConnectionHandler
 KAGO_framework/model/abitur/netz/Connection.java
  KAGO_framework.model.abitur.netz.Connection
-KAGO_framework/model/abitur/datenstrukturen/Stack.java
- KAGO_framework.model.abitur.datenstrukturen.Stack
- KAGO_framework.model.abitur.datenstrukturen.Stack$StackNode
 KAGO_framework/model/Sound.java
  KAGO_framework.model.Sound
  KAGO_framework.model.Sound$1
-my_project/view/InputManager.java
- my_project.view.InputManager
 KAGO_framework/model/abitur/datenstrukturen/BinaryTree.java
  KAGO_framework.model.abitur.datenstrukturen.BinaryTree
  KAGO_framework.model.abitur.datenstrukturen.BinaryTree$BTNode
 KAGO_framework/model/abitur/datenbanken/msaccess/DatabaseConnector.java
  KAGO_framework.model.abitur.datenbanken.msaccess.DatabaseConnector
-KAGO_framework/view/ProgramView.java
- KAGO_framework.view.ProgramView
+my_project/view/InputManager.java
+ my_project.view.InputManager
 KAGO_framework/model/abitur/datenstrukturen/Queue.java
  KAGO_framework.model.abitur.datenstrukturen.Queue
  KAGO_framework.model.abitur.datenstrukturen.Queue$QueueNode
@@ -93,22 +69,54 @@ KAGO_framework/control/NetworkController.java
  KAGO_framework.control.NetworkController
  KAGO_framework.control.NetworkController$1
  KAGO_framework.control.NetworkController$NetworkClient
-KAGO_framework/control/DatabaseController.java
- KAGO_framework.control.DatabaseController
-KAGO_framework/control/package-info.java
- KAGO_framework.control.package-info
 KAGO_framework/control/SoundController.java
  KAGO_framework.control.SoundController
  KAGO_framework.control.SoundController$SoundData
 KAGO_framework/view/simple_gui/GIFPainter.java
  KAGO_framework.view.simple_gui.GIFPainter
+my_project/model/modes/Mode.java
+ my_project.model.modes.Mode
 KAGO_framework/view/package-info.java
  KAGO_framework.view.package-info
 KAGO_framework/view/simple_gui/Button.java
  KAGO_framework.view.simple_gui.Button
+davStructures/DavHeap.java
+ davStructures.DavHeap
+KAGO_framework/model/abitur/datenstrukturen/ComparableContent.java
+ KAGO_framework.model.abitur.datenstrukturen.ComparableContent
+beckerStructures/BeckerMap.java
+ beckerStructures.BeckerMap
+ beckerStructures.BeckerMap$MapNode
+KAGO_framework/control/Drawable.java
+ KAGO_framework.control.Drawable
+KAGO_framework/model/abitur/netz/Client.java
+ KAGO_framework.model.abitur.netz.Client
+ KAGO_framework.model.abitur.netz.Client$MessageHandler
+ KAGO_framework.model.abitur.netz.Client$MessageHandler$SocketWrapper
+KAGO_framework/view/DrawingPanel.java
+ KAGO_framework.view.DrawingPanel
+beckerStructures/BeckerList.java
+ beckerStructures.BeckerList
+ beckerStructures.BeckerList$ListNode
+my_project/control/ModeController.java
+ my_project.control.ModeController
+KAGO_framework/model/abitur/datenbanken/mysql/QueryResult.java
+ KAGO_framework.model.abitur.datenbanken.mysql.QueryResult
+davStructures/DavHeapOld.java
+ davStructures.DavHeapOld
+ davStructures.DavHeapOld$HeapNode
+KAGO_framework/model/package-info.java
+ KAGO_framework.model.package-info
+KAGO_framework/model/abitur/datenstrukturen/Stack.java
+ KAGO_framework.model.abitur.datenstrukturen.Stack
+ KAGO_framework.model.abitur.datenstrukturen.Stack$StackNode
+KAGO_framework/view/ProgramView.java
+ KAGO_framework.view.ProgramView
+KAGO_framework/control/DatabaseController.java
+ KAGO_framework.control.DatabaseController
+KAGO_framework/control/package-info.java
+ KAGO_framework.control.package-info
 KAGO_framework/model/GraphicalObject.java
  KAGO_framework.model.GraphicalObject
 KAGO_framework/model/abitur/datenbanken/mysql/DatabaseConnector.java
  KAGO_framework.model.abitur.datenbanken.mysql.DatabaseConnector
-KAGO_framework/model/abitur/datenstrukturen/ComparableContent.java
- KAGO_framework.model.abitur.datenstrukturen.ComparableContent
