@@ -14,7 +14,6 @@ public class PlanetSheet {
         tileSheets = new TileSheet[heights];
         for (int i = 0; i < heights; i++) {
             tileSheets[i] = new TileSheet(mainImage.getSubimage(0, (mainImage.getHeight()/heights)*i, mainImage.getWidth(), mainImage.getHeight()/heights), mainImage.getHeight()/heights, borderSize);
-
         }
     }
     public TileSheet getTileSheet(int height){

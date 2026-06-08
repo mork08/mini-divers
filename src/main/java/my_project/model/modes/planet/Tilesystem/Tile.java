@@ -49,7 +49,7 @@ public class Tile extends GraphicalObject {
                 return  tileMap.getTile(indexX + rx, indexY + ry);
             }
         }
-        return null; //TODO figure out good way to give Tile acces to TileMap
+        return this; //TODO figure out good way to give Tile acces to TileMap
     }
     public Tile[] getRelatives(){
         return new Tile[]{
@@ -89,4 +89,7 @@ public class Tile extends GraphicalObject {
          */
     }
 
+    public int getLevelHeight() {
+        return levelHeight;
+    }
 }

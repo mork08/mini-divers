@@ -38,23 +38,39 @@ public class TileSheet extends QuadSheet{
 
         //- lower layer -
         //[9] top-left convex corner
+        addQuad(size + borderSize, borderSize, borderSize, borderSize);
         //[10] top edge
-        //[11] top-rightconvex corner
+        addQuad(size + borderSize, 0, centerSize, borderSize);
+        //[11] top-right convex corner
+        addQuad(size + centerSize + borderSize, borderSize, borderSize, borderSize);
         //[12] right edge
+        addQuad(size + centerSize + borderSize, borderSize, borderSize, centerSize);
         //[13] bottom-rightconvex corner
+        addQuad(size + borderSize, borderSize, borderSize, borderSize);
         //[14] bottom edge
+        addQuad(size + borderSize, centerSize + borderSize, centerSize, borderSize);
         //[15] bottom-left convex corner
+        addQuad(size + borderSize, borderSize, borderSize, borderSize);
         //[16] left edge
+        addQuad(size + 0, borderSize, borderSize, centerSize);
 
         //- higher layer -
         //[17] top-left convex corner
+        addQuad(size + borderSize, borderSize, borderSize, borderSize);
         //[18] top edge
-        //[19] top-rightconvex corner
+        addQuad(size + borderSize, 0, centerSize, borderSize);
+        //[19] top-right convex corner
+        addQuad(size + centerSize + borderSize, borderSize, borderSize, borderSize);
         //[20] right edge
+        addQuad(size + centerSize + borderSize, borderSize, borderSize, centerSize);
         //[21] bottom-rightconvex corner
+        addQuad(size + borderSize, borderSize, borderSize, borderSize);
         //[22] bottom edge
+        addQuad(size + borderSize, centerSize + borderSize, centerSize, borderSize);
         //[23] bottom-left convex corner
+        addQuad(size + borderSize, borderSize, borderSize, borderSize);
         //[24] left edge
+        addQuad(size + 0, borderSize, borderSize, centerSize);
 
         //- concave corners -
         //    > upper layer
@@ -81,16 +97,40 @@ public class TileSheet extends QuadSheet{
      * @return
      */
     public BufferedImage getEdge(String direction, int heightdifference) {
-        switch (direction) {
-            case "left":
-                return getSprite(8);
-            case "right":
-                return getSprite(4);
-            case "up":
-                return getSprite(2);
-            case "down":
-                return getSprite(6);
-
+        heightdifference = 0;
+        if (heightdifference == 0){
+            switch (direction) {
+                case "left":
+                    return getSprite(8);
+                case "right":
+                    return getSprite(4);
+                case "up":
+                    return getSprite(2);
+                case "down":
+                    return getSprite(6);
+            }
+        } else if (heightdifference < 0) {
+            switch (direction) {
+                case "left":
+                    return getSprite(18);
+                case "right":
+                    return getSprite(14);
+                case "up":
+                    return getSprite(12);
+                case "down":
+                    return getSprite(16);
+            }
+        } else {
+            switch (direction) {
+                case "left":
+                    return getSprite(28);
+                case "right":
+                    return getSprite(24);
+                case "up":
+                    return getSprite(22);
+                case "down":
+                    return getSprite(26);
+            }
         }
         return null;
     }
