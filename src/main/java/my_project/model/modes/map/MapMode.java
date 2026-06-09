@@ -12,9 +12,12 @@ public class MapMode extends Mode {
     private static int xTranslationDirection, yTranslationDirection;
     private static double scale = 1;
     private static int scaleDirection = 0;
+    private Planet currentPlanet;
+    private SpaceShip spaceShip;
 
     public MapMode() {
-        this.planetController = new PlanetController();
+        planetController = new PlanetController(this);
+        spaceShip = new SpaceShip(this);
     }
 
     @Override
@@ -22,6 +25,7 @@ public class MapMode extends Mode {
         drawTool.setCurrentColor(new Color(0,0,0));
         drawTool.drawFilledRectangle(0-drawTool.getTranslationX(),0-drawTool.getTranslationY(),1000/drawTool.getScaleX(),1000/drawTool.getScaleY());
         planetController.draw(drawTool);
+        spaceShip.draw(drawTool);
     }
 
     @Override
@@ -36,6 +40,7 @@ public class MapMode extends Mode {
             scale += scaleDirection * dt * 1 * scale;
         }
         planetController.update(dt);
+        spaceShip.update(dt);
     }
 
     public void manageMouse(MouseEvent e){
@@ -48,4 +53,6 @@ public class MapMode extends Mode {
     public static void setTranslateY(int y){yTranslationDirection = y;}
     public static double getScale() {return scale;}
     public static void setScale(int s) {scaleDirection = s;}
+    public Planet getCurrentPlanet() {return currentPlanet;}
+    public void setCurrentPlanet(Planet currentPlanet) {this.currentPlanet = currentPlanet;}
 }

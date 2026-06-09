@@ -20,19 +20,22 @@ public class PlanetController extends GraphicalObject {
     private List<Vertex<Planet>> planetList;
     private List<Edge<Planet>> planetEdgeList;
     private int planetCount = 200;
+    private MapMode mapMode;
     private Planet currentPlanet;
 
     private boolean easeIn = true;
     private double radius = 5;
     private DrawTool drawTool;
 
-    public PlanetController() {
+    public PlanetController(MapMode mapMode) {
+        this.mapMode = mapMode;
         planets = new Graph<Planet>();
 
         initiatePlanetInGraph();
         addEdgesToGraph();
 
         currentPlanet = planets.getVertex("0").getContent();
+        mapMode.setCurrentPlanet(currentPlanet);
     }
 
     private void initiatePlanetInGraph() {
@@ -66,7 +69,7 @@ public class PlanetController extends GraphicalObject {
             for (int j = 0; j < planetCount; j++) {
                 if(i == j) continue;
                 double distance = planets.getVertex(String.valueOf(i)).getContent().getDistanceTo(planets.getVertex(String.valueOf(j)).getContent());
-                if(distance < 250) {
+                if(distance < 500) {
                     planets.addEdge(new Edge<>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
                 }
             }
@@ -109,6 +112,8 @@ public class PlanetController extends GraphicalObject {
 
     @Override
     public void update(double dt) {
+        mapMode.setCurrentPlanet(currentPlanet);
+
         if(easeIn) radius -= dt * 7;
         else radius += dt * 7;
         if(radius < 2) easeIn = false;
