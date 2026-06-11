@@ -13,13 +13,13 @@ public class SpaceShip extends GraphicalObject {
 
     public SpaceShip(MapMode mapMode) {
         this.mapMode = mapMode;
-        image = DrawTool.getNewImage("src/main/resources/graphic/spaceship.png");
+        image = DrawTool.getNewImage("src/main/resources/graphic/spaceship_v2.png");
     }
 
     @Override
     public void draw(DrawTool drawTool) {
 
-        drawTool.drawTransformedImage(image, x, y, degrees + 90, 1);
+        drawTool.drawTransformedImage(image, x, y, degrees + 180, 2);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class SpaceShip extends GraphicalObject {
         x = currentPlanet.getX() - image.getWidth()/2 + Math.cos(degrees * Math.PI / 180) * radius;
         y = currentPlanet.getY() - image.getHeight()/2 + Math.sin(degrees * Math.PI / 180) * radius;
         degrees += dt * 40;
-        //if(degrees > 360) degrees -= 360;
+        if(degrees > 360) degrees -= 360;
     }
 }

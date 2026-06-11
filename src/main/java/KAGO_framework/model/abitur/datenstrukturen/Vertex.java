@@ -22,7 +22,7 @@ public class Vertex<CT>{
   private boolean mark;
   private CT content;
   private double pathDistance;
-  private double distance;
+  //private double distance;
   private Vertex<CT> prev;
   
   /**
@@ -58,8 +58,8 @@ public class Vertex<CT>{
   public CT getContent(){return content;}
   public void setPathDistance(double pPathDistance){pathDistance = pPathDistance;}
   public double getPathDistance(){return pathDistance;}
-  public void setDistance(double pDistance){distance = pDistance;}
-  public double getDistance(){return distance;}
+  //public void setDistance(double pDistance){distance = pDistance;}
+  //public double getDistance(){return distance;}
   public void setPrev(Vertex<CT> pPrev){prev = pPrev;}
   public Vertex<CT> getPrev(){return prev;}
 }

@@ -1,14 +1,9 @@
 package my_project.model.modes.map;
 
-import KAGO_framework.control.Drawable;
 import KAGO_framework.model.GraphicalObject;
-import KAGO_framework.model.abitur.datenstrukturen.Edge;
-import KAGO_framework.model.abitur.datenstrukturen.Graph;
+import KAGO_framework.model.abitur.datenstrukturen.*;
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import KAGO_framework.model.abitur.datenstrukturen.Queue;
-import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import KAGO_framework.view.DrawTool;
-import my_project.control.ProgramController;
 import my_project.model.*;
 
 import java.awt.*;
@@ -19,9 +14,9 @@ public class PlanetController extends GraphicalObject {
     public Graph<Planet> planets;
     private List<Vertex<Planet>> planetList;
     private List<Edge<Planet>> planetEdgeList;
-    private int planetCount = 200;
+    private int planetCount = 400;
     private MapMode mapMode;
-    private Planet currentPlanet;
+    private Vertex<Planet> currentPlanet;
 
     private boolean easeIn = true;
     private double radius = 5;
@@ -34,8 +29,8 @@ public class PlanetController extends GraphicalObject {
         initiatePlanetInGraph();
         addEdgesToGraph();
 
-        currentPlanet = planets.getVertex("0").getContent();
-        mapMode.setCurrentPlanet(currentPlanet);
+        currentPlanet = planets.getVertex("0");
+        mapMode.setCurrentPlanet(currentPlanet.getContent());
     }
 
     private void initiatePlanetInGraph() {
@@ -69,8 +64,8 @@ public class PlanetController extends GraphicalObject {
             for (int j = 0; j < planetCount; j++) {
                 if(i == j) continue;
                 double distance = planets.getVertex(String.valueOf(i)).getContent().getDistanceTo(planets.getVertex(String.valueOf(j)).getContent());
-                if(distance < 500) {
-                    planets.addEdge(new Edge<>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
+                if(distance < 300 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 100) {
+                    planets.addEdge(new Edge<Planet>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
                 }
             }
         }
@@ -101,7 +96,7 @@ public class PlanetController extends GraphicalObject {
 
         planetList.toFirst();
         while(planetList.hasAccess()) {
-            if(Objects.equals(currentPlanet, planetList.getContent().getContent())) {
+            if(Objects.equals(currentPlanet, planetList.getContent())) {
                 drawTool.setCurrentColor(new Color(255, 255, 255, 255));
                 drawTool.drawFilledCircle(planetList.getContent().getContent().getX(), planetList.getContent().getContent().getY(), planetList.getContent().getContent().getRadius() + radius);
             }
@@ -112,7 +107,7 @@ public class PlanetController extends GraphicalObject {
 
     @Override
     public void update(double dt) {
-        mapMode.setCurrentPlanet(currentPlanet);
+        mapMode.setCurrentPlanet(currentPlanet.getContent());
 
         if(easeIn) radius -= dt * 7;
         else radius += dt * 7;
@@ -125,36 +120,53 @@ public class PlanetController extends GraphicalObject {
         planetList.toFirst();
         List<Vertex<Planet>> island = new List<>();
         modifiedBFS(island, planetList.getContent());
-        while(planetList.hasAccess()) {
-            if(planetList.getContent().isMarked()) {
+        while(!planets.allVerticesMarked()) {
+            planetList.toFirst();
+            double minDistance = Double.MAX_VALUE;
+            Vertex<Planet>[] connectionVertices = new Vertex[2];
+            while(planetList.hasAccess()) {
+                if (!planetList.getContent().isMarked()) {
+                    island.toFirst();
+                    while (island.hasAccess()) {
+                        double newDistance = planetList.getContent().getContent().getDistanceTo(island.getContent().getContent());
+                        if (newDistance < minDistance) {
+                            //if ((int)(Math.random() * 100) < 1) planets.addEdge(new Edge<Planet>(connectionVertices[0], connectionVertices[1], minDistance));
+                            minDistance = newDistance;
+                            connectionVertices[0] = island.getContent();
+                            connectionVertices[1] = planetList.getContent();
+                        }
+                        island.next();
+                    }
+                }
                 planetList.next();
-                continue;
             }
 
             List<Vertex<Planet>> tempIsland = new List<>();
-            modifiedBFS(tempIsland, planetList.getContent());
+            modifiedBFS(tempIsland, connectionVertices[1]);
 
-            double minDistance = Double.MAX_VALUE;
-            Vertex<Planet>[] connectionVertices = new Vertex[2];
-            connectionVertices[0] = planetList.getContent();
-            connectionVertices[1] = planetList.getContent();
-            island.toFirst();
-            while(island.hasAccess()) {
-                tempIsland.toFirst();
-                while(tempIsland.hasAccess()) {
-                    double distance = island.getContent().getContent().getDistanceTo(tempIsland.getContent().getContent());
-                    if(distance < minDistance) {
-                        minDistance = distance;
-                        connectionVertices[0] = island.getContent();
-                        connectionVertices[1] = tempIsland.getContent();
-                    }
-                    tempIsland.next();
-                }
-                island.next();
-            }
             island.concat(tempIsland);
-            planets.addEdge(new Edge<>(connectionVertices[0], connectionVertices[1], minDistance));
+            planets.addEdge(new Edge<Planet>(connectionVertices[0], connectionVertices[1], minDistance));
         }
+/*
+        double minDistance = Double.MAX_VALUE;
+        Vertex<Planet>[] connectionVertices = new Vertex[2];
+        connectionVertices[0] = planetList.getContent();
+        connectionVertices[1] = planetList.getContent();
+        island.toFirst();
+        while(island.hasAccess()) {
+            tempIsland.toFirst();
+            while(tempIsland.hasAccess()) {
+                double distance = island.getContent().getContent().getDistanceTo(tempIsland.getContent().getContent());
+                if(distance < minDistance) {
+                    minDistance = distance;
+                    connectionVertices[0] = island.getContent();
+                    connectionVertices[1] = tempIsland.getContent();
+                }
+                tempIsland.next();
+            }
+            island.next();
+        }
+*/
     }
 
     private void modifiedBFS(List<Vertex<Planet>> island, Vertex<Planet> start) {
@@ -185,9 +197,79 @@ public class PlanetController extends GraphicalObject {
             Planet p = planetList.getContent().getContent();
             if(Math.sqrt( Math.pow(mouseX-p.getX(), 2) + Math.pow(mouseY-p.getY(),2)) <= p.getRadius()) {
                 System.out.println(mouseX+","+mouseY+","+p.getRadius());
-                currentPlanet = p;
+
+                List<Vertex<Planet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
+                planets.setAllEdgeMarks(false);
+                path.toFirst();
+                while(path.hasAccess()) {
+                    Vertex<Planet> current = path.getContent();
+                    path.next();
+                    if(path.hasAccess()) planets.getEdge(current, path.getContent()).setMark(true);
+                }
+
+                currentPlanet = planetList.getContent();
             }
             planetList.next();
         }
+    }
+
+    public List<Vertex<Planet>> dijkstra(Graph<Planet> pGraph, Vertex<Planet> startVertex, Vertex<Planet> pZiel) {
+        pGraph.setAllVertexMarks(false);
+        pGraph.setDistanceForAll(Double.MAX_VALUE);
+        pGraph.setPrevToNull();
+        startVertex.setPathDistance(0);
+        List<Vertex<Planet>> list = new List<>();
+        list.append(startVertex);
+
+        while(!list.isEmpty()) {
+            list.toFirst();
+            Vertex<Planet> smallestVertex = list.getContent();
+            while(list.hasAccess()) {
+                if(list.getContent().getPathDistance() < smallestVertex.getPathDistance()) {
+                    smallestVertex = list.getContent();
+                    break;
+                }
+                list.next();
+            }
+            list.toFirst();
+            while(list.hasAccess()) {
+                if(list.getContent() == smallestVertex) {
+                    list.remove();
+                    break;
+                }
+                list.next();
+            }
+
+            smallestVertex.setMark(true);
+            if(smallestVertex == pZiel) break;
+
+            List<Vertex<Planet>> neighbors = pGraph.getNeighbours(smallestVertex);
+            neighbors.toFirst();
+            while(neighbors.hasAccess()) {
+                if(!neighbors.getContent().isMarked()) {
+                    double newDistance = smallestVertex.getPathDistance() + pGraph.getEdge(smallestVertex, neighbors.getContent()).getWeight();
+                    if(neighbors.getContent().getPathDistance() > newDistance) {
+                        neighbors.getContent().setPathDistance(newDistance);
+                        if(neighbors.getContent().getPrev() == null) list.append(neighbors.getContent());
+                        neighbors.getContent().setPrev(smallestVertex);
+                    }
+                }
+                neighbors.next();
+            }
+        }
+
+        Stack<Vertex<Planet>> stack = new Stack<>();
+        Vertex<Planet> backTracker = pZiel;
+        stack.push(backTracker);
+        while(backTracker.getPrev() != null) {
+            backTracker = backTracker.getPrev();
+            stack.push(backTracker);
+        }
+        List<Vertex<Planet>> path = new List<>();
+        while(!stack.isEmpty()) {
+            path.append(stack.top());
+            stack.pop();
+        }
+        return path;
     }
 }

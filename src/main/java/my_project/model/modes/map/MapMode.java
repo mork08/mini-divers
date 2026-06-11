@@ -38,6 +38,8 @@ public class MapMode extends Mode {
         }
         if(scaleDirection != 0) {
             scale += scaleDirection * dt * 1 * scale;
+            //translateX -= (scaleDirection  * 50) / 2;
+            //translateY -= (scaleDirection  * 50) / 2;
         }
         planetController.update(dt);
         spaceShip.update(dt);
