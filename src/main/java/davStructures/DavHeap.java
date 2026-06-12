@@ -2,33 +2,18 @@ package davStructures;
 
 import KAGO_framework.model.abitur.datenstrukturen.ComparableContent;
 import beckerStructures.BeckerList;
+import my_project.model.AStarNode;
 
 public class DavHeap <CT extends ComparableContent<CT>> {
     private boolean isMin;
-    // private BeckerList<HeapNode> nodes;
+    private BeckerList<AStarNode> heap;
 
     public DavHeap(boolean isMin) {
         this.isMin = isMin;
+        this.heap = new BeckerList<>();
     }
 
-    /*private class AStarNode<CT extends ComparableContent<CT>>{
-        private double distance;
-        private double heuristic;
-        private double value;
-        private HeapNode prev;
-        private CT content;
-
-        public HeapNode(double distance, double heuristic, HeapNode prev, CT pContent){
-            this.distance = distance;
-            this.heuristic = heuristic;
-            this.prev = prev;
-            this.value = this.distance + this.heuristic;
-            this.content = pContent;
-        }
-    }*/
-
-
-
-
+    // For understanding a pissible implementation:
+    // https://www.geeksforgeeks.org/java/heap-implementation-in-java/
 
 }
