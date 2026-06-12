@@ -2,18 +2,20 @@ package my_project.model.spritesheetSystem;
 
 import java.awt.image.BufferedImage;
 
-public class TileSheet extends QuadSheet{
+public class TileSheet extends QuadSheet {
     private int borderSize;
     private int size;
     private int centerSize;
-    public TileSheet(BufferedImage texture, int size, int borderSize){
+
+    public TileSheet(BufferedImage texture, int size, int borderSize) {
         super(texture);
         this.size = size;
         this.borderSize = borderSize;
-        centerSize = size - (borderSize*2);
+        centerSize = size - (borderSize * 2);
         generate();
     }
-    private void generate(){
+
+    private void generate() {
 
         //[0] center
         addQuad(borderSize, borderSize, centerSize, centerSize);
@@ -56,21 +58,21 @@ public class TileSheet extends QuadSheet{
 
         //- higher layer -
         //[17] top-left convex corner
-        addQuad(size + borderSize, borderSize, borderSize, borderSize);
+        addQuad(size * 2 + borderSize, borderSize, borderSize, borderSize);
         //[18] top edge
-        addQuad(size + borderSize, 0, centerSize, borderSize);
+        addQuad(size * 2 + borderSize, 0, centerSize, borderSize);
         //[19] top-right convex corner
-        addQuad(size + centerSize + borderSize, borderSize, borderSize, borderSize);
+        addQuad(size * 2 + centerSize + borderSize, borderSize, borderSize, borderSize);
         //[20] right edge
-        addQuad(size + centerSize + borderSize, borderSize, borderSize, centerSize);
+        addQuad(size * 2 + centerSize + borderSize, borderSize, borderSize, centerSize);
         //[21] bottom-rightconvex corner
-        addQuad(size + borderSize, borderSize, borderSize, borderSize);
+        addQuad(size * 2 + borderSize, borderSize, borderSize, borderSize);
         //[22] bottom edge
-        addQuad(size + borderSize, centerSize + borderSize, centerSize, borderSize);
+        addQuad(size * 2 + borderSize, centerSize + borderSize, centerSize, borderSize);
         //[23] bottom-left convex corner
-        addQuad(size + borderSize, borderSize, borderSize, borderSize);
+        addQuad(size * 2 + borderSize, borderSize, borderSize, borderSize);
         //[24] left edge
-        addQuad(size + 0, borderSize, borderSize, centerSize);
+        addQuad(size * 2 + 0, borderSize, borderSize, centerSize);
 
         //- concave corners -
         //    > upper layer
@@ -86,19 +88,19 @@ public class TileSheet extends QuadSheet{
 
     }
 
-    public BufferedImage getCenter(){
+    public BufferedImage getCenter() {
         return getSprite(0);
     }
 
     /**
      *
-     * @param direction either "left", "right", "up" or "down"
+     * @param direction        either "left", "right", "up" or "down"
      * @param heightDifference not currently used
      * @return
      */
     public BufferedImage getEdge(String direction, int heightDifference) {
         //heightDifference = 0;
-        if (heightDifference == 0){
+        if (heightDifference == 0) {
             switch (direction) {
                 case "left":
                     return getSprite(8);
@@ -135,7 +137,7 @@ public class TileSheet extends QuadSheet{
         return null;
     }
 
-    public BufferedImage getCorner(String Direction, int heightDifference1, int heightDifference2){
+    public BufferedImage getCorner(String Direction, int heightDifference1, int heightDifference2) {
         boolean sameHeight = heightDifference1 == 0 && heightDifference2 == 0;
         if (sameHeight) {
             switch (Direction) {
@@ -149,8 +151,20 @@ public class TileSheet extends QuadSheet{
                     return getSprite(7);
 
             }
+        } else if (heightDifference1 > 0 && heightDifference2 > 0) {
+            switch (Direction) {
+                case "topLeft":
+                    return getSprite(17);
+                case "topRight":
+                    return getSprite(19);
+                case "downRight":
+                    return getSprite(21);
+                case "downLeft":
+                    return getSprite(23);
+            }
+
         }
-        return getSprite(23);
+        return getSprite(1);
     }
 
 }
