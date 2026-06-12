@@ -48,6 +48,9 @@ public class Mouse extends InteractiveGraphicalObject {
         return button[b];
     }
     public static void setTranslationAndScale(double tx, double ty, double sx, double sy){
-
+        scale.x = sx;
+        scale.y = sy;
+        offset.x = tx;
+        offset.y = ty;
     }
 }

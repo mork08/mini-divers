@@ -2,6 +2,7 @@ package KAGO_framework.view;
 
 import KAGO_framework.Config;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
+import my_project.control.Mouse;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -80,35 +81,33 @@ public class DrawTool {
     public double getScaleY(){
         return stack.top().scaleY;
     }
-    public void getTranslateAndScale(double tx, double ty, double sx, double sy){
-        stack.top().translateX = tx;
-        stack.top().translateY = ty;
-        stack.top().scaleX = sx;
-        stack.top().scaleY = sy;
+    public void setTranslateAndScale(double tx, double ty, double sx, double sy){
+        setTranslate(tx, ty);
+        setScale(sx, sy);
+
     }
-    public void getTranslateAndScale(double tx, double ty, double s){
-        stack.top().translateX = tx;
-        stack.top().translateY = ty;
-        stack.top().scaleX = s;
-        stack.top().scaleY = s;
+    public void setTranslateAndScale(double tx, double ty, double s){
+        setTranslateAndScale(tx, ty, s, s);
     }
     public void setTranslate(double tx, double ty){
-        stack.top().translateX = tx;
-        stack.top().translateY = ty;
+        setTranslateX(tx);
+        setTranslateY(ty);
     }
-    public void getTranslateX(double tx){
+    public void setTranslateX(double tx){
         stack.top().translateX = tx;
+        Mouse.setTranslationAndScale(tx, getTranslationY(), getScaleX(), getScaleY());
     }
     public void setTranslateY(double ty){
         stack.top().translateY = ty;
+        Mouse.setTranslationAndScale(getTranslationX(), ty, getScaleX(), getScaleY());
     }
     public void setScale(double sx, double sy){
         stack.top().scaleX = sx;
         stack.top().scaleY = sy;
+        Mouse.setTranslationAndScale(getTranslationX(), getTranslationY(), sx, sy);
     }
     public void setScale(double s){
-        stack.top().scaleX = s;
-        stack.top().scaleY = s;
+        setScale(s, s);
     }
     private double translateAndScaleX(double x){
         return scaleX(x + stack.top().translateX);
@@ -137,7 +136,7 @@ public class DrawTool {
      * @param y Die y-Koordinate der oberen linken Ecke
      */
     public void drawImage(BufferedImage bI, double x, double y){
-        if (graphics2D!= null) graphics2D.drawImage(bI, (int)(translateAndScaleX(x)), (int)(y + getTranslationY()), null);
+        drawTransformedImage(bI, x, y, 0,1);
     }
 
     /**
