@@ -116,7 +116,7 @@ public class BeckerList<ContentType> {
     // Index aktuellen Elementes
     protected int currentIndex;
 
-    // Grö?e der Liste
+    // Größe der Liste
     protected int length;
 
     /**
@@ -433,6 +433,10 @@ public class BeckerList<ContentType> {
                 next();
             }
         }
+    }
+
+    public int getLength(){
+        return this.length;
     }
 
 }
