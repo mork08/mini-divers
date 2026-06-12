@@ -64,7 +64,7 @@ public class PlanetController extends GraphicalObject {
             for (int j = 0; j < planetCount; j++) {
                 if(i == j) continue;
                 double distance = planets.getVertex(String.valueOf(i)).getContent().getDistanceTo(planets.getVertex(String.valueOf(j)).getContent());
-                if(distance < 300 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 100) {
+                if(distance < 300 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 50) {
                     planets.addEdge(new Edge<Planet>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
                 }
             }

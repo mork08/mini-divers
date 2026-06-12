@@ -6,6 +6,9 @@ import KAGO_framework.view.DrawTool;
 import java.awt.*;
 
 public class Planet extends GraphicalObject {
+    private String planetName;
+    //TODO: Namen der Planeten generieren und beim darüberhovern diesen anzeigen
+
     public Planet(double x, double y, double radius) {
         this.x = x;
         this.y = y;
