@@ -7,6 +7,7 @@ import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import beckerStructures.BeckerList;
 import davStructures.DavHeap;
+import my_project.model.AStarNode;
 import my_project.model.modes.map.Planet;
 
 /**
@@ -15,33 +16,8 @@ import my_project.model.modes.map.Planet;
  */
 public class AStar <ContentType extends GraphicalObject>{
     private Graph<ContentType> graph;
-    private AStarNode startNode;
-    private AStarNode endNode;
-
-    /**
-     * A node for handling the path finding inside the AStar-Algorithm.
-     */
-    private class AStarNode implements ComparableContent<AStarNode> {
-        private double distance;
-        private double heuristic;
-        private double value;
-        private AStarNode prev;
-        private Vertex graphNode;
-
-        public AStarNode(double distance, double heuristic, AStarNode prev, Vertex<ContentType> pGraphNode){
-            this.distance = distance;
-            this.heuristic = heuristic;
-            this.prev = prev;
-            this.value = this.distance + this.heuristic;
-            this.graphNode = pGraphNode;
-        }
-
-        private boolean isGreater(ContentType pContent){return value > pContent.value();}
-
-        private boolean isLess(ContentType pContent){}
-
-        private boolean isEqual(ContentType pContent){}
-    }
+    private AStarNode<ContentType> startNode;
+    private AStarNode<ContentType> endNode;
 
     public AStar(Graph<ContentType> graph, Vertex<ContentType> start, Vertex<ContentType> end){
         this.graph = graph;
@@ -52,6 +28,7 @@ public class AStar <ContentType extends GraphicalObject>{
 
     private List<Vertex> findPath(){
         DavHeap<? extends ComparableContent<AStarNode>> openNodes = new DavHeap(true);
+        //openNodes.add(startNode);
         BeckerList<AStarNode> closedNodes = new BeckerList<>();
 
 
