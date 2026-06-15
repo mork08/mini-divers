@@ -13,11 +13,15 @@ public class Planet extends GraphicalObject {
         this.x = x;
         this.y = y;
         this.radius = radius;
+        planetName = PlanetNames.generateName();
     }
 
     @Override
     public void draw(DrawTool drawTool) {
         drawTool.setCurrentColor(new Color(41, 76, 191));
         drawTool.drawFilledCircle(x ,y , radius);
+        drawTool.setCurrentColor(new Color(255, 255, 255));
+        drawTool.formatText("Monospaced",Font.PLAIN,(int)(14*drawTool.getScaleX()));
+        drawTool.drawText(x-radius-20, y-radius, planetName);
     }
 }

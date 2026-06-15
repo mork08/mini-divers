@@ -27,7 +27,9 @@ public class PlanetController extends GraphicalObject {
         planets = new Graph<Planet>();
 
         initiatePlanetInGraph();
-        addEdgesToGraph();
+        //addEdgesToGraph();
+        connectIsland();
+        planetEdgeList = planets.getEdges();
 
         currentPlanet = planets.getVertex("0");
         mapMode.setCurrentPlanet(currentPlanet.getContent());
@@ -70,7 +72,6 @@ public class PlanetController extends GraphicalObject {
             }
         }
         connectIsland();
-        planetEdgeList = planets.getEdges();
     }
 
     //TODO: When going to Planet, animate Path with Edges (A*)
@@ -189,7 +190,7 @@ public class PlanetController extends GraphicalObject {
         }
     }
 
-    public void checkForContact(MouseEvent e) {
+    public void checkForContactOnClick(MouseEvent e) {
         double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
         double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
         planetList.toFirst();
@@ -208,6 +209,7 @@ public class PlanetController extends GraphicalObject {
                 }
 
                 currentPlanet = planetList.getContent();
+                break;
             }
             planetList.next();
         }

@@ -63,8 +63,15 @@ public class ModeController extends InteractiveGraphicalObject {
     public void mousePressed(MouseEvent e){
         if(e.getButton() == 1){
             if(currentModeKey.equals("Map")){
-                ((MapMode)modes.get("Map")).manageMouse(e);
+                ((MapMode)modes.get("Map")).manageMouseClick(e);
             }
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        if(currentModeKey.equals("Map")){
+            ((MapMode)modes.get("Map")).manageMouseMove(e);
         }
     }
 }

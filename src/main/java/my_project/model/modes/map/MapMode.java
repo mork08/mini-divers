@@ -45,8 +45,11 @@ public class MapMode extends Mode {
         spaceShip.update(dt);
     }
 
-    public void manageMouse(MouseEvent e){
-        planetController.checkForContact(e);
+    public void manageMouseClick(MouseEvent e){
+        planetController.checkForContactOnClick(e);
+    }
+    public void manageMouseMove(MouseEvent e){
+        //TODO: Show Name on Hover
     }
 
     public static double getTranslateX(){return translateX;}
