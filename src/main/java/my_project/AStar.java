@@ -27,7 +27,7 @@ public class AStar <ContentType extends GraphicalObject>{
     }
 
     private List<Vertex> findPath(){
-        DavHeap<? extends ComparableContent<AStarNode>> openNodes = new DavHeap(true);
+        DavHeap<AStarNode<ContentType>> openNodes = new DavHeap(true);
         //openNodes.add(startNode);
         BeckerList<AStarNode> closedNodes = new BeckerList<>();
 
