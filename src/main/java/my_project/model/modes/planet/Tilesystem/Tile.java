@@ -73,7 +73,7 @@ public class Tile extends GraphicalObject {
         };
     }
     private void adjustHeight(){
-        /*
+
         Tile[] tiles = getRelatives(false);
         if (this.levelHeight == 1) {
             for (int i = 0; i < tiles.length; i++) {
@@ -86,7 +86,7 @@ public class Tile extends GraphicalObject {
             }
         }
 
-         */
+
     }
 
     public int getLevelHeight() {

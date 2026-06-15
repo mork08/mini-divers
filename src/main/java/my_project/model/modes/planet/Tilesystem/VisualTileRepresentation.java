@@ -146,9 +146,10 @@ public class VisualTileRepresentation {
             int heightDifferenceDownLeft = tile.getRelative(-1, 1) != null ? tile.getRelative(-1, 1).getLevelHeight() - tile.getLevelHeight() : 1;
             int heightDifferenceDownRight = tile.getRelative(1, 1) != null ? tile.getRelative(1, 1).getLevelHeight() - tile.getLevelHeight() : 1;
 
-            dt.drawImage(currentHeightSheet.getCorner("topLeft", heightDifferenceLeft, heightDifferenceUp), x, y);
-
-
+            dt.drawImage(currentHeightSheet.getCorner("topLeft", heightDifferenceLeft, heightDifferenceUp, heightDifferenceUpLeft), x, y);
+            dt.drawImage(currentHeightSheet.getCorner("topRight", heightDifferenceUp, heightDifferenceRight, heightDifferenceUpRight), x + Tile.TILE_SIZE - BORDER_SIZE, y);
+            dt.drawImage(currentHeightSheet.getCorner("downRight", heightDifferenceRight, heightDifferenceDown, heightDifferenceDownRight), x + Tile.TILE_SIZE - BORDER_SIZE, y+ Tile.TILE_SIZE - BORDER_SIZE);
+            dt.drawImage(currentHeightSheet.getCorner("downLeft", heightDifferenceDown, heightDifferenceLeft, heightDifferenceDownLeft), x, y + Tile.TILE_SIZE - BORDER_SIZE);
         }
     }
 }
