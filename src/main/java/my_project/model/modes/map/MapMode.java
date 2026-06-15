@@ -48,8 +48,8 @@ public class MapMode extends Mode {
     public void manageMouseClick(MouseEvent e){
         planetController.checkForContactOnClick(e);
     }
-    public void manageMouseMove(MouseEvent e){
-        //TODO: Show Name on Hover
+    public void manageMouseMove(MouseEvent e) {
+        planetController.checkForHover(e);
     }
 
     public static double getTranslateX(){return translateX;}

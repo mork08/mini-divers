@@ -215,6 +215,21 @@ public class PlanetController extends GraphicalObject {
         }
     }
 
+    public void checkForHover(MouseEvent e) {
+        double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
+        double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
+        planetList.toFirst();
+        while(planetList.hasAccess()) {
+            Planet p = planetList.getContent().getContent();
+            if(Math.sqrt(Math.pow(mouseX-p.getX(), 2) + Math.pow(mouseY-p.getY(),2)) <= p.getRadius()) {
+                p.setNameShowing(true);
+            }else {
+                p.setNameShowing(false);
+            }
+            planetList.next();
+        }
+    }
+
     public List<Vertex<Planet>> dijkstra(Graph<Planet> pGraph, Vertex<Planet> startVertex, Vertex<Planet> pZiel) {
         pGraph.setAllVertexMarks(false);
         pGraph.setDistanceForAll(Double.MAX_VALUE);
