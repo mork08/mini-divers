@@ -11,6 +11,9 @@ public class PlanetMode extends Mode {
     }
     @Override
     public void draw(DrawTool drawTool) {
-        tileMap.draw(drawTool);
+        drawTool.push();
+        drawTool.setScale(5);
+            tileMap.draw(drawTool);
+        drawTool.pop();
     }
 }

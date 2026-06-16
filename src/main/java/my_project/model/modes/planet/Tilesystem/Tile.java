@@ -2,6 +2,7 @@ package my_project.model.modes.planet.Tilesystem;
 
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
+import my_project.control.Mouse;
 
 public class Tile extends GraphicalObject {
     private TileMap tileMap;
@@ -32,8 +33,20 @@ public class Tile extends GraphicalObject {
     @Override
     public void draw(DrawTool dt){
         adjustHeight();
+        update(0); //TODO man sieht hier direkt das Problem, ne?;
         visualTileRepresentation.drawAt(dt, x, y);
         highlighted = false;
+    }
+    @Override
+    public void update(double dt) {
+        if(highlighted){
+            if(Mouse.isDown(0)){
+                levelHeight = 0;
+            }
+            if(Mouse.isDown(1)){
+                levelHeight = -1;
+            }
+        }
     }
     public void highlight(boolean highlighted){
         this.highlighted = highlighted;
@@ -74,7 +87,7 @@ public class Tile extends GraphicalObject {
     }
     private void adjustHeight(){
 
-        Tile[] tiles = getRelatives(false);
+        Tile[] tiles = getRelatives(true);
         if (this.levelHeight == 1) {
             for (int i = 0; i < tiles.length; i++) {
                 if (tiles[i] != null) {

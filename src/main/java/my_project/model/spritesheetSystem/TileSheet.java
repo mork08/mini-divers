@@ -117,14 +117,22 @@ public class TileSheet extends QuadSheet {
         // - straight corners up-
         //    > vertical
         //[41]
-        //[42]
-        //[43]
-        //[44]
-        //    > horizontal
-        //[45]
-        //[46]
-        //[47]
-        //[48]
+        addQuad(size * 2 + borderSize * 2, 0, borderSize, borderSize);
+        //[42] upper right
+        addQuad(size * 2 + borderSize * 1, 0, borderSize, borderSize);
+        //[43] lower right
+        addQuad(size * 2 + borderSize * 1, centerSize + borderSize, borderSize, borderSize);
+        //[44] lower left
+        addQuad(size * 2 + borderSize * 2, centerSize + borderSize, borderSize, borderSize);
+        //    > vertical
+        //[45] upper left
+        addQuad(size * 2, borderSize * 2, borderSize, borderSize);
+        //[46] upper right
+        addQuad(size * 2 + centerSize + borderSize, borderSize * 2, borderSize, borderSize);
+        //[47] lower right
+        addQuad(size * 2 + centerSize + borderSize, borderSize * 1, borderSize, borderSize);
+        //[48] lower left
+        addQuad(size * 2, borderSize * 1, borderSize, borderSize);
 
 
     }
@@ -258,13 +266,37 @@ public class TileSheet extends QuadSheet {
             }else{
                 switch (Direction) {
                     case "topLeft":
-                        return getSprite(PLACEHOLDER);
+                        return getSprite(33+8);
                     case "topRight":
-                        return getSprite(PLACEHOLDER);
+                        return getSprite(38+8);
                     case "downRight":
-                        return getSprite(PLACEHOLDER);
+                        return getSprite(35+8);
                     case "downLeft":
-                        return getSprite(PLACEHOLDER);
+                        return getSprite(40+8);
+                }
+            }
+        }else if (heightDifference1 != 0 && heightDifference2 == 0) {
+            if (heightDifference1 < 0) {
+                switch (Direction) {
+                    case "topLeft":
+                        return getSprite(37);
+                    case "topRight":
+                        return getSprite(34);
+                    case "downRight":
+                        return getSprite(39);
+                    case "downLeft":
+                        return getSprite(36);
+                }
+            }else{
+                switch (Direction) {
+                    case "topLeft":
+                        return getSprite(37+8);
+                    case "topRight":
+                        return getSprite(34+8);
+                    case "downRight":
+                        return getSprite(39+8);
+                    case "downLeft":
+                        return getSprite(36+8);
                 }
             }
         }

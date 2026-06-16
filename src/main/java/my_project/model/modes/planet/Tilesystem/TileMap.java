@@ -65,6 +65,7 @@ public class TileMap extends GraphicalObject {
     }
     @Override
     public void draw(DrawTool drawTool){
+
         getTileByPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y).highlight(true);
         addRenderPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y);
         //drawTool.setTranslate(Mouse.getPosition().x, Mouse.getPosition().y);
@@ -81,6 +82,7 @@ public class TileMap extends GraphicalObject {
             renderPositions.dequeue();
         }
     }
+
     public void createTile(int x, int y){
         /*
         System.out.println("-----Creating new Tile-------");

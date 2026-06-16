@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 public class VisualTileRepresentation {
     private Tile tile;
     private static final int BORDER_SIZE = 8;
-    private static PlanetSheet planetSheet = TileTextureContainer.getDebugPlanet();
+    private static PlanetSheet planetSheet = TileTextureContainer.getMars();
     public VisualTileRepresentation(Tile tile){
         setTile(tile);
     }
@@ -19,6 +19,7 @@ public class VisualTileRepresentation {
 
     }
     public void drawAt(DrawTool dt, double x, double y){
+
         TileSheet currentHeightSheet;
         if (tile != null){
             switch (tile.levelHeight){
