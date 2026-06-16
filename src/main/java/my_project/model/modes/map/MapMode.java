@@ -31,15 +31,15 @@ public class MapMode extends Mode {
     @Override
     public void update(double dt) {
         if(xTranslationDirection != 0) {
-            translateX += xTranslationDirection * dt * 200 / scale;
+            translateX += xTranslationDirection * dt * 600 / scale;
         }
         if(yTranslationDirection != 0) {
-            translateY += yTranslationDirection * dt * 200 / scale;
+            translateY += yTranslationDirection * dt * 600 / scale;
         }
         if(scaleDirection != 0) {
             scale += scaleDirection * dt * 1 * scale;
-            //translateX -= (scaleDirection  * 50) / 2;
-            //translateY -= (scaleDirection  * 50) / 2;
+            translateX -= (scaleDirection  * 50/scale) / 3;
+            translateY -= (scaleDirection  * 50/scale) / 3;
         }
         planetController.update(dt);
         spaceShip.update(dt);

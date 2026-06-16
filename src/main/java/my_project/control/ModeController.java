@@ -46,6 +46,7 @@ public class ModeController extends InteractiveGraphicalObject {
             drawTool.setCurrentColor(new Color(255, 255, 255, 203));
             drawTool.drawFilledRectangle(0, 0, Config.WINDOW_WIDTH, 24 + 2);
             drawTool.setCurrentColor(Color.BLACK);
+            drawTool.formatText("Arial", Font.PLAIN, 12);
             drawTool.drawText(0, 12, "Mode: " + currentModeKey);
             drawTool.drawText(0, 24, "FPS: " + Math.floor(fps*10)/10);
         }

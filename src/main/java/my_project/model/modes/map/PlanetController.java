@@ -41,7 +41,7 @@ public class PlanetController extends GraphicalObject {
             boolean fitting = false;
             while(!fitting) {
                 fitting = true;
-                Planet newPlanet = new Planet(Math.random() * 10000, Math.random() * 10000, Math.random() * 30 + 20);
+                Planet newPlanet = new Planet(Math.random() * 10000, Math.random() * 10000, PlanetNames.getPlanetSize());
                 planetList = planets.getVertices();
                 planetList.toFirst();
                 while(!planetList.isEmpty() && planetList.hasAccess()) {
