@@ -311,6 +311,21 @@ public class Graph<CT>{
    */
   public boolean isEmpty(){
     return vertices.isEmpty();
-  } 
+  }
 
+  public void setDistanceForAll(double pDistance){
+    vertices.toFirst();
+    while(vertices.hasAccess()){
+      vertices.getContent().setPathDistance(pDistance);
+      vertices.next();
+    }
+  }
+
+  public void setPrevToNull(){
+    vertices.toFirst();
+    while(vertices.hasAccess()){
+      vertices.getContent().setPrev(null);
+      vertices.next();
+    }
+  }
 }

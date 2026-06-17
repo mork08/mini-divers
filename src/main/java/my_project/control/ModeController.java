@@ -10,6 +10,7 @@ import my_project.model.modes.planet.PlanetMode;
 import my_project.model.modes.start.StartMode;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class ModeController extends InteractiveGraphicalObject {
     double fps;
@@ -51,6 +52,7 @@ public class ModeController extends InteractiveGraphicalObject {
             drawTool.setCurrentColor(new Color(255, 255, 255, 203));
             drawTool.drawFilledRectangle(0, 0, Config.WINDOW_WIDTH, 24 + 2);
             drawTool.setCurrentColor(Color.BLACK);
+            drawTool.formatText("Arial", Font.PLAIN, 12);
             drawTool.drawText(0, 12, "Mode: " + currentModeKey);
             drawTool.drawText(0, 24, "FPS: " + Math.floor(fps*10)/10);
         }
@@ -60,5 +62,24 @@ public class ModeController extends InteractiveGraphicalObject {
         currentModeKey = mode;
         currentMode = modes.get(mode);
         currentMode.switchMode(mode);
+    }
+
+    public String getCurrentModeKey(){
+        return currentModeKey;
+    }
+    @Override
+    public void mousePressed(MouseEvent e){
+        if(e.getButton() == 1){
+            if(currentModeKey.equals("Map")){
+                ((MapMode)modes.get("Map")).manageMouseClick(e);
+            }
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        if(currentModeKey.equals("Map")){
+            ((MapMode)modes.get("Map")).manageMouseMove(e);
+        }
     }
 }

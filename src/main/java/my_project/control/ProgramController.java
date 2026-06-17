@@ -50,6 +50,7 @@ public class ProgramController {
         viewController.draw(mouse);
         viewController.register(mouse);
         viewController.register(inputManager);
+        viewController.register(modeController);
     }
 
     /**
