@@ -3,7 +3,7 @@ package my_project.model.modes;
 import KAGO_framework.view.DrawTool;
 
 public abstract class Mode {
-
+    private String wantedMode;
     public void update(double dt){
 
     }
@@ -19,4 +19,11 @@ public abstract class Mode {
     public void drawUI(DrawTool drawTool){
 
     }
+    public void switchMode(String mode){
+        wantedMode = mode;
+    }
+    public String getWantedMode(){
+        return wantedMode;
+    }
 }
+

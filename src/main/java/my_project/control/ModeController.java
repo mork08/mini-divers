@@ -26,9 +26,15 @@ public class ModeController extends InteractiveGraphicalObject {
     @Override
     public void update(double dt){
         fps = 1/dt;
+        if(currentMode != null) {
+            //Updates the current mode
+            currentMode.update(dt);
+            if (!currentMode.getWantedMode().equals(currentModeKey)){
+                selectMode(currentMode.getWantedMode());
+            }
+        }
 
-        //Updates the current mode
-        currentMode.update(dt);
+
 
     }
     @Override
@@ -53,5 +59,6 @@ public class ModeController extends InteractiveGraphicalObject {
     public void selectMode(String mode){
         currentModeKey = mode;
         currentMode = modes.get(mode);
+        currentMode.switchMode(mode);
     }
 }
