@@ -15,6 +15,7 @@ public class PlanetController extends GraphicalObject {
     private List<Vertex<Planet>> planetList;
     private List<Edge<Planet>> planetEdgeList;
     private int planetCount = 400;
+    private int planetSpawnRadius = 5000;
     private MapMode mapMode;
     private Vertex<Planet> currentPlanet;
 
@@ -45,7 +46,9 @@ public class PlanetController extends GraphicalObject {
             boolean fitting = false;
             while(!fitting) {
                 fitting = true;
-                Planet newPlanet = new Planet(Math.random() * 10000, Math.random() * 10000, PlanetNames.getPlanetSize());
+                double r = planetSpawnRadius * Math.sqrt(Math.random());
+                double alpha = 2 * Math.PI * Math.random();
+                Planet newPlanet = new Planet(r * Math.cos(alpha), r * Math.sin(alpha), PlanetNames.getPlanetSize());
                 planetList = planets.getVertices();
                 planetList.toFirst();
                 while(!planetList.isEmpty() && planetList.hasAccess()) {
