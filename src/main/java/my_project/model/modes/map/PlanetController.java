@@ -22,6 +22,9 @@ public class PlanetController extends GraphicalObject {
     private double radius = 5;
     private DrawTool drawTool;
 
+    private String[] occupations = {"Terminis", "Iluminis", "MiniBots"};
+    private double occupationBudget = 20000;
+
     public PlanetController(MapMode mapMode) {
         this.mapMode = mapMode;
         planets = new Graph<Planet>();
@@ -33,6 +36,7 @@ public class PlanetController extends GraphicalObject {
 
         currentPlanet = planets.getVertex("0");
         mapMode.setCurrentPlanet(currentPlanet.getContent());
+        spreadOccupation();
     }
 
     private void initiatePlanetInGraph() {
@@ -216,6 +220,7 @@ public class PlanetController extends GraphicalObject {
     }
 
     public void checkForHover(MouseEvent e) {
+        if(drawTool == null) return;
         double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
         double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
         planetList.toFirst();
@@ -225,6 +230,45 @@ public class PlanetController extends GraphicalObject {
                 p.setNameShowing(true);
             }else {
                 p.setNameShowing(false);
+            }
+            planetList.next();
+        }
+    }
+
+    private void spreadOccupation() {
+        planetList.toFirst();
+        planetList.next();
+        for(int i = 0;i < occupations.length;i++) {
+            double tempBudget = occupationBudget;
+            //planetList.getContent().getContent().setOccupation(occupations[i]);
+            planets.setAllVertexMarks(false);
+            Queue<Vertex<Planet>> queue = new Queue<>();
+            while(!planetList.getContent().getContent().getOccupation().equals("MiniEarth")) {
+                planetList.next();
+            }
+            planetList.getContent().getContent().setOccupation(occupations[i]);
+            queue.enqueue(planetList.getContent());
+            while(!queue.isEmpty()) {
+
+                queue.front().setMark(true);
+
+                List<Vertex<Planet>> neighbours = planets.getNeighbours(queue.front());
+                neighbours.toFirst();
+                while(neighbours.getContent() != null && (!neighbours.isEmpty() || neighbours.hasAccess())) {
+                    if(!neighbours.getContent().isMarked() && neighbours.getContent().getContent().getOccupation().equals("MiniEarth")) {
+                        double cost = planets.getEdge(queue.front(), neighbours.getContent()).getWeight();
+                        if (cost < tempBudget) {
+                            tempBudget -= cost;
+                            neighbours.getContent().getContent().setOccupation(occupations[i]);
+                            queue.enqueue(neighbours.getContent());
+                        }
+                    }
+                    neighbours.next();
+                }
+                queue.dequeue();
+                if(tempBudget < 100) {
+                    break;
+                }
             }
             planetList.next();
         }
