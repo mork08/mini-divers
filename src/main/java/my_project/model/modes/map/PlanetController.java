@@ -48,7 +48,7 @@ public class PlanetController extends GraphicalObject {
                 fitting = true;
                 double r = planetSpawnRadius * Math.sqrt(Math.random());
                 double alpha = 2 * Math.PI * Math.random();
-                Planet newPlanet = new Planet(r * Math.cos(alpha), r * Math.sin(alpha), PlanetNames.getPlanetSize());
+                Planet newPlanet = new Planet(r * Math.cos(alpha) + 500, r * Math.sin(alpha) + 500, PlanetNames.getPlanetSize());
                 planetList = planets.getVertices();
                 planetList.toFirst();
                 while(!planetList.isEmpty() && planetList.hasAccess()) {
@@ -117,10 +117,10 @@ public class PlanetController extends GraphicalObject {
     public void update(double dt) {
         mapMode.setCurrentPlanet(currentPlanet.getContent());
 
-        if(easeIn) radius -= dt * 7;
-        else radius += dt * 7;
+        if(easeIn) radius -= dt * 10;
+        else radius += dt * 10;
         if(radius < 2) easeIn = false;
-        if(radius > 5) easeIn = true;
+        if(radius > 10) easeIn = true;
     }
 
     private void connectIsland() {
