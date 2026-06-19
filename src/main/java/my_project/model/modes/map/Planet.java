@@ -4,12 +4,15 @@ import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class Planet extends GraphicalObject {
     private String planetName;
     private boolean showName = false;
     private String terrainType;
     private String occupation = "MiniEarth";//MiniEarth, Terminis, Iluminis, MiniBots
+    private BufferedImage planetCard;
+    private boolean isPlanetCardLoaded = false;
 
     public Planet(double x, double y, double radius) {
         this.x = x;
@@ -20,6 +23,10 @@ public class Planet extends GraphicalObject {
 
     @Override
     public void draw(DrawTool drawTool) {
+        if(!isPlanetCardLoaded) {
+            planetCard = DrawTool.getNewImage("src/main/resources/graphic/" + occupation + ".png");
+            isPlanetCardLoaded = true;
+        }
         if(occupation.equals("MiniEarth")) {
             drawTool.setCurrentColor(new Color(0, 166, 255));
         }else if(occupation.equals("Terminis")) {
@@ -32,13 +39,15 @@ public class Planet extends GraphicalObject {
 
         drawTool.drawFilledCircle(x ,y , radius);
         if(showName) {
-            drawTool.setCurrentColor(new Color(50, 50, 50, 121));
-            drawTool.drawFilledRectangle(x - 120 ,y + 60 , 240, 100);
+            drawTool.setCurrentColor(new Color(0, 0, 0, 121));
+            drawTool.drawTransformedImage(planetCard, x - 110 , y + 60, 0, 4);
+            //drawTool.setCurrentColor(new Color(50, 50, 50, 121));
+            //drawTool.drawFilledRectangle(x - 120 ,y + 60 , 240, 100);
             drawTool.setCurrentColor(new Color(255, 255, 255));
-            drawTool.formatText("Monospaced", Font.PLAIN, (int) (16 * drawTool.getScaleX()));
-            drawTool.drawText(x - 110, y + 80, planetName);
-            drawTool.drawText(x - 110, y + 80 + 30, "Occupation: " + occupation);
-            drawTool.drawText(x - 110, y + 80 + 60, "Terrain: " + terrainType);
+            drawTool.formatText("Monospaced", Font.PLAIN, (int) (14 * drawTool.getScaleX()));
+            drawTool.drawText(x - 90, y + 170, planetName);
+            drawTool.drawText(x - 90, y + 170 + 30, "Occupation: " + occupation);
+            drawTool.drawText(x - 90, y + 170 + 60, "Terrain: " + terrainType);
         }
     }
 
