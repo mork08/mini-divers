@@ -54,7 +54,7 @@ public class DavHeap <CT extends ComparableContent> {
      * Insterts an element according to the min or max heap property
      * @param element
      */
-    public void insert(CT element){
+    public void add(CT element){
         // Insert element at the first unfilled position (at the end, as it's a complete tree)
         heap.append(element);
         int currentIndex = heap.getLength() - 1;
