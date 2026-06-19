@@ -26,28 +26,29 @@ public class AStar <ContentType extends GraphicalObject>{
         this.endNode = new AStarNode(Double.MAX_VALUE, 0, null, end);
     }
 
-    private List<Vertex> findPath(){
+    private Vertex[] findPath(){
         DavHeap<AStarNode<ContentType>> openNodes = new DavHeap(true);
-        //openNodes.add(startNode);
+        openNodes.add(startNode);
         BeckerList<AStarNode> closedNodes = new BeckerList<>();
 
+        while (!openNodes.isEmpty()){
+            AStarNode current = openNodes.extractRoot(); // Mit Bearbeitung des Nodes wird es automatisch aus openNodes entfernt
 
-        return new List<>();
+            if (current == this.endNode) return reconstructPathFrom(current);
+
+            closedNodes.append(current);
+
+        }
+
+        return reconstructPathFrom(null); // return leer?
     }
 
-    /*private Stack<Tile> findPath(){
-        List<PathNode> openList = new List<>();
-        List<PathNode> closedList = new List<>();
+    public Vertex[] reconstructPathFrom(AStarNode current){
+        return new Vertex[0];
+    }
 
-        Tile start = control.getDungeon().getTileFromCoordinates(x,y);
-        Tile goal = control.getDungeon().getTileFromCoordinates(control.getDungeonPlayer().getX(), control.getDungeonPlayer().getY());
 
-        PathNode startNode = new PathNode(start, goal);
-        openList.append(startNode);
-        startNode.setDistance(0);
-        startNode.calculateCost();
-        startNode.setParent(null);
-
+    /*
         while (!openList.isEmpty()){
             // Node with least cost is going to be examined, is the new current
             openList.toFirst();
@@ -62,6 +63,22 @@ public class AStar <ContentType extends GraphicalObject>{
             closedList.append(current);
             openList.remove();
 
+      private Stack<Tile> findPath(){
+        List<PathNode> openList = new List<>();
+        List<PathNode> closedList = new List<>();
+
+        Tile start = control.getDungeon().getTileFromCoordinates(x,y);
+        Tile goal = control.getDungeon().getTileFromCoordinates(control.getDungeonPlayer().getX(), control.getDungeonPlayer().getY());
+
+        PathNode startNode = new PathNode(start, goal);
+        openList.append(startNode);
+        startNode.setDistance(0);
+        startNode.calculateCost();
+        startNode.setParent(null);
+
+    */
+
+    /*
             Tile[] neighbors = current.getNotSolidNeighboringTiles();
             outer:
             for (Tile neighbor : neighbors){
@@ -95,6 +112,8 @@ public class AStar <ContentType extends GraphicalObject>{
             }
         }
         return null; // No path found
-    }*/
+    }
+
+    */
 
 }
