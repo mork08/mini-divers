@@ -18,7 +18,7 @@ public class Planet extends GraphicalObject {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        planetName = PlanetNames.generateName();
+        planetName = PlanetInfoContainer.generateName();
     }
 
     @Override
