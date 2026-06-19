@@ -458,5 +458,8 @@ public class BeckerList<ContentType> {
             }
         }
     }
+    public int getLength(){
+        return length;
+    }
 
 }
