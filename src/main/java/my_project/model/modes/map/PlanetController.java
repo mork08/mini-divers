@@ -90,6 +90,7 @@ public class PlanetController extends GraphicalObject {
         drawTool.setTranslate(MapMode.getTranslateX(),  MapMode.getTranslateY());
         drawTool.setScale(MapMode.getScale());
 
+        //Draw Edges
         planetEdgeList.toFirst();
         while(planetEdgeList.hasAccess()) {
             if(planetEdgeList.getContent().isMarked()) {
@@ -102,6 +103,7 @@ public class PlanetController extends GraphicalObject {
             planetEdgeList.next();
         }
 
+        //Let Planet be drawn
         planetList.toFirst();
         while(planetList.hasAccess()) {
             if(Objects.equals(currentPlanet, planetList.getContent())) {
@@ -109,6 +111,12 @@ public class PlanetController extends GraphicalObject {
                 drawTool.drawFilledCircle(planetList.getContent().getContent().getX(), planetList.getContent().getContent().getY(), planetList.getContent().getContent().getRadius() + radius);
             }
             planetList.getContent().getContent().draw(drawTool);
+            planetList.next();
+        }
+
+        planetList.toFirst();
+        while(planetList.hasAccess()) {
+            planetList.getContent().getContent().drawUI(drawTool);
             planetList.next();
         }
     }
