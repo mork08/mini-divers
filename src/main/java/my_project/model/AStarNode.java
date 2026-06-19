@@ -9,38 +9,42 @@ import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 public class AStarNode<ContentType> implements ComparableContent<AStarNode> {
     private double distance;
     private double heuristic;
-    private double value;
-    private AStarNode prev;
+    private double cost;
+    private AStarNode parent;
     private Vertex graphNode;
 
-    public AStarNode(double distance, double heuristic, AStarNode prev, Vertex<ContentType> pGraphNode){
+    public AStarNode(double distance, double heuristic, AStarNode parent, Vertex<ContentType> pGraphNode){
         this.distance = distance;
         this.heuristic = heuristic;
-        this.prev = prev;
-        this.value = this.distance + this.heuristic;
+        this.parent = parent;
+        this.cost = this.distance + this.heuristic;
         this.graphNode = pGraphNode;
     }
 
     public void setDistance(double distance) {
         this.distance = distance;
-        this.value = this.distance + this.heuristic;
+        this.cost = this.distance + this.heuristic;
     }
 
     public void setPrev(AStarNode prev) {
-        this.prev = prev;
+        this.parent = parent;
     }
 
     public void setHeuristic(double heuristic) {
         this.heuristic = heuristic;
-        this.value = this.distance + this.heuristic;
+        this.cost = this.distance + this.heuristic;
+    }
+
+    public double getCost() {
+        return cost;
     }
 
     @Override
-    public boolean isGreater(AStarNode otherNode){return value > otherNode.value;}
+    public boolean isGreater(AStarNode otherNode){return cost > otherNode.cost;}
 
     @Override
-    public boolean isLess(AStarNode otherNode){return value < otherNode.value;}
+    public boolean isLess(AStarNode otherNode){return cost < otherNode.cost;}
 
     @Override
-    public boolean isEqual(AStarNode otherNode){return value == otherNode.value;}
+    public boolean isEqual(AStarNode otherNode){return cost == otherNode.cost;}
 }
