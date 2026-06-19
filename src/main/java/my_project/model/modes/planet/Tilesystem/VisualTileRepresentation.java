@@ -16,7 +16,7 @@ public class VisualTileRepresentation {
         this.tile = tile;
     }
     public void update(){
-
+        
     }
     public void drawAt(DrawTool dt, double x, double y){
 
