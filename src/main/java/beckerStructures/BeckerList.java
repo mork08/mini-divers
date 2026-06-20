@@ -391,6 +391,7 @@ public class BeckerList<ContentType> {
         }
     }
     public ContentType get(int index){
+        if (index == currentIndex) return this.current.getContentObject();
         if (index >= length || index < 0){
             System.err.println("Index " + index + "out of punds for BeckerList with the length of " + length);
             return null;
