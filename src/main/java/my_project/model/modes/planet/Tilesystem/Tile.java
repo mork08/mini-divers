@@ -62,7 +62,7 @@ public class Tile extends GraphicalObject {
                 return  tileMap.getTile(indexX + rx, indexY + ry);
             }
         }
-        return this; //TODO figure out good way to give Tile acces to TileMap
+        return this;
     }
     public Tile[] getRelatives(){
         return new Tile[]{

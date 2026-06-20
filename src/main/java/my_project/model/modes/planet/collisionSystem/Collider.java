@@ -71,4 +71,10 @@ public class Collider {
         this.breakingfactor = bF;
     }
 
+    public void stepBack() {
+        double stepX = (linVelX / Math.abs(linVelX));
+        double stepY = (linVelY / Math.abs(linVelY));
+        this.x -= stepX;
+        this.y -= stepY;
+    }
 }
