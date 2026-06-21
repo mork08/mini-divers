@@ -6,7 +6,7 @@ import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 /**
  * A node for handling the path finding inside the A*-Algorithm.
  */
-public class AStarVertex<ContentType> extends Vertex implements ComparableContent<AStarVertex> {
+public class AStarVertex<ContentType> extends Vertex<ContentType> implements ComparableContent<AStarVertex> {
     private double distance;
     private double heuristic;
     private double cost;

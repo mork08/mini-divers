@@ -22,8 +22,8 @@ import KAGO_framework.model.abitur.datenstrukturen.Edge;
  * @author Qualitaets- und UnterstuetzungsAgentur - Landesinstitut fuer Schule
  * @version Oktober 2015
  */
-public class Graph<CT>{
-  private List<Vertex<CT>> vertices;
+public class Graph<CT, V extends Vertex<CT>>{
+  private List<V> vertices;
   private List<Edge<CT>> edges;
 
   /**
@@ -32,7 +32,7 @@ public class Graph<CT>{
    */
   public Graph(){
     //Leere Listen fuer Knoten und Kanten erstellen.
-    vertices = new List<Vertex<CT>>();
+    vertices = new List<V>();
     edges = new List<Edge<CT>>();
   }
 
@@ -94,7 +94,7 @@ public class Graph<CT>{
    * Knoten mit demselben ID-Eintrag wie pVertex im Graphen gibt und pVertex eine ID ungleich null hat. 
    * Ansonsten passiert nichts.
    */
-  public void addVertex(Vertex<CT> pVertex){
+  public void addVertex(V pVertex){
     //Pruefen, ob der Vertex existiert und eine ID hat.
     if (pVertex != null && pVertex.getID() != null) {
       //Pruefen, ob nicht schon ein Vertex mit gleicher ID enthalten ist.
