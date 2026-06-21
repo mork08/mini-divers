@@ -3,139 +3,105 @@ package my_project.model;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.Graph;
 import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import beckerStructures.BeckerList;
 import davStructures.DavHeap;
 
 /**
- * The AStar algorithm finds the shortest path in a Graph from the startNode to the endNode <br>
- * For reasons of efficiency and clarity the algorithm uses the vertices from the graph for information storage. <br><br>
- * WARNING: The given graph needs to explicitly store Objects of the type AStarVertex and no other type of Vertex.
- *
- * @param <ContentType> the contentType of the Objects inside the graph
+ * The AStar algorithm finds the shortest path in a Graph from the startNode to the endNode;
+ * @param <ContentType>
  */
 public class AStar <ContentType extends GraphicalObject>{
-    private final Graph<ContentType, AStarVertex<ContentType>> graph;
-    private final AStarVertex<ContentType> startNode;
-    private final AStarVertex<ContentType> endNode;
+    private Graph<ContentType> graph;
+    private AStarNode<ContentType> startNode;
+    private AStarNode<ContentType> endNode;
 
-    public AStar(Graph<ContentType, AStarVertex<ContentType>> graph, AStarVertex<ContentType> start, AStarVertex<ContentType> end){
+    public AStar(Graph<ContentType> graph, Vertex<ContentType> start, Vertex<ContentType> end){
         this.graph = graph;
-
-        this.startNode = start;
-        startNode.setDistance(0);
-        startNode.setHeuristic(start.getContent().getDistanceTo(end.getContent()));
-        startNode.setParent(null);
-
-        this.endNode = end;
-        endNode.setDistance(Double.MAX_VALUE);
-        endNode.setHeuristic(0);
-        endNode.setParent(null);
+        double heuristic = start.getContent().getDistanceTo(end.getContent());
+        this.startNode = new AStarNode(0, heuristic, null, start);
+        this.endNode = new AStarNode(Double.MAX_VALUE, 0, null, end);
     }
 
     /**
-     * Method for path finding on the given graph. <br><br>
-     *
-     * An open node is a discovered node which is still to be evaluated regarding the path.<br>
-     * A closed node is fully evaluated.<br>
-     * An unknown node is a vertex from the graph which is newly discovered during the algorithms runtime and becomes an open one.
-     * @return the shortest path from the start vertex to the end vertex as a KAGO-List with AStarVertices.
+     * Method for path finding on the given graph.
+     * @return the shortest path from the start vertex to the end vertex.
      */
-    public List<AStarVertex> findPath(){
-        DavHeap<AStarVertex<ContentType>> openNodes = new DavHeap<>(true);
+    private Vertex[] findPath(){
+        DavHeap<AStarNode<ContentType>> openNodes = new DavHeap(true);
         openNodes.add(startNode);
-        BeckerList<AStarVertex> closedNodes = new BeckerList<>();
+        BeckerList<AStarNode> closedNodes = new BeckerList<>();
 
         while (!openNodes.isEmpty()){
-            AStarVertex current = openNodes.extractRoot(); // Node gets deleted out of openNodes as soon as it gets examined.
+            AStarNode current = openNodes.extractRoot(); // Mit Bearbeitung des Nodes wird es automatisch aus openNodes entfernt
+
             if (current == this.endNode) return reconstructPathFrom(current);
 
             closedNodes.append(current);
-            current.setMark(false);
 
-            List<AStarVertex<ContentType>> neighbours = graph.getNeighbours(current);
+            List<Vertex> neighbours = graph.getNeighbours(current.getVertex());
+
             neighbours.toFirst();
+            outer:
             while (neighbours.hasAccess()){
-                AStarVertex<ContentType> nbr = neighbours.getContent();
+                Vertex nbr = neighbours.getContent();
 
                 // check if nbr is unknown or closed
-                ContentType currentObject = nbr.getContent();
-                ContentType nbrObject = endNode.getContent();
-                double weight = graph.getEdge(current,nbr).getWeight();
-
-                if (!nbr.isMarked()){ // TODO lieber isMarked für closed, um nicht immer durchsuchen zu müssen?
-                    if (closedNodes.isInside(nbr)) continue; // Skips closed neighbour
+                if (!nbr.isMarked()){
+                    closedNodes.toFirst();
+                    while (closedNodes.hasAccess()){
+                        if (closedNodes.getContent().getVertex() == nbr) continue outer; // Skips closed neighbour
+                        closedNodes.next();
+                    }
 
                     // if this is reached, nbr is unknown
-                    openNodes.add(nbr);
-                    nbr.setDistance(current.getDistance() + weight);
-                    nbr.setHeuristic(currentObject.getDistanceTo(nbrObject));
-                    nbr.setParent(current);
+                    // TODO is graph unweighted and all edges weight 1 ?
+                    openNodes.add(new AStarNode(
+                            current.getDistance() + 1,
+                            ((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent())),
+                            current,
+                            nbr
+                            ));
                     nbr.setMark(true);
 
                 } else { // Node to this neighbour vertex is in openNodes
-
-                    double tentativeCost = current.getDistance() + weight;
-                    if (tentativeCost < nbr.getDistance()){
-                        nbr.setParent(current);
-                        nbr.setDistance(current.getDistance() + weight);
-                        nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
-                        // TODO heap aktualisieren!!!
-
+                    double tentativeCost = current.getDistance() + 1 + ((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent()));
+                    // TODO need to compare to AStarNodes current cost, but reference to AStarNode missing
+                    if (tentativeCost < node.getCost()){
+                       node.setParent(current);
+                       node.setDistance(current.getDistance() + 1);
+                       node.setHeuristic(((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent())));
                     }
                 }
-
-                neighbours.next();
             }
         }
 
-        return reconstructPathFrom(null); // return empty if path not found
+        return reconstructPathFrom(null); // return leer?
     }
 
-    /**
-     * Changes the path data from a líst into an array.
-     * @param list The list, e.g. returned by findPath()
-     * @return the data now in an array
-     */
-    public AStarVertex[] listToArray(List<AStarVertex> list){
-        if (list == null || list.isEmpty()) return new AStarVertex[0];
-
-        int counter = 0;
-        list.toFirst();
-        while (list.hasAccess()){
-            counter++;
-            list.next();
+    public Vertex[] reconstructPathFrom(AStarNode current){
+        if (current == null ) return new Vertex[0];
+        if (current != endNode) throw new IllegalArgumentException("Path reconstruction needs to start with endNode");
+        List<AStarNode> list = new List<>();
+        int counter = 1;
+        while (endNode.getParent() != null){
+            list.append(current.getParent());
+            current = current.getParent();
+            counter ++;
         }
 
-        AStarVertex[] path = new AStarVertex[counter];
+        Vertex[] path = new Vertex[counter];
         list.toFirst();
         for (int i = 0; i < counter; i++){
-            path[i] = list.getContent();
+            path[i] = list.getContent().getVertex();
             list.next();
         }
 
         return path;
     }
 
-    /**
-     * Recunstructs the path beginning from the end node.  If the endNode wasn't found, an empty list is returned.
-     * @param current the node te reconstruction is initialized from
-     * @return the path as a KAGO-List
-     */
-    private List<AStarVertex> reconstructPathFrom(AStarVertex current){
-        if (current == null ) return new List<>();
-        if (current != endNode) throw new IllegalArgumentException("Path reconstruction needs to start with endNode");
-        List<AStarVertex> list = new List<>();
 
-        while (endNode.getParent() != null){
-            list.append(current.getParent());
-            current = current.getParent();
-        }
-
-        return list;
-    }
-}
-
-/*
+    /*
         while (!openList.isEmpty()){
             // Node with least cost is going to be examined, is the new current
             openList.toFirst();
@@ -199,3 +165,5 @@ public class AStar <ContentType extends GraphicalObject>{
     }
 
     */
+
+}
