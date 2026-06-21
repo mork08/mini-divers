@@ -14,15 +14,15 @@ import my_project.model.*;
 import java.awt.*;
 
 public class PlanetController extends GraphicalObject {
-    public Graph<Planet> planets;
+    public Graph<Planet, AStarVertex<Planet>> planets;
     private List<Vertex<Planet>> planetList;
     private List<Edge<Planet>> planetEdgeList;
     private int planetCount = 10;
 
     public PlanetController() {
-        planets = new Graph<Planet>();
+        planets = new Graph<>();
         for(int i = 0;i < planetCount;i++) {
-            Vertex<Planet> planet = new Vertex<>(String.valueOf(i));
+            AStarVertex<Planet> planet = new AStarVertex<>(String.valueOf(i));
             planet.setContent(new Planet(Math.random()*1000, Math.random()*1000));
             planets.addVertex(planet);
         }
