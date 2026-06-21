@@ -26,7 +26,7 @@ public class AStarNode<ContentType> implements ComparableContent<AStarNode> {
         this.cost = this.distance + this.heuristic;
     }
 
-    public void setPrev(AStarNode prev) {
+    public void setParent(AStarNode parent) {
         this.parent = parent;
     }
 
@@ -38,6 +38,9 @@ public class AStarNode<ContentType> implements ComparableContent<AStarNode> {
     public double getCost() {
         return cost;
     }
+    public Vertex getVertex(){return graphNode;}
+    public double getDistance(){return distance;}
+    public AStarNode getParent(){return parent;}
 
     @Override
     public boolean isGreater(AStarNode otherNode){return cost > otherNode.cost;}
