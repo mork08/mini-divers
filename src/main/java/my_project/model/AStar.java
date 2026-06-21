@@ -1,14 +1,11 @@
-package my_project;
+package my_project.model;
 
 import KAGO_framework.model.GraphicalObject;
-import KAGO_framework.model.abitur.datenstrukturen.ComparableContent;
 import KAGO_framework.model.abitur.datenstrukturen.Graph;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import beckerStructures.BeckerList;
 import davStructures.DavHeap;
-import my_project.model.AStarNode;
-import my_project.model.modes.map.Planet;
 
 /**
  * The AStar algorithm finds the shortest path in a Graph from the startNode to the endNode;
@@ -26,6 +23,10 @@ public class AStar <ContentType extends GraphicalObject>{
         this.endNode = new AStarNode(Double.MAX_VALUE, 0, null, end);
     }
 
+    /**
+     * Method for path finding on the given graph.
+     * @return the shortest path from the start vertex to the end vertex.
+     */
     private Vertex[] findPath(){
         DavHeap<AStarNode<ContentType>> openNodes = new DavHeap(true);
         openNodes.add(startNode);
@@ -38,13 +39,65 @@ public class AStar <ContentType extends GraphicalObject>{
 
             closedNodes.append(current);
 
+            List<Vertex> neighbours = graph.getNeighbours(current.getVertex());
+
+            neighbours.toFirst();
+            outer:
+            while (neighbours.hasAccess()){
+                Vertex nbr = neighbours.getContent();
+
+                // check if nbr is unknown or closed
+                if (!nbr.isMarked()){
+                    closedNodes.toFirst();
+                    while (closedNodes.hasAccess()){
+                        if (closedNodes.getContent().getVertex() == nbr) continue outer; // Skips closed neighbour
+                        closedNodes.next();
+                    }
+
+                    // if this is reached, nbr is unknown
+                    // TODO is graph unweighted and all edges weight 1 ?
+                    openNodes.add(new AStarNode(
+                            current.getDistance() + 1,
+                            ((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent())),
+                            current,
+                            nbr
+                            ));
+                    nbr.setMark(true);
+
+                } else { // Node to this neighbour vertex is in openNodes
+                    double tentativeCost = current.getDistance() + 1 + ((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent()));
+                    // TODO need to compare to AStarNodes current cost, but reference to AStarNode missing
+                    if (tentativeCost < node.getCost()){
+                       node.setParent(current);
+                       node.setDistance(current.getDistance() + 1);
+                       node.setHeuristic(((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent())));
+                    }
+                }
+            }
         }
 
         return reconstructPathFrom(null); // return leer?
     }
 
     public Vertex[] reconstructPathFrom(AStarNode current){
-        return new Vertex[0];
+        if (current == null ) return new Vertex[0];
+        if (current != endNode) throw new IllegalArgumentException("Path reconstruction needs to start with endNode");
+        List<AStarNode> list = new List<>();
+        int counter = 1;
+        while (endNode.getParent() != null){
+            list.append(current.getParent());
+            current = current.getParent();
+            counter ++;
+        }
+
+        Vertex[] path = new Vertex[counter];
+        list.toFirst();
+        for (int i = 0; i < counter; i++){
+            path[i] = list.getContent().getVertex();
+            list.next();
+        }
+
+        return path;
     }
 
 
@@ -76,9 +129,6 @@ public class AStar <ContentType extends GraphicalObject>{
         startNode.calculateCost();
         startNode.setParent(null);
 
-    */
-
-    /*
             Tile[] neighbors = current.getNotSolidNeighboringTiles();
             outer:
             for (Tile neighbor : neighbors){
