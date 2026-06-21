@@ -6,19 +6,15 @@ import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 /**
  * A node for handling the path finding inside the A*-Algorithm.
  */
-public class AStarNode<ContentType> implements ComparableContent<AStarNode> {
+public class AStarVertex<ContentType> extends Vertex implements ComparableContent<AStarVertex> {
     private double distance;
     private double heuristic;
     private double cost;
-    private AStarNode parent;
+    private AStarVertex parent;
     private Vertex graphNode;
 
-    public AStarNode(double distance, double heuristic, AStarNode parent, Vertex<ContentType> pGraphNode){
-        this.distance = distance;
-        this.heuristic = heuristic;
-        this.parent = parent;
-        this.cost = this.distance + this.heuristic;
-        this.graphNode = pGraphNode;
+    public AStarVertex(String pID){
+        super(pID);
     }
 
     public void setDistance(double distance) {
@@ -26,7 +22,7 @@ public class AStarNode<ContentType> implements ComparableContent<AStarNode> {
         this.cost = this.distance + this.heuristic;
     }
 
-    public void setParent(AStarNode parent) {
+    public void setParent(AStarVertex parent) {
         this.parent = parent;
     }
 
@@ -40,14 +36,14 @@ public class AStarNode<ContentType> implements ComparableContent<AStarNode> {
     }
     public Vertex getVertex(){return graphNode;}
     public double getDistance(){return distance;}
-    public AStarNode getParent(){return parent;}
+    public AStarVertex getParent(){return parent;}
 
     @Override
-    public boolean isGreater(AStarNode otherNode){return cost > otherNode.cost;}
+    public boolean isGreater(AStarVertex otherNode){return cost > otherNode.cost;}
 
     @Override
-    public boolean isLess(AStarNode otherNode){return cost < otherNode.cost;}
+    public boolean isLess(AStarVertex otherNode){return cost < otherNode.cost;}
 
     @Override
-    public boolean isEqual(AStarNode otherNode){return cost == otherNode.cost;}
+    public boolean isEqual(AStarVertex otherNode){return cost == otherNode.cost;}
 }
