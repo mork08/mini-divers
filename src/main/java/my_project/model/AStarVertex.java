@@ -6,11 +6,12 @@ import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 /**
  * A node for handling the path finding inside the A*-Algorithm.
  */
-public class AStarVertex<ContentType> extends Vertex<ContentType> implements ComparableContent<AStarVertex> {
+public class AStarVertex<ContentType> extends Vertex implements ComparableContent<AStarVertex> {
     private double distance;
     private double heuristic;
     private double cost;
     private AStarVertex parent;
+    private Vertex graphNode;
 
     public AStarVertex(String pID){
         super(pID);
@@ -33,7 +34,7 @@ public class AStarVertex<ContentType> extends Vertex<ContentType> implements Com
     public double getCost() {
         return cost;
     }
-
+    public Vertex getVertex(){return graphNode;}
     public double getDistance(){return distance;}
     public AStarVertex getParent(){return parent;}
 

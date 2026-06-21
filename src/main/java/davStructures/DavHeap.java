@@ -2,7 +2,6 @@ package davStructures;
 
 import KAGO_framework.model.abitur.datenstrukturen.ComparableContent;
 import beckerStructures.BeckerList;
-import my_project.model.AStarNode;
 
 /**
  * Ein Heap ordnet Elemente in einem Binärbaum nach ihrer Größe.
