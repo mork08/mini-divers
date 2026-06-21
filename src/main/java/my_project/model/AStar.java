@@ -15,11 +15,11 @@ import davStructures.DavHeap;
  * @param <ContentType> the contentType of the Objects inside the graph
  */
 public class AStar <ContentType extends GraphicalObject>{
-    private Graph<ContentType> graph;
+    private Graph<ContentType, AStarVertex<ContentType>> graph;
     private AStarVertex<ContentType> startNode;
     private AStarVertex<ContentType> endNode;
 
-    public AStar(Graph<ContentType> graph, AStarVertex<ContentType> start, AStarVertex<ContentType> end){
+    public AStar(Graph<ContentType, AStarVertex<ContentType>> graph, AStarVertex<ContentType> start, AStarVertex<ContentType> end){
         this.graph = graph;
 
         this.startNode = start;
@@ -110,9 +110,9 @@ public class AStar <ContentType extends GraphicalObject>{
 
         return path;
     }
+}
 
-
-    /*
+/*
         while (!openList.isEmpty()){
             // Node with least cost is going to be examined, is the new current
             openList.toFirst();
@@ -176,5 +176,3 @@ public class AStar <ContentType extends GraphicalObject>{
     }
 
     */
-
-}
