@@ -2,6 +2,7 @@ package my_project.model.modes.map;
 
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
+import my_project.model.modes.planet.missions.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,11 +15,15 @@ public class Planet extends GraphicalObject {
     private BufferedImage planetCard;
     private boolean isPlanetCardLoaded = false;
 
+    private Mission mission; // - BunterNinja2609
+
     public Planet(double x, double y, double radius) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         planetName = PlanetInfoContainer.generateName();
+        mission = Math.random() > 0.7 ? new ExtractionMission() : new ExterminationMission(); //RANDOM SELCTED MISSION TYPE - BunterNinja2609
+        terrainType = PlanetInfoContainer.getTerrainType();
     }
 
     @Override
@@ -42,6 +47,8 @@ public class Planet extends GraphicalObject {
                 break;
         }
         drawTool.drawFilledCircle(x ,y , radius);
+        BufferedImage planetTexture = PlanetInfoContainer.getPlanetTexture(terrainType, radius);
+        if (planetTexture != null) drawTool.drawTransformedImage(planetTexture, x - (double) planetTexture.getWidth() /2,y - (double) planetTexture.getHeight() /2, 0, 1);
     }
 
     public void drawUI(DrawTool drawTool) {
@@ -67,4 +74,5 @@ public class Planet extends GraphicalObject {
     public String getOccupation() {
         return occupation;
     }
+
 }

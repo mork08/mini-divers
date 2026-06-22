@@ -4,6 +4,7 @@ import KAGO_framework.control.ViewController;
 
 
 import my_project.model.modes.map.PlanetController;
+import my_project.model.modes.map.PlanetInfoContainer;
 import my_project.view.InputManager;
 
 /**
@@ -45,6 +46,7 @@ public class ProgramController {
         modeController = new ModeController();
         mouse = new Mouse();
         inputManager = new InputManager(this);
+        PlanetInfoContainer planetInfoContainer = new PlanetInfoContainer();
         // Teile dem ViewController-Objekt mit, dass das House-Objekt gezeichnet werden soll
         viewController.draw(modeController);
         viewController.draw(mouse);

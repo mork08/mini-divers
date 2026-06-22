@@ -391,18 +391,21 @@ public class BeckerList<ContentType> {
         }
     }
     public ContentType get(int index){
-        if (index == currentIndex) return this.current.getContentObject();
-        if (index >= length || index < 0){
-            System.err.println("Index " + index + "out of punds for BeckerList with the length of " + length);
+        try {
+            if (index == currentIndex) return this.current.getContentObject();
+            if (index >= length || index < 0) {
+                System.err.println("Index " + index + "out of punds for BeckerList with the length of " + length);
+                return null;
+            }
+            toFirst();
+            for (int i = 0; i < index; i++) {
+                next();
+            }
+            if (current != null) return current.getContentObject();
+            return null;
+        } catch (NullPointerException nE) {
             return null;
         }
-        toFirst();
-        for (int i = 0; i < index; i++) {
-            next();
-        }
-        if (current != null) return current.getContentObject();
-        return null;
-
     }
 
     public void set(int index, ContentType image) {
