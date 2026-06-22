@@ -6,6 +6,7 @@ import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import beckerStructures.BeckerList;
 import davStructures.DavHeap;
+import my_project.model.modes.map.Planet;
 
 /**
  * The AStar algorithm finds the shortest path in a Graph from the startNode to the endNode <br>
@@ -39,9 +40,9 @@ public class AStar <ContentType extends GraphicalObject>{
      * An open node is a discovered node which is still to be evaluated regarding the path.<br>
      * A closed node is fully evaluated.<br>
      * An unknown node is a vertex from the graph which is newly discovered during the algorithms runtime and becomes an open one.
-     * @return the shortest path from the start vertex to the end vertex.
+     * @return the shortest path from the start vertex to the end vertex as a KAGO-List with AStarVertices.
      */
-    public AStarVertex[] findPath(){
+    public List<AStarVertex> findPath(){
         DavHeap<AStarVertex<ContentType>> openNodes = new DavHeap(true);
         openNodes.add(startNode);
         BeckerList<AStarVertex> closedNodes = new BeckerList<>();
@@ -50,65 +51,84 @@ public class AStar <ContentType extends GraphicalObject>{
             AStarVertex current = openNodes.extractRoot(); // Node gets deleted out of openNodes as soon as it gets examined.
             if (current == this.endNode) return reconstructPathFrom(current);
 
-            closedNodes.append(current); // TODO is this correct? the vertex could still be found via another parent later, couldn't it?
+            closedNodes.append(current);
             current.setMark(false);
 
-            List<AStarVertex> neighbours = graph.getNeighbours(current.getVertex());
+            List<AStarVertex<ContentType>> neighbours = graph.getNeighbours(current);
             neighbours.toFirst();
             outer:
             while (neighbours.hasAccess()){
-                AStarVertex nbr = neighbours.getContent();
+                AStarVertex<ContentType> nbr = neighbours.getContent();
 
                 // check if nbr is unknown or closed
-                if (!nbr.isMarked()){
+                ContentType currentPlanet = nbr.getContent();
+                ContentType nbrPlanet = endNode.getContent();
+                double weight = graph.getEdge(current,nbr).getWeight();
+
+                if (!nbr.isMarked()){ // TODO lieber isMarked für closed, um nicht immer durchsuchen zu müssen?
                     closedNodes.toFirst();
                     while (closedNodes.hasAccess()){
-                        if (closedNodes.getContent().getVertex() == nbr) continue outer; // Skips closed neighbour
+                        if (closedNodes.getContent() == nbr) continue outer; // Skips closed neighbour
                         closedNodes.next();
                     }
 
                     // if this is reached, nbr is unknown
                     openNodes.add(nbr);
-                    nbr.setDistance(current.getDistance() + 1);     // >>>>>>>> TODO is graph unweighted and all edges weight 1 ?
-                    nbr.setHeuristic(((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent())));
+                    nbr.setDistance(current.getDistance() + weight);
+                    nbr.setHeuristic(currentPlanet.getDistanceTo(nbrPlanet));
                     nbr.setParent(current);
                     nbr.setMark(true);
 
                 } else { // Node to this neighbour vertex is in openNodes
 
-                    double tentativeCost = current.getDistance() + 1 + ((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent()));
-                    if (tentativeCost < nbr.getCost()){
+                    double tentativeCost = current.getDistance() + weight;
+                    if (tentativeCost < nbr.getDistance()){
                         nbr.setParent(current);
-                        nbr.setDistance(current.getDistance() + 1);
-                        nbr.setHeuristic(((GraphicalObject)nbr.getContent()).getDistanceTo((GraphicalObject)(endNode.getVertex().getContent())));
+                        nbr.setDistance(current.getDistance() + weight);
+                        nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
+                        // TODO heap aktualisieren!!!
+
                     }
                 }
+
+                neighbours.next();
             }
         }
 
         return reconstructPathFrom(null); // return empty if path not found
     }
 
-    public AStarVertex[] reconstructPathFrom(AStarVertex current){
-        if (current == null ) return new AStarVertex[0];
-        if (current != endNode) throw new IllegalArgumentException("Path reconstruction needs to start with endNode");
-        List<AStarVertex> list = new List<>();
-        int counter = 1;
-        while (endNode.getParent() != null){
-            list.append(current.getParent());
-            current = current.getParent();
-            counter ++;
+    public AStarVertex[] listToArray(List<AStarVertex> list){
+        if (list == null || list.isEmpty()) return new AStarVertex[0];
+
+        int counter = 0;
+        list.toFirst();
+        while (list.hasAccess()){
+            counter++;
+            list.next();
         }
 
         AStarVertex[] path = new AStarVertex[counter];
         list.toFirst();
         for (int i = 0; i < counter; i++){
-            if (!(list.getContent().getVertex() instanceof AStarVertex)) throw new Error("AStar only usable with AStarVertex, no other type of Vertex");
-            path[i] = (AStarVertex)(list.getContent().getVertex());
+            path[i] = list.getContent();
             list.next();
         }
 
         return path;
+    }
+
+    public List<AStarVertex> reconstructPathFrom(AStarVertex current){
+        if (current == null ) return new List<>();
+        if (current != endNode) throw new IllegalArgumentException("Path reconstruction needs to start with endNode");
+        List<AStarVertex> list = new List<>();
+
+        while (endNode.getParent() != null){
+            list.append(current.getParent());
+            current = current.getParent();
+        }
+
+        return list;
     }
 }
 
