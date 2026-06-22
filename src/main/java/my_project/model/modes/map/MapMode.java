@@ -60,4 +60,7 @@ public class MapMode extends Mode {
     public static void setScale(int s) {scaleDirection = s;}
     public Planet getCurrentPlanet() {return currentPlanet;}
     public void setCurrentPlanet(Planet currentPlanet) {this.currentPlanet = currentPlanet;}
+    public void startMission() { // - BunterNinja2609
+        switchMode("Planet");
+    }
 }

@@ -211,8 +211,8 @@ public class PlanetController extends GraphicalObject {
         while(planetList.hasAccess()) {
             Planet p = planetList.getContent().getContent();
             if(Math.sqrt( Math.pow(mouseX-p.getX(), 2) + Math.pow(mouseY-p.getY(),2)) <= p.getRadius()) {
-                System.out.println(mouseX+","+mouseY+","+p.getRadius());
-
+                //System.out.println(mouseX+","+mouseY+","+p.getRadius());
+                //TODO call mapMode.startMission(); when currentPlanet is clicked;
                 List<Vertex<Planet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
