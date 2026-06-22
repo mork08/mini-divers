@@ -1,7 +1,7 @@
 package my_project.model.modes.map;
 
-public class PlanetNames {
-    private static String[] firstPart = {"Duran","Thon","Undr","En","Sind","Ecrun","Dat","Accind","Hophor","Cean","Liph","Chanaril","Don","Grill","Xepr","Tros"};
+public class PlanetInfoContainer {
+    private static String[] firstPart = {"Duran","Thon","Undr","En","Sind","Ecrun","Dat","Accind","Hophor","Cean","Liph","Chanaril","Don","Grill","Xepr","Tros","At","Geat"};
     private static String[] secondPart = {"ov","eth","us","ia","ea","uno","on","es","is","i"};
     private static String[] thirdPart = {"M","G","Z","B","K","Δ","α","∑","π","Æ","Q","F","23W","7H","E"};
     private static String[] fourthPart = {"127","35B","64-STK","13","42","67","69","33J","13A-or-B","2","17","52","025","39","612"};
@@ -9,7 +9,7 @@ public class PlanetNames {
     private static String[] terrainTypes = {"flat","hilly"};
     private static double[] planetSize = {20,30,40,50};
 
-    public PlanetNames() {
+    public PlanetInfoContainer() {
 
     }
 

@@ -18,7 +18,7 @@ public class Planet extends GraphicalObject {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        planetName = PlanetNames.generateName();
+        planetName = PlanetInfoContainer.generateName();
     }
 
     @Override
@@ -27,17 +27,24 @@ public class Planet extends GraphicalObject {
             planetCard = DrawTool.getNewImage("src/main/resources/graphic/" + occupation + ".png");
             isPlanetCardLoaded = true;
         }
-        if(occupation.equals("MiniEarth")) {
-            drawTool.setCurrentColor(new Color(0, 166, 255));
-        }else if(occupation.equals("Terminis")) {
-            drawTool.setCurrentColor(new Color(228, 149, 34));
-        }else if(occupation.equals("Iluminis")) {
-            drawTool.setCurrentColor(new Color(122, 1, 181));
-        }else if(occupation.equals("MiniBots")) {
-            drawTool.setCurrentColor(new Color(163, 7, 7));
+        switch (occupation) {
+            case "MiniEarth":
+                drawTool.setCurrentColor(new Color(0, 166, 255));
+                break;
+            case "Terminis":
+                drawTool.setCurrentColor(new Color(228, 149, 34));
+                break;
+            case "Iluminis":
+                drawTool.setCurrentColor(new Color(122, 1, 181));
+                break;
+            case "MiniBots":
+                drawTool.setCurrentColor(new Color(163, 7, 7));
+                break;
         }
-
         drawTool.drawFilledCircle(x ,y , radius);
+    }
+
+    public void drawUI(DrawTool drawTool) {
         if(showName) {
             drawTool.setCurrentColor(new Color(0, 0, 0, 121));
             drawTool.drawTransformedImage(planetCard, x - 110 , y + 60, 0, 4);

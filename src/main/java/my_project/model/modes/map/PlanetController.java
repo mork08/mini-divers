@@ -48,7 +48,7 @@ public class PlanetController extends GraphicalObject {
                 fitting = true;
                 double r = planetSpawnRadius * Math.sqrt(Math.random());
                 double alpha = 2 * Math.PI * Math.random();
-                Planet newPlanet = new Planet(r * Math.cos(alpha) + 500, r * Math.sin(alpha) + 500, PlanetNames.getPlanetSize());
+                Planet newPlanet = new Planet(r * Math.cos(alpha) + 500, r * Math.sin(alpha) + 500, PlanetInfoContainer.getPlanetSize());
                 planetList = planets.getVertices();
                 planetList.toFirst();
                 while(!planetList.isEmpty() && planetList.hasAccess()) {
@@ -73,12 +73,11 @@ public class PlanetController extends GraphicalObject {
             for (int j = 0; j < planetCount; j++) {
                 if(i == j) continue;
                 double distance = planets.getVertex(String.valueOf(i)).getContent().getDistanceTo(planets.getVertex(String.valueOf(j)).getContent());
-                if(distance < 300 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 50) {
+                if(distance < 700 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 2) {
                     planets.addEdge(new Edge<Planet>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
                 }
             }
         }
-        connectIsland();
     }
 
     //TODO: When going to Planet, animate Path with Edges (A*)
@@ -90,6 +89,7 @@ public class PlanetController extends GraphicalObject {
         drawTool.setTranslate(MapMode.getTranslateX(),  MapMode.getTranslateY());
         drawTool.setScale(MapMode.getScale());
 
+        //Draw Edges
         planetEdgeList.toFirst();
         while(planetEdgeList.hasAccess()) {
             if(planetEdgeList.getContent().isMarked()) {
@@ -102,6 +102,7 @@ public class PlanetController extends GraphicalObject {
             planetEdgeList.next();
         }
 
+        //Let Planet be drawn
         planetList.toFirst();
         while(planetList.hasAccess()) {
             if(Objects.equals(currentPlanet, planetList.getContent())) {
@@ -109,6 +110,12 @@ public class PlanetController extends GraphicalObject {
                 drawTool.drawFilledCircle(planetList.getContent().getContent().getX(), planetList.getContent().getContent().getY(), planetList.getContent().getContent().getRadius() + radius);
             }
             planetList.getContent().getContent().draw(drawTool);
+            planetList.next();
+        }
+
+        planetList.toFirst();
+        while(planetList.hasAccess()) {
+            planetList.getContent().getContent().drawUI(drawTool);
             planetList.next();
         }
     }
