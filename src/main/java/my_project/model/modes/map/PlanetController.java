@@ -212,7 +212,10 @@ public class PlanetController extends GraphicalObject {
             Planet p = planetList.getContent().getContent();
             if(Math.sqrt( Math.pow(mouseX-p.getX(), 2) + Math.pow(mouseY-p.getY(),2)) <= p.getRadius()) {
                 //System.out.println(mouseX+","+mouseY+","+p.getRadius());
-                //TODO call mapMode.startMission(); when currentPlanet is clicked;
+                if(currentPlanet == planetList.getContent()) {
+                    mapMode.startMission();
+                    return;
+                }
                 List<Vertex<Planet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
@@ -223,7 +226,7 @@ public class PlanetController extends GraphicalObject {
                 }
 
                 currentPlanet = planetList.getContent();
-                break;
+                return;
             }
             planetList.next();
         }

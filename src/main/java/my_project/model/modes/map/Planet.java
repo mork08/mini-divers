@@ -46,7 +46,7 @@ public class Planet extends GraphicalObject {
                 drawTool.setCurrentColor(new Color(163, 7, 7));
                 break;
         }
-        drawTool.drawFilledCircle(x ,y , radius);
+        //drawTool.drawFilledCircle(x ,y , radius);
         BufferedImage planetTexture = PlanetInfoContainer.getPlanetTexture(terrainType, radius);
         if (planetTexture != null) drawTool.drawTransformedImage(planetTexture, x - planetTexture.getHeight() ,y - planetTexture.getHeight() , 0, 2);
     }
