@@ -21,12 +21,17 @@ public class PlanetInfoContainer {
     public PlanetInfoContainer() {
         planetTextures = new BeckerMap<>();
         setUpPlanetTexture("sandy");
+        setUpPlanetTexture("earthlike");
+        setUpPlanetTexture("rocky");
     }
     public static BufferedImage getPlanetTexture(String terrainType, double size) {
         for (int i = 0; i < planetSize.length; i++) {
+
             if (size == planetSize[i]) {
                 if (planetTextures.contains(terrainType)) {
+
                     return planetTextures.get(terrainType).getSprite(i);
+
                 }
             }
         }
@@ -38,7 +43,7 @@ public class PlanetInfoContainer {
         if (img == null) return;
         QuadSheet sheet = new QuadSheet(img);
         for (int i = 0; i < img.getWidth() / img.getHeight(); i++) {
-            sheet.addQuad(i, 0, img.getHeight(), img.getHeight());
+            sheet.addQuad(i * img.getHeight(), 0, img.getHeight(), img.getHeight());
         }
         planetTextures.add(terrainType, sheet);
     }
