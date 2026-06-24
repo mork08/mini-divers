@@ -134,7 +134,9 @@ public class TileSheet extends QuadSheet {
         //[48] lower left
         addQuad(size * 2, borderSize * 1, borderSize, borderSize);
 
+        /*
         System.out.println("generated tile sheet, starting debug check for nullpointers");
+
         boolean nullpointer = false;
         for (int i = 0; i < 49; i++) {
             if (getSprite(i) == null) {
@@ -143,6 +145,8 @@ public class TileSheet extends QuadSheet {
             }else System.out.println("Tile sheet " + i + " is not null :)");
         }
         //if (nullpointer) {System.exit(0);}
+
+         */
     }
 
     public BufferedImage getCenter() {

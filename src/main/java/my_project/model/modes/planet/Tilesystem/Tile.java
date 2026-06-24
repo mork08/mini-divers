@@ -13,7 +13,7 @@ public class Tile extends GraphicalObject {
     boolean highlighted = false;
     VisualTileRepresentation visualTileRepresentation;
     public Tile(int x, int y){
-        levelHeight = (int)(Math.random()*3)-1;
+        levelHeight = 0;
         width = TILE_SIZE;
         height = TILE_SIZE;
         setPosition(x, y);
@@ -87,7 +87,7 @@ public class Tile extends GraphicalObject {
     }
     private void adjustHeight(){
 
-        Tile[] tiles = getRelatives(true);
+        Tile[] tiles = getRelatives();
         if (this.levelHeight == 1) {
             for (int i = 0; i < tiles.length; i++) {
                 if (tiles[i] != null) {
@@ -104,5 +104,8 @@ public class Tile extends GraphicalObject {
 
     public int getLevelHeight() {
         return levelHeight;
+    }
+    public void setLevelHeight(int levelHeight) {
+        this.levelHeight = levelHeight;
     }
 }

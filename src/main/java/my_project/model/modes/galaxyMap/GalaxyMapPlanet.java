@@ -1,4 +1,4 @@
-package my_project.model.modes.map;
+package my_project.model.modes.galaxyMap;
 
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.view.DrawTool;
@@ -7,7 +7,7 @@ import my_project.model.modes.planet.missions.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Planet extends GraphicalObject {
+public class GalaxyMapPlanet extends GraphicalObject {
     private String planetName;
     private boolean showName = false;
     private String terrainType;
@@ -17,13 +17,13 @@ public class Planet extends GraphicalObject {
 
     private Mission mission; // - BunterNinja2609
 
-    public Planet(double x, double y, double radius) {
+    public GalaxyMapPlanet(double x, double y, double radius) {
         this.x = x;
         this.y = y;
         this.radius = radius;
-        planetName = PlanetInfoContainer.generateName();
+        planetName = GalaxyMapPlanetInfoContainer.generateName();
         mission = Math.random() > 0.7 ? new ExtractionMission() : new ExterminationMission(); //RANDOM SELCTED MISSION TYPE - BunterNinja2609
-        terrainType = PlanetInfoContainer.getTerrainType();
+        terrainType = GalaxyMapPlanetInfoContainer.getTerrainType();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Planet extends GraphicalObject {
                 break;
         }
         //drawTool.drawFilledCircle(x ,y , radius);
-        BufferedImage planetTexture = PlanetInfoContainer.getPlanetTexture(terrainType, radius);
+        BufferedImage planetTexture = GalaxyMapPlanetInfoContainer.getPlanetTexture(terrainType, radius);
         if (planetTexture != null) drawTool.drawTransformedImage(planetTexture, x - planetTexture.getHeight() ,y - planetTexture.getHeight() , 0, 2);
     }
 

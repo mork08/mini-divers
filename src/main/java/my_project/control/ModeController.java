@@ -5,7 +5,7 @@ import KAGO_framework.view.DrawTool;
 import beckerStructures.BeckerMap;
 import my_project.Config;
 import my_project.model.modes.Mode;
-import my_project.model.modes.map.MapMode;
+import my_project.model.modes.galaxyMap.GalaxyMapMode;
 import my_project.model.modes.planet.PlanetMode;
 import my_project.model.modes.start.StartMode;
 
@@ -20,8 +20,8 @@ public class ModeController extends InteractiveGraphicalObject {
     public ModeController() {
         modes = new BeckerMap<>();
         modes.add("Start", new StartMode());
-        modes.add("Planet", new PlanetMode());
-        modes.add("Map", new MapMode());
+        modes.add("GalaxyMapPlanet", new PlanetMode());
+        modes.add("Map", new GalaxyMapMode());
         selectMode(currentModeKey);
     }
     @Override
@@ -71,7 +71,7 @@ public class ModeController extends InteractiveGraphicalObject {
     public void mousePressed(MouseEvent e){
         if(e.getButton() == 1){
             if(currentModeKey.equals("Map")){
-                ((MapMode)modes.get("Map")).manageMouseClick(e);
+                ((GalaxyMapMode)modes.get("Map")).manageMouseClick(e);
             }
         }
     }
@@ -79,7 +79,7 @@ public class ModeController extends InteractiveGraphicalObject {
     @Override
     public void mouseMoved(MouseEvent e) {
         if(currentModeKey.equals("Map")){
-            ((MapMode)modes.get("Map")).manageMouseMove(e);
+            ((GalaxyMapMode)modes.get("Map")).manageMouseMove(e);
         }
     }
 }

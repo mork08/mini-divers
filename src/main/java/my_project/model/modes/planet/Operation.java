@@ -10,7 +10,7 @@ public class Operation {
     String terrainType;
     String occupation;
     public Operation(String terrainType, String occupation, Mission mission) {
-        this.tileMap = new TileMap(10);
+        this.tileMap = new TileMap(8);
         this.mission = mission;
         this.terrainType = terrainType;
         this.occupation = occupation;

@@ -1,4 +1,4 @@
-package my_project.model.modes.map;
+package my_project.model.modes.galaxyMap;
 
 import KAGO_framework.view.DrawTool;
 import beckerStructures.BeckerMap;
@@ -6,7 +6,7 @@ import my_project.model.spritesheetSystem.QuadSheet;
 
 import java.awt.image.BufferedImage;
 
-public class PlanetInfoContainer {
+public class GalaxyMapPlanetInfoContainer {
     private static String[] firstPart = {"Duran","Thon","Undr","En","Sind","Ecrun","Dat","Accind","Hophor","Cean","Liph","Chanaril","Don","Grill","Xepr","Tros","At","Geat"};
     private static String[] secondPart = {"ov","eth","us","ia","ea","uno","on","es","is","i"};
     private static String[] thirdPart = {"M","G","Z","B","K","Δ","α","∑","π","Æ","Q","F","23W","7H","E"};
@@ -18,7 +18,7 @@ public class PlanetInfoContainer {
     private static BeckerMap<String ,QuadSheet> planetTextures;
 
 
-    public PlanetInfoContainer() {
+    public GalaxyMapPlanetInfoContainer() {
         planetTextures = new BeckerMap<>();
         setUpPlanetTexture("sandy");
         setUpPlanetTexture("earthlike");

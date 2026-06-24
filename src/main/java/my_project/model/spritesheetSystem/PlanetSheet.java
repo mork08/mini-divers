@@ -13,7 +13,7 @@ public class PlanetSheet {
         this.borderSize = borderSize;
         tileSheets = new TileSheet[heights];
         for (int i = 0; i < heights; i++) {
-            System.out.println("Planet sheet subsheet " + i + " is created");
+            //System.out.println("GalaxyMapPlanet sheet subsheet " + i + " is created");
             tileSheets[i] = new TileSheet(mainImage.getSubimage(0, (mainImage.getHeight()/heights)*i, mainImage.getWidth(), mainImage.getHeight()/heights), mainImage.getHeight()/heights, borderSize);
         }
     }

@@ -14,7 +14,7 @@ public class PlanetMode extends Mode {
     @Override
     public void draw(DrawTool drawTool) {
         drawTool.push();
-        drawTool.setScale(5);
+        drawTool.setScale(1);
             operation.draw(drawTool);
         drawTool.pop();
     }

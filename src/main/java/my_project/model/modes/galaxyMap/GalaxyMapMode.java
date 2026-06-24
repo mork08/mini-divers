@@ -1,4 +1,4 @@
-package my_project.model.modes.map;
+package my_project.model.modes.galaxyMap;
 
 import KAGO_framework.view.DrawTool;
 import my_project.model.modes.Mode;
@@ -6,17 +6,17 @@ import my_project.model.modes.Mode;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class MapMode extends Mode {
-    PlanetController planetController;
+public class GalaxyMapMode extends Mode {
+    GalaxyMapPlanetController galaxyMapPlanetController;
     private static double translateX, translateY;
     private static int xTranslationDirection, yTranslationDirection;
     private static double scale = 1;
     private static int scaleDirection = 0;
-    private Planet currentPlanet;
+    private GalaxyMapPlanet currentGalaxyMapPlanet;
     private SpaceShip spaceShip;
 
-    public MapMode() {
-        planetController = new PlanetController(this);
+    public GalaxyMapMode() {
+        galaxyMapPlanetController = new GalaxyMapPlanetController(this);
         spaceShip = new SpaceShip(this);
     }
 
@@ -24,7 +24,7 @@ public class MapMode extends Mode {
     public void draw(DrawTool drawTool) {
         drawTool.setCurrentColor(new Color(0,0,0));
         drawTool.drawFilledRectangle(0-drawTool.getTranslationX(),0-drawTool.getTranslationY(),1000/drawTool.getScaleX(),1000/drawTool.getScaleY());
-        planetController.draw(drawTool);
+        galaxyMapPlanetController.draw(drawTool);
         spaceShip.draw(drawTool);
     }
 
@@ -41,15 +41,15 @@ public class MapMode extends Mode {
             translateX -= (scaleDirection  * 50/scale) / 3;
             translateY -= (scaleDirection  * 50/scale) / 3;
         }
-        planetController.update(dt);
+        galaxyMapPlanetController.update(dt);
         spaceShip.update(dt);
     }
 
     public void manageMouseClick(MouseEvent e){
-        planetController.checkForContactOnClick(e);
+        galaxyMapPlanetController.checkForContactOnClick(e);
     }
     public void manageMouseMove(MouseEvent e) {
-        planetController.checkForHover(e);
+        galaxyMapPlanetController.checkForHover(e);
     }
 
     public static double getTranslateX(){return translateX;}
@@ -58,9 +58,9 @@ public class MapMode extends Mode {
     public static void setTranslateY(int y){yTranslationDirection = y;}
     public static double getScale() {return scale;}
     public static void setScale(int s) {scaleDirection = s;}
-    public Planet getCurrentPlanet() {return currentPlanet;}
-    public void setCurrentPlanet(Planet currentPlanet) {this.currentPlanet = currentPlanet;}
+    public GalaxyMapPlanet getCurrentPlanet() {return currentGalaxyMapPlanet;}
+    public void setCurrentPlanet(GalaxyMapPlanet currentGalaxyMapPlanet) {this.currentGalaxyMapPlanet = currentGalaxyMapPlanet;}
     public void startMission() { // - BunterNinja2609
-        switchMode("Planet");
+        switchMode("GalaxyMapPlanet");
     }
 }

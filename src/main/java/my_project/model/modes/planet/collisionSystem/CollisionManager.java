@@ -32,7 +32,11 @@ public class CollisionManager {
         colliders.append(collider);
     }
     public void removeCollider(Collider collider){
-        //TODO collider entfernen können
+        for (int i = 0; i < colliders.getLength(); i++) {
+            if(colliders.get(i) == collider){
+                colliders.set(i, null);
+            }
+        }
     }
     public void clearColliders() {
         colliders = new BeckerList<>();

@@ -7,10 +7,13 @@ import beckerStructures.BeckerMap;
 import com.sun.javafx.geom.Vec2d;
 import my_project.control.Mouse;
 
+import java.awt.image.BufferedImage;
+
 public class TileMap extends GraphicalObject {
     private int mapSize; //in Chunks
     private Chunk[][] chunks;
     private Queue<Vec2d> renderPositions;
+    private int renderDistance = 1;
 
     public TileMap(int mapSize){
         renderPositions = new Queue<>();
@@ -23,9 +26,10 @@ public class TileMap extends GraphicalObject {
         }
         for (int x = 0; x < mapSize*Chunk.CHUNK_SIZE; x++) {
             for (int y = 0; y < mapSize*Chunk.CHUNK_SIZE; y++) {
-                createTile(x,y);
+                createTile(x,y,1);
             }
         }
+        setMap(SurfaceMapContainer.getMap(0));
     }
     public Tile getTileByPosition(double x, double y){
         return getTile((int) x/Tile.TILE_SIZE, (int) y/Tile.TILE_SIZE);
@@ -67,7 +71,13 @@ public class TileMap extends GraphicalObject {
     public void draw(DrawTool drawTool){
 
         getTileByPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y).highlight(true);
+
         addRenderPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y);
+        for (int i = -renderDistance; i <= renderDistance; i++) {
+            for (int j = -renderDistance; j <= renderDistance; j++) {
+                addRenderPosition(Mouse.getTranslatedPosition().x + i * Tile.TILE_SIZE * Chunk.CHUNK_SIZE, Mouse.getTranslatedPosition().y + j * Tile.TILE_SIZE * Chunk.CHUNK_SIZE);
+            }
+        }
         //drawTool.setTranslate(Mouse.getPosition().x, Mouse.getPosition().y);
         /*for (Chunk[] cx : chunks){
             for (Chunk c : cx){
@@ -83,15 +93,72 @@ public class TileMap extends GraphicalObject {
         }
     }
 
-    public void createTile(int x, int y){
+    public void createTile(int x, int y, int height){
         /*
         System.out.println("-----Creating new Tile-------");
         System.out.println("  > x: " + x);
         System.out.println("  > y: " + y);
         */
-        setTile(x, y, new Tile(x, y));
+        Tile t = new Tile(x, y);
+        t.setLevelHeight(height);
+        setTile(x, y, t);
     }
     public void addRenderPosition(double x, double y){
         renderPositions.enqueue(new Vec2d(x, y));
+    }
+
+    private void setMap(BufferedImage map){
+        System.out.println(map == null ? "null" : "not null apearrently");
+        //if (map == null) return;
+        int width = map.getWidth();
+        int height = map.getHeight();
+
+        for (int row = 0; row < height; row++) {
+            System.out.println("");
+            for (int col = 0; col < width; col++) {
+                switch (Integer.toBinaryString(map.getRGB(col, row))) {
+                    case "11111111000000000000000000000000": //black
+                        // Player spawn point
+                        //createTile(col, row, 0);
+                        getTile(col, row).setLevelHeight(0);
+                        System.out.print("X");
+                        //TODO SPAWN PLAYER ON  BLACK SQUARE
+                        break;
+                    case "11111111111111110000000011111111": //magenta
+                        //createTile(col, row, -1);
+                        getTile(col, row).setLevelHeight(-1);
+                        System.out.print(" ");
+                        break;
+                    case "11111111111111110000000000000000": //red
+                        //createTile(col, row, 0);
+                        getTile(col, row).setLevelHeight(0);
+                        System.out.print(":");
+                        break;
+                    case "11111111111111111111111100000000": //yellow
+                        //createTile(col, row, 1);
+                        getTile(col, row).setLevelHeight(1);
+                        System.out.print("#");
+                        break;
+                    case "11111111000000001111111100000000": //green
+                        //objective spawn point
+                        createTile(col, row, 0);
+                        getTile(col, row).setLevelHeight(0);
+                        System.out.print("Y");
+                        //TODO SPAWN OBJECTIVE
+                        break;
+                    case "11111111000000001111111111111111": //cyan
+                        break;
+                    case "11111111000000000000000011111111": //blue
+
+                        break;
+                    case "11111111111111111111111111111111": //white
+                        //createTile(col, row, 0);
+                        getTile(col, row).setLevelHeight(0);
+                        System.out.print("!");
+                        //TODO SPAWN EXTRACT ON WHITE SQUARE
+                        break;
+                }
+            }
+        }
     }
 }

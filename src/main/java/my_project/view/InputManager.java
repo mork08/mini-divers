@@ -2,10 +2,9 @@ package my_project.view;
 
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.ProgramController;
-import my_project.model.modes.map.MapMode;
+import my_project.model.modes.galaxyMap.GalaxyMapMode;
 
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 /**
  * Realisiert ein Objekt, dass alle Eingaben empfängt und dann danach passende Methoden
@@ -26,22 +25,34 @@ public class InputManager extends InteractiveGraphicalObject {
 
     @Override
     public void keyPressed(int key) {
-        if(key == KeyEvent.VK_LEFT){MapMode.setTranslateX(1);}
-        else if(key == KeyEvent.VK_RIGHT){MapMode.setTranslateX(-1);}
-        else if(key == KeyEvent.VK_UP){MapMode.setTranslateY(1);}
-        else if(key == KeyEvent.VK_DOWN){MapMode.setTranslateY(-1);}
-        else if(key == KeyEvent.VK_PLUS){MapMode.setScale(1);}
-        else if(key == KeyEvent.VK_MINUS){MapMode.setScale(-1);}
+        if(key == KeyEvent.VK_LEFT){
+            GalaxyMapMode.setTranslateX(1);}
+        else if(key == KeyEvent.VK_RIGHT){
+            GalaxyMapMode.setTranslateX(-1);}
+        else if(key == KeyEvent.VK_UP){
+            GalaxyMapMode.setTranslateY(1);}
+        else if(key == KeyEvent.VK_DOWN){
+            GalaxyMapMode.setTranslateY(-1);}
+        else if(key == KeyEvent.VK_PLUS){
+            GalaxyMapMode.setScale(1);}
+        else if(key == KeyEvent.VK_MINUS){
+            GalaxyMapMode.setScale(-1);}
     }
 
     @Override
     public void keyReleased(int key) {
-        if(key == KeyEvent.VK_LEFT){MapMode.setTranslateX(0);}
-        else if(key == KeyEvent.VK_RIGHT){MapMode.setTranslateX(0);}
-        else if(key == KeyEvent.VK_UP){MapMode.setTranslateY(0);}
-        else if(key == KeyEvent.VK_DOWN){MapMode.setTranslateY(0);}
-        else if(key == KeyEvent.VK_PLUS){MapMode.setScale(0);}
-        else if(key == KeyEvent.VK_MINUS){MapMode.setScale(0);}
+        if(key == KeyEvent.VK_LEFT){
+            GalaxyMapMode.setTranslateX(0);}
+        else if(key == KeyEvent.VK_RIGHT){
+            GalaxyMapMode.setTranslateX(0);}
+        else if(key == KeyEvent.VK_UP){
+            GalaxyMapMode.setTranslateY(0);}
+        else if(key == KeyEvent.VK_DOWN){
+            GalaxyMapMode.setTranslateY(0);}
+        else if(key == KeyEvent.VK_PLUS){
+            GalaxyMapMode.setScale(0);}
+        else if(key == KeyEvent.VK_MINUS){
+            GalaxyMapMode.setScale(0);}
     }
 
 }

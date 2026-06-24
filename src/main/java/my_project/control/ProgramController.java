@@ -3,8 +3,8 @@ package my_project.control;
 import KAGO_framework.control.ViewController;
 
 
-import my_project.model.modes.map.PlanetController;
-import my_project.model.modes.map.PlanetInfoContainer;
+import my_project.model.modes.galaxyMap.GalaxyMapPlanetInfoContainer;
+import my_project.model.modes.planet.Tilesystem.SurfaceMapContainer;
 import my_project.view.InputManager;
 
 /**
@@ -25,6 +25,7 @@ public class ProgramController {
     private ModeController modeController; // deklariert eine Referenz für ein Objekt der Klasse House
     private Mouse mouse;
     private InputManager inputManager;
+    private SurfaceMapContainer surfaceMapContainer;
 
     /**
      * Konstruktor
@@ -43,10 +44,12 @@ public class ProgramController {
      */
     public void startProgram() {
         // Erstelle ein Objekt der Klasse House und initialisiere damit die Referenz house1
+        surfaceMapContainer = new SurfaceMapContainer();
         modeController = new ModeController();
         mouse = new Mouse();
         inputManager = new InputManager(this);
-        PlanetInfoContainer planetInfoContainer = new PlanetInfoContainer();
+
+        GalaxyMapPlanetInfoContainer galaxyMapPlanetInfoContainer = new GalaxyMapPlanetInfoContainer();
         // Teile dem ViewController-Objekt mit, dass das House-Objekt gezeichnet werden soll
         viewController.draw(modeController);
         viewController.draw(mouse);
