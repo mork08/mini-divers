@@ -5,6 +5,7 @@ import KAGO_framework.control.ViewController;
 
 import my_project.model.modes.galaxyMap.GalaxyMapPlanetInfoContainer;
 import my_project.model.modes.planet.Tilesystem.SurfaceMapContainer;
+import my_project.model.modes.planet.entity.EntityPlayer;
 import my_project.view.InputManager;
 
 /**
@@ -44,6 +45,7 @@ public class ProgramController {
      */
     public void startProgram() {
         // Erstelle ein Objekt der Klasse House und initialisiere damit die Referenz house1
+        new EntityPlayer("player", 64, 64, 32, 32);
         surfaceMapContainer = new SurfaceMapContainer();
         modeController = new ModeController();
         mouse = new Mouse();
