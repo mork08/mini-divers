@@ -63,7 +63,7 @@ public class AStar <ContentType extends GraphicalObject>{
                 double weight = graph.getEdge(current,nbr).getWeight();
 
                 if (!nbr.isMarked()){ // TODO lieber isMarked für closed, um nicht immer durchsuchen zu müssen?
-                    if (closedNodes.isInside(nbr)) continue; // Skips closed neighbour
+                    if (closedNodes.contains(nbr)) continue; // Skips closed neighbour
 
                     // if this is reached, nbr is unknown
                     openNodes.add(nbr);
@@ -79,8 +79,7 @@ public class AStar <ContentType extends GraphicalObject>{
                         nbr.setParent(current);
                         nbr.setDistance(current.getDistance() + weight);
                         nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
-                        // TODO heap aktualisieren!!!
-
+                        openNodes.updatePosition(nbr, true);
                     }
                 }
 
