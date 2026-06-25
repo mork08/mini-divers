@@ -81,6 +81,8 @@ KAGO_framework/model/abitur/datenbanken/msaccess/DatabaseConnector.java
  KAGO_framework.model.abitur.datenbanken.msaccess.DatabaseConnector
 my_project/view/InputManager.java
  my_project.view.InputManager
+my_project/model/AStar.java
+ my_project.model.AStar
 KAGO_framework/model/abitur/datenstrukturen/Queue.java
  KAGO_framework.model.abitur.datenstrukturen.Queue
  KAGO_framework.model.abitur.datenstrukturen.Queue$QueueNode
@@ -108,7 +110,6 @@ KAGO_framework/view/simple_gui/Button.java
  KAGO_framework.view.simple_gui.Button
 davStructures/DavHeap.java
  davStructures.DavHeap
- davStructures.DavHeap$HeapNode
 KAGO_framework/model/abitur/datenstrukturen/ComparableContent.java
  KAGO_framework.model.abitur.datenstrukturen.ComparableContent
 my_project/model/modes/galaxyMap/GalaxyMapPlanet.java
@@ -122,8 +123,6 @@ beckerStructures/BeckerMap.java
  beckerStructures.BeckerMap$MapNode
 KAGO_framework/control/Drawable.java
  KAGO_framework.control.Drawable
-my_project/AStar.java
- my_project.AStar
 my_project/model/modes/planet/collisionSystem/CollisionManager.java
  my_project.model.modes.planet.collisionSystem.CollisionManager
 KAGO_framework/model/abitur/netz/Client.java
@@ -132,6 +131,8 @@ KAGO_framework/model/abitur/netz/Client.java
  KAGO_framework.model.abitur.netz.Client$MessageHandler$SocketWrapper
 my_project/Config.java
  my_project.Config
+my_project/model/AStarVertex.java
+ my_project.model.AStarVertex
 KAGO_framework/view/DrawingPanel.java
  KAGO_framework.view.DrawingPanel
 beckerStructures/BeckerList.java

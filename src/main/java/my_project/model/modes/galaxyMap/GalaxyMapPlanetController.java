@@ -4,13 +4,14 @@ import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.*;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.view.DrawTool;
+import my_project.model.AStarVertex;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 public class GalaxyMapPlanetController extends GraphicalObject {
-    public Graph<GalaxyMapPlanet> planets;
+    public Graph<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>> planets;
     private List<Vertex<GalaxyMapPlanet>> planetList;
     private List<Edge<GalaxyMapPlanet>> planetEdgeList;
     private int planetCount = 400;
@@ -28,7 +29,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
     public GalaxyMapPlanetController(GalaxyMapMode galaxyMapMode) {
         this.galaxyMapMode = galaxyMapMode;
-        planets = new Graph<GalaxyMapPlanet>();
+        planets = new Graph<>();
 
         initiatePlanetInGraph();
         //addEdgesToGraph();
@@ -93,7 +94,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
     private void initiatePlanetInGraph() {
         for(int i = 0;i < planetCount;i++) {
-            Vertex<GalaxyMapPlanet> planet = new Vertex<>(String.valueOf(i));
+            AStarVertex<GalaxyMapPlanet> planet = new AStarVertex(String.valueOf(i));
             boolean fitting = false;
             while(!fitting) {
                 fitting = true;
@@ -293,7 +294,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
         }
     }
 
-    public List<Vertex<GalaxyMapPlanet>> dijkstra(Graph<GalaxyMapPlanet> pGraph, Vertex<GalaxyMapPlanet> startVertex, Vertex<GalaxyMapPlanet> pZiel) {
+    public List<Vertex<GalaxyMapPlanet>> dijkstra(Graph<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>> pGraph, Vertex<GalaxyMapPlanet> startVertex, Vertex<GalaxyMapPlanet> pZiel) {
         pGraph.setAllVertexMarks(false);
         pGraph.setDistanceForAll(Double.MAX_VALUE);
         pGraph.setPrevToNull();
