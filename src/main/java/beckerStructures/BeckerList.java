@@ -1,13 +1,12 @@
 package beckerStructures;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 /**
 
- * @author Joshua Becker & Mark
+ * @author Joshua Becker
  */
 public class BeckerList<ContentType> {
     private ContentType[] array;
@@ -194,6 +193,7 @@ public class BeckerList<ContentType> {
         }
         return false;
     }
+
     public int getIndex(ContentType content){
         for (int i = 0; i < getLength(); i++){
             if (array[i] == content) return i;
