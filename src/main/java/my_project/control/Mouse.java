@@ -10,11 +10,13 @@ public class Mouse extends InteractiveGraphicalObject {
     private static boolean[] button;
     private static Vec2d offset;
     private static Vec2d scale;
+    private static Vec2d focusOffset;
 
     public Mouse() {
         position = new Vec2d();
         offset = new Vec2d(0,0);
         scale = new Vec2d(1,1);
+        focusOffset = new Vec2d(0,0);
         button = new boolean[6];
     }
 
@@ -42,15 +44,17 @@ public class Mouse extends InteractiveGraphicalObject {
         return position;
     }
     public static Vec2d getTranslatedPosition() {
-        return new Vec2d((position.x/scale.x) - offset.x, (position.y/scale.y) - offset.y);
+        return new Vec2d((position.x- focusOffset.x/scale.x) - offset.x, (position.y-focusOffset.y/scale.y) - offset.y);
     }
     public static boolean isDown(int b) {
         return button[b];
     }
-    public static void setTranslationAndScale(double tx, double ty, double sx, double sy){
+    public static void setTranslationAndScale(double tx, double ty, double sx, double sy, double fx, double fy) {
         scale.x = sx;
         scale.y = sy;
         offset.x = tx;
         offset.y = ty;
+        focusOffset.x = fx;
+        focusOffset.y = fy;
     }
 }

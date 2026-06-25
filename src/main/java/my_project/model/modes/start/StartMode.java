@@ -7,4 +7,9 @@ public class StartMode extends Mode {
     public StartMode(ModeController modeController) {
         super(modeController);
     }
+
+    @Override
+    public void launch() {
+
+    }
 }

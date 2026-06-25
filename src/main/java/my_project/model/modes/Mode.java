@@ -30,5 +30,6 @@ public abstract class Mode {
     public String getWantedMode(){
         return wantedMode;
     }
+    public abstract void launch();
 }
 

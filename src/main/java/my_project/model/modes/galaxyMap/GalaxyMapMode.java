@@ -33,6 +33,11 @@ public class GalaxyMapMode extends Mode {
     }
 
     @Override
+    public void launch() {
+
+    }
+
+    @Override
     public void update(double dt) {
         if(xTranslationDirection != 0) {
             translateX += xTranslationDirection * dt * 600 / scale;
@@ -65,6 +70,7 @@ public class GalaxyMapMode extends Mode {
     public GalaxyMapPlanet getCurrentPlanet() {return currentGalaxyMapPlanet;}
     public void setCurrentPlanet(GalaxyMapPlanet currentGalaxyMapPlanet) {this.currentGalaxyMapPlanet = currentGalaxyMapPlanet;}
     public void startMission() { // - BunterNinja2609
+        controller.setCurrentPlanet(currentGalaxyMapPlanet);
         switchMode("GalaxyMapPlanet");
     }
     public SpaceShip getSpaceShip() {return spaceShip;}

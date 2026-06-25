@@ -26,6 +26,8 @@ public class DrawTool {
     private class Translation{
         private double translateX = 0;
         private double translateY = 0;
+        private double screenTranslateX = 0;
+        private double screenTranslateY = 0;
 
         private double scaleX = 1;
         private double scaleY = 1;
@@ -61,6 +63,19 @@ public class DrawTool {
         public double getScaleY(){
             return scaleY;
         }
+
+        public double getScreenTranslateX(){
+            return screenTranslateX;
+        }
+        public double getScreenTranslateY(){
+            return screenTranslateY;
+        }
+        public void setScreenTranslateX(double screenTranslateX) {
+            this.screenTranslateX = screenTranslateX;
+        }
+        public void setScreenTranslateY(double screenTranslateY) {
+            this.screenTranslateY = screenTranslateY;
+        }
     }
 
     public void push(){
@@ -86,6 +101,12 @@ public class DrawTool {
         setScale(sx, sy);
 
     }
+    public void setFocalPoint(double x, double y){
+        stack.top().setScreenTranslateX(x);
+        stack.top().setScreenTranslateY(y);
+        Mouse.setTranslationAndScale(getTranslationX(), getTranslationY(), getScaleX(), getScaleY(), stack.top().screenTranslateX, stack.top().screenTranslateY);
+
+    }
     public void setTranslateAndScale(double tx, double ty, double s){
         setTranslateAndScale(tx, ty, s, s);
     }
@@ -95,25 +116,25 @@ public class DrawTool {
     }
     public void setTranslateX(double tx){
         stack.top().translateX = tx;
-        Mouse.setTranslationAndScale(tx, getTranslationY(), getScaleX(), getScaleY());
+        Mouse.setTranslationAndScale(tx, getTranslationY(), getScaleX(), getScaleY(), stack.top().screenTranslateX, stack.top().screenTranslateY);
     }
     public void setTranslateY(double ty){
         stack.top().translateY = ty;
-        Mouse.setTranslationAndScale(getTranslationX(), ty, getScaleX(), getScaleY());
+        Mouse.setTranslationAndScale(getTranslationX(), ty, getScaleX(), getScaleY(), stack.top().screenTranslateX, stack.top().screenTranslateY);
     }
     public void setScale(double sx, double sy){
         stack.top().scaleX = sx;
         stack.top().scaleY = sy;
-        Mouse.setTranslationAndScale(getTranslationX(), getTranslationY(), sx, sy);
+        Mouse.setTranslationAndScale(getTranslationX(), getTranslationY(), sx, sy, stack.top().screenTranslateX, stack.top().screenTranslateY);
     }
     public void setScale(double s){
         setScale(s, s);
     }
     public double translateAndScaleX(double x){
-        return scaleX(x + stack.top().translateX);
+        return scaleX(x + stack.top().translateX) + stack.top().screenTranslateX;
     }
     public double translateAndScaleY(double y) {
-        return scaleY(y + stack.top().translateY);
+        return scaleY(y + stack.top().translateY)+ stack.top().screenTranslateY;
     }
     private double scaleX(double x){
         return x * stack.top().scaleX;

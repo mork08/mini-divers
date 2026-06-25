@@ -64,6 +64,7 @@ public class ModeController extends InteractiveGraphicalObject {
         currentModeKey = mode;
         currentMode = modes.get(mode);
         currentMode.switchMode(mode);
+        currentMode.launch();
     }
 
     public String getCurrentModeKey(){
@@ -83,5 +84,11 @@ public class ModeController extends InteractiveGraphicalObject {
         if(currentModeKey.equals("Map")){
             ((GalaxyMapMode)modes.get("Map")).manageMouseMove(e);
         }
+    }
+    public GalaxyMapPlanet getCurrentPlanet() {
+        return currentPlanet;
+    }
+    public void setCurrentPlanet(GalaxyMapPlanet currentPlanet) {
+        this.currentPlanet = currentPlanet;
     }
 }
