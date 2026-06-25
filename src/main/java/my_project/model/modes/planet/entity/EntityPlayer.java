@@ -12,18 +12,16 @@ import java.awt.event.KeyEvent;
 
 public class EntityPlayer extends Entity<CharacterAnimationState> {
 
-    private EntityDirection direction;
-
     public EntityPlayer(String id, double x, double y, double width, double height) {
         super(
             id,
             new AnimationRenderer<>(
-                    "/graphic/entities/player.png",
-                    2,
-                    4,
-                    32,
-                    32,
-                    CharacterAnimationState.IDLE_DOWN
+                "/graphic/entities/player.png",
+                2,
+                4,
+                32,
+                32,
+                CharacterAnimationState.IDLE_DOWN
             ),
             new Collider(x, y, width, height),
             x,
@@ -84,18 +82,7 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
     @Override
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
-
             drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height);
-
         }
-    }
-
-    private CharacterAnimationState getStateForEntityState(EntityDirection direction, EntityState state) {
-        for (CharacterAnimationState anim : CharacterAnimationState.values()) {
-            if (anim.getDirection() == direction && anim.getState() == state) {
-                return anim;
-            }
-        }
-        return null;
     }
 }

@@ -4,8 +4,10 @@ import KAGO_framework.view.DrawTool;
 import my_project.model.modes.planet.collisionSystem.Collider;
 import my_project.model.modes.planet.collisionSystem.CollisionManager;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
+import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
 import my_project.model.spritesheetSystem.animation.entity.EntityState;
 import my_project.model.spritesheetSystem.animation.entity.IEntityAnimationState;
+import my_project.model.spritesheetSystem.animation.states.CharacterAnimationState;
 
 import java.util.UUID;
 
@@ -18,6 +20,8 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
     protected double y;
     protected double width;
     protected double height;
+
+    protected EntityDirection direction;
 
     public Entity(AnimationRenderer renderer, Collider collider, double x, double y, double width, double height) {
         this(UUID.randomUUID().toString(), renderer, collider, x, y, width, height);
@@ -48,9 +52,7 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
 
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
-            drawTool.push();
-            drawTool.getGraphics2D().drawImage(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height, null);
-            drawTool.pop();
+            drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height);
         }
     }
 
@@ -59,6 +61,18 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
     public boolean isCurrentAnimation(EntityState state) {
         var anim = (IEntityAnimationState) this.renderer.getCurrentAnimation().getState();
         return anim.getState() == state;
+    }
+
+    protected T getStateForEntityState(EntityDirection direction, EntityState state) {
+        T[] values = (T[]) this.renderer.getCurrentAnimation().getState().getDeclaringClass().getEnumConstants();
+
+        for (T anim : values) {
+            if (anim.getDirection() == direction && anim.getState() == state) {
+                return anim;
+            }
+        }
+
+        return null;
     }
 
     public Collider getCollider() {

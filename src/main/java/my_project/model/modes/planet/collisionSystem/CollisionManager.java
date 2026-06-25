@@ -14,10 +14,10 @@ public class CollisionManager {
                 if (j != index) {//wenn beide collider sie selben sind, sollen sie nicht überprüft werden
                     if (curr.collidesWith(colliders.get(j))) {
                         //bewegt die beiden Collider zurück, bis sie nicht mehr überlappen
-                        while (curr.collidesWith(colliders.get(j))) {
-                            curr.stepBack();
-                            colliders.get(j).stepBack();
-                        }
+                        //while (curr.collidesWith(colliders.get(j))) {
+                            //curr.stepBack();
+                            //colliders.get(j).stepBack();
+                        //}
                     }
                 }
             }
