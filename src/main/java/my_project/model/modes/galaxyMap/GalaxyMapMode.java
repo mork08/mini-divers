@@ -18,6 +18,8 @@ public class GalaxyMapMode extends Mode {
     public GalaxyMapMode() {
         galaxyMapPlanetController = new GalaxyMapPlanetController(this);
         spaceShip = new SpaceShip(this);
+        translateX = -currentPlanet.getX() + 500;
+        translateY = -currentPlanet.getY() + 500;
     }
 
     @Override
@@ -63,4 +65,5 @@ public class GalaxyMapMode extends Mode {
     public void startMission() { // - BunterNinja2609
         switchMode("GalaxyMapPlanet");
     }
+    public SpaceShip getSpaceShip() {return spaceShip;}
 }
