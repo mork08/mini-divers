@@ -37,20 +37,19 @@ public class SpaceShip extends GraphicalObject {
             degrees += dt * 40;
             if(degrees > 360) degrees -= 360;
         }else {
-            if(this.getDistanceTo(path.getContent().getContent()) < 33) {
-                x = path.getContent().getContent().getX() - image.getWidth() / 2;
-                y = path.getContent().getContent().getY() - image.getHeight() / 2;
+            GalaxyMapPlanet nextPlanet = path.getContent().getContent();
+            degrees = Math.atan2(nextPlanet.getY() - y - image.getHeight()/2, nextPlanet.getX() - x - image.getWidth()/2);
+            x += Math.cos(degrees) * speed*dt;
+            y += Math.sin(degrees) * speed*dt;
+            if(this.getDistanceTo(nextPlanet) < 33) {
+                x = nextPlanet.getX() - image.getWidth() / 2;
+                y = nextPlanet.getY() - image.getHeight() / 2;
                 path.next();
                 if(!path.hasAccess()) {
                       orbit = true;
                       degrees = 0;
-                      return;
                 }
             }
-            GalaxyMapPlanet p = path.getContent().getContent();
-            degrees = Math.atan2(p.getY() - y - image.getHeight()/2, p.getX() - x - image.getWidth()/2);
-            x += Math.cos(degrees) * speed*dt;
-            y += Math.sin(degrees) * speed*dt;
         }
     }
 
