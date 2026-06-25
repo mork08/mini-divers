@@ -39,7 +39,7 @@ public class VisualTileRepresentation {
                     currentHeightSheet = planetSheet.getTileSheet(0);
                 break;
             }
-
+            /*
             dt.drawFilledRectangle(x, y, Tile.TILE_SIZE, Tile.TILE_SIZE);
 
             if (tile.isHighlighted()) {
@@ -123,6 +123,8 @@ public class VisualTileRepresentation {
             //bottom left corner
             dt.drawRectangle(x, y + Tile.TILE_SIZE - BORDER_SIZE, BORDER_SIZE, BORDER_SIZE);
 
+
+             */
             if(currentHeightSheet != null) {
                 //Center
                 dt.drawImage(currentHeightSheet.getCenter(), x + BORDER_SIZE, y + BORDER_SIZE);
