@@ -8,7 +8,7 @@ public class Collider {
     double x, y;
     double linVelX, linVelY;
     double breakingfactor = 1;
-    public Collider(String shapeType, float x, float y, double radiusOrSideLength) {
+    public Collider(String shapeType, double x, double y, double radiusOrSideLength) {
 
         if (shapeType.equals("rectangle")) {
             this.width = radiusOrSideLength;
@@ -17,20 +17,20 @@ public class Collider {
             this.radius = radiusOrSideLength;
         }
     }
-    public Collider(float x, float y, double radius) {
+    public Collider(double x, double y, double radius) {
         shapeType = "circle";
         this.x = x;
         this.y = y;
         this.radius = radius;
     }
-    public Collider(float x, float y, double width, double height) {
+    public Collider(double x, double y, double width, double height) {
         shapeType = "rectangle";
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
     }
-    public Collider(float x, float y) {
+    public Collider(double x, double y) {
         shapeType = "point";
         this.x = x;
         this.y = y;
@@ -76,5 +76,13 @@ public class Collider {
         double stepY = (linVelY / Math.abs(linVelY));
         this.x -= stepX;
         this.y -= stepY;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
     }
 }
