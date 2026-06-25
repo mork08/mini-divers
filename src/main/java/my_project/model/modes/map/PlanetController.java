@@ -22,6 +22,7 @@ public class PlanetController extends GraphicalObject {
     private boolean easeIn = true;
     private double radius = 5;
     private DrawTool drawTool;
+    private double cooldown = 0;
 
     private String[] occupations = {"Terminis", "Iluminis", "MiniBots"};
     private double occupationBudget = 20000;
@@ -38,6 +39,54 @@ public class PlanetController extends GraphicalObject {
         currentPlanet = planets.getVertex("0");
         mapMode.setCurrentPlanet(currentPlanet.getContent());
         spreadOccupation();
+    }
+
+    @Override
+    public void draw(DrawTool drawTool) {
+        this.drawTool = drawTool;
+
+        drawTool.setTranslate(MapMode.getTranslateX(),  MapMode.getTranslateY());
+        drawTool.setScale(MapMode.getScale());
+
+        //Draw Edges
+        planetEdgeList.toFirst();
+        while(planetEdgeList.hasAccess()) {
+            if(planetEdgeList.getContent().isMarked()) {
+                drawTool.setCurrentColor(new Color(122, 222, 253));
+            }else {
+                drawTool.setCurrentColor(new Color(43, 42, 42));
+            }
+            Vertex<Planet>[] tempTwoPlanets = planetEdgeList.getContent().getVertices();
+            drawTool.drawLine(tempTwoPlanets[0].getContent().getX(), tempTwoPlanets[0].getContent().getY(), tempTwoPlanets[1].getContent().getX(), tempTwoPlanets[1].getContent().getY());
+            planetEdgeList.next();
+        }
+
+        //Let Planet be drawn
+        planetList.toFirst();
+        while(planetList.hasAccess()) {
+            if(Objects.equals(currentPlanet, planetList.getContent())) {
+                drawTool.setCurrentColor(new Color(255, 255, 255, 255));
+                drawTool.drawFilledCircle(planetList.getContent().getContent().getX(), planetList.getContent().getContent().getY(), planetList.getContent().getContent().getRadius() + radius);
+            }
+            planetList.getContent().getContent().draw(drawTool);
+            planetList.next();
+        }
+
+        planetList.toFirst();
+        while(planetList.hasAccess()) {
+            planetList.getContent().getContent().drawUI(drawTool);
+            planetList.next();
+        }
+    }
+
+    @Override
+    public void update(double dt) {
+        mapMode.setCurrentPlanet(currentPlanet.getContent());
+        if(mapMode.getSpaceShip().getReady()) cooldown = 0;
+        if(easeIn) radius -= dt * 10;
+        else radius += dt * 10;
+        if(radius < 2) easeIn = false;
+        if(radius > 10) easeIn = true;
     }
 
     private void initiatePlanetInGraph() {
@@ -81,54 +130,6 @@ public class PlanetController extends GraphicalObject {
     }
 
     //TODO: When going to Planet, animate Path with Edges (A*)
-
-    @Override
-    public void draw(DrawTool drawTool) {
-        this.drawTool = drawTool;
-
-        drawTool.setTranslate(MapMode.getTranslateX(),  MapMode.getTranslateY());
-        drawTool.setScale(MapMode.getScale());
-
-        //Draw Edges
-        planetEdgeList.toFirst();
-        while(planetEdgeList.hasAccess()) {
-            if(planetEdgeList.getContent().isMarked()) {
-                drawTool.setCurrentColor(new Color(122, 222, 253));
-            }else {
-                drawTool.setCurrentColor(new Color(43, 42, 42));
-            }
-            Vertex<Planet>[] tempTwoPlanets = planetEdgeList.getContent().getVertices();
-            drawTool.drawLine(tempTwoPlanets[0].getContent().getX(), tempTwoPlanets[0].getContent().getY(), tempTwoPlanets[1].getContent().getX(), tempTwoPlanets[1].getContent().getY());
-            planetEdgeList.next();
-        }
-
-        //Let Planet be drawn
-        planetList.toFirst();
-        while(planetList.hasAccess()) {
-            if(Objects.equals(currentPlanet, planetList.getContent())) {
-                drawTool.setCurrentColor(new Color(255, 255, 255, 255));
-                drawTool.drawFilledCircle(planetList.getContent().getContent().getX(), planetList.getContent().getContent().getY(), planetList.getContent().getContent().getRadius() + radius);
-            }
-            planetList.getContent().getContent().draw(drawTool);
-            planetList.next();
-        }
-
-        planetList.toFirst();
-        while(planetList.hasAccess()) {
-            planetList.getContent().getContent().drawUI(drawTool);
-            planetList.next();
-        }
-    }
-
-    @Override
-    public void update(double dt) {
-        mapMode.setCurrentPlanet(currentPlanet.getContent());
-
-        if(easeIn) radius -= dt * 10;
-        else radius += dt * 10;
-        if(radius < 2) easeIn = false;
-        if(radius > 10) easeIn = true;
-    }
 
     private void connectIsland() {
         planets.setAllVertexMarks(false);
@@ -205,6 +206,7 @@ public class PlanetController extends GraphicalObject {
     }
 
     public void checkForContactOnClick(MouseEvent e) {
+        if(cooldown > 0) return;
         double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
         double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
         planetList.toFirst();
@@ -216,6 +218,8 @@ public class PlanetController extends GraphicalObject {
                     mapMode.startMission();
                     return;
                 }
+
+                cooldown = 1;
                 List<Vertex<Planet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
@@ -224,7 +228,7 @@ public class PlanetController extends GraphicalObject {
                     path.next();
                     if(path.hasAccess()) planets.getEdge(current, path.getContent()).setMark(true);
                 }
-
+                mapMode.getSpaceShip().moveOnPath(path);
                 currentPlanet = planetList.getContent();
                 return;
             }

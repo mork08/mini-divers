@@ -18,6 +18,8 @@ public class MapMode extends Mode {
     public MapMode() {
         planetController = new PlanetController(this);
         spaceShip = new SpaceShip(this);
+        translateX = -currentPlanet.getX() + 500;
+        translateY = -currentPlanet.getY() + 500;
     }
 
     @Override
@@ -63,4 +65,5 @@ public class MapMode extends Mode {
     public void startMission() { // - BunterNinja2609
         switchMode("Planet");
     }
+    public SpaceShip getSpaceShip() {return spaceShip;}
 }
