@@ -72,7 +72,6 @@ public class TileMap extends GraphicalObject {
     }
     @Override
     public void draw(DrawTool drawTool){
-        checkWallCollisions();
         // getTileByPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y).highlight(true);
 
         addRenderPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y);
@@ -171,23 +170,5 @@ public class TileMap extends GraphicalObject {
     }
     public static EntityPlayer getPlayer(){
         return player;
-    }
-    public void checkWallCollisions(){
-        /*
-        if(getTileByPosition(player.getX(), player.getY()) != null) {
-            Tile[] playerTiles = getTileByPosition(player.getX(), player.getY()).getRelatives();
-
-            for (Tile tile : playerTiles) {
-                if (tile != null) {
-                    if (tile.collidesWith(player.getCollider())) {
-                        System.out.println("collides");
-                        CollisionManager.moveBackColliders(player.getCollider(), tile.getCollider());
-                    }
-
-                }
-            }
-        }
-
-         */
     }
 }

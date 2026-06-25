@@ -14,8 +14,6 @@ import java.awt.event.KeyEvent;
 
 public class EntityPlayer extends Entity<PlayerAnimationState> {
 
-    private EntityDirection direction;
-
     public EntityPlayer(String id, double x, double y, double width, double height) {
         super(
                 id,
@@ -93,9 +91,7 @@ public class EntityPlayer extends Entity<PlayerAnimationState> {
                 ? EntityState.IDLE
                 : EntityState.WALKING;
 
-        var s = getStateForEntityState(this.direction, state);
-        System.out.println(s);
-        this.renderer.switchState(s);
+        this.renderer.switchState(getStateForEntityState(this.direction, state));
     }
 
     @Override

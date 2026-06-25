@@ -56,7 +56,6 @@ public class PlanetMode extends Mode {
         if (controller.getCurrentPlanet() != null) {
             System.out.println("Planet: " + controller.getCurrentPlanet().getPlanetName());
             operation = new Operation(this, controller.getCurrentPlanet().getTerrainType(), controller.getCurrentPlanet().getOccupation(), new ExterminationMission());
-            //new EntityMinirobot("test", 10, 10, 32, 32).setTarget(TileMap.getPlayer());
         }
     }
     public void freePlanet() {
