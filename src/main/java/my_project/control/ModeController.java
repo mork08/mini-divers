@@ -6,6 +6,7 @@ import beckerStructures.BeckerMap;
 import my_project.Config;
 import my_project.model.modes.Mode;
 import my_project.model.modes.galaxyMap.GalaxyMapMode;
+import my_project.model.modes.galaxyMap.GalaxyMapPlanet;
 import my_project.model.modes.planet.PlanetMode;
 import my_project.model.modes.start.StartMode;
 
@@ -16,12 +17,13 @@ public class ModeController extends InteractiveGraphicalObject {
     double fps;
     BeckerMap<String, Mode> modes;
     String currentModeKey = Config.STARTING_MODE;
+    private GalaxyMapPlanet currentPlanet;
     Mode currentMode;
     public ModeController() {
         modes = new BeckerMap<>();
-        modes.add("Start", new StartMode());
-        modes.add("GalaxyMapPlanet", new PlanetMode());
-        modes.add("Map", new GalaxyMapMode());
+        modes.add("Start", new StartMode(this));
+        modes.add("GalaxyMapPlanet", new PlanetMode(this));
+        modes.add("Map", new GalaxyMapMode(this));
         selectMode(currentModeKey);
     }
     @Override
@@ -62,6 +64,7 @@ public class ModeController extends InteractiveGraphicalObject {
         currentModeKey = mode;
         currentMode = modes.get(mode);
         currentMode.switchMode(mode);
+        currentMode.launch();
     }
 
     public String getCurrentModeKey(){
@@ -81,5 +84,11 @@ public class ModeController extends InteractiveGraphicalObject {
         if(currentModeKey.equals("Map")){
             ((GalaxyMapMode)modes.get("Map")).manageMouseMove(e);
         }
+    }
+    public GalaxyMapPlanet getCurrentPlanet() {
+        return currentPlanet;
+    }
+    public void setCurrentPlanet(GalaxyMapPlanet currentPlanet) {
+        this.currentPlanet = currentPlanet;
     }
 }

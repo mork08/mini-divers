@@ -1,7 +1,8 @@
 package my_project.model.modes.galaxyMap;
 
 import KAGO_framework.view.DrawTool;
-import my_project.model.modes.Mode;
+import my_project.control.ModeController;
+import my_project.model.modes.*;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -15,9 +16,12 @@ public class GalaxyMapMode extends Mode {
     private GalaxyMapPlanet currentGalaxyMapPlanet;
     private SpaceShip spaceShip;
 
-    public GalaxyMapMode() {
+    public GalaxyMapMode(ModeController modeController) {
+        super(modeController);
         galaxyMapPlanetController = new GalaxyMapPlanetController(this);
         spaceShip = new SpaceShip(this);
+        translateX = -currentGalaxyMapPlanet.getX() + 500;
+        translateY = -currentGalaxyMapPlanet.getY() + 500;
     }
 
     @Override
@@ -26,6 +30,11 @@ public class GalaxyMapMode extends Mode {
         drawTool.drawFilledRectangle(0-drawTool.getTranslationX(),0-drawTool.getTranslationY(),1000/drawTool.getScaleX(),1000/drawTool.getScaleY());
         galaxyMapPlanetController.draw(drawTool);
         spaceShip.draw(drawTool);
+    }
+
+    @Override
+    public void launch() {
+
     }
 
     @Override
@@ -61,6 +70,8 @@ public class GalaxyMapMode extends Mode {
     public GalaxyMapPlanet getCurrentPlanet() {return currentGalaxyMapPlanet;}
     public void setCurrentPlanet(GalaxyMapPlanet currentGalaxyMapPlanet) {this.currentGalaxyMapPlanet = currentGalaxyMapPlanet;}
     public void startMission() { // - BunterNinja2609
+        controller.setCurrentPlanet(currentGalaxyMapPlanet);
         switchMode("GalaxyMapPlanet");
     }
+    public SpaceShip getSpaceShip() {return spaceShip;}
 }

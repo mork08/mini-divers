@@ -75,4 +75,11 @@ public class GalaxyMapPlanet extends GraphicalObject {
         return occupation;
     }
 
+    public String getPlanetName() {
+        return planetName;
+    }
+    public String getTerrainType() {
+        return terrainType;
+    }
+
 }

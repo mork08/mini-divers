@@ -9,11 +9,13 @@ public class Operation {
     Mission mission;
     String terrainType;
     String occupation;
-    public Operation(String terrainType, String occupation, Mission mission) {
+    PlanetMode planetMode;
+    public Operation(PlanetMode planetMode,String terrainType, String occupation, Mission mission) {
         this.tileMap = new TileMap(8);
         this.mission = mission;
         this.terrainType = terrainType;
         this.occupation = occupation;
+        this.planetMode = planetMode;
     }
     public TileMap getTilemap() {
         return tileMap;
