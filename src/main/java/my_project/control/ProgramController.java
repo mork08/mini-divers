@@ -45,7 +45,7 @@ public class ProgramController {
      */
     public void startProgram() {
         // Erstelle ein Objekt der Klasse House und initialisiere damit die Referenz house1
-        new EntityPlayer("player", 64, 64, 32, 32);
+
         surfaceMapContainer = new SurfaceMapContainer();
         modeController = new ModeController();
         mouse = new Mouse();

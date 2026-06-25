@@ -6,6 +6,7 @@ import KAGO_framework.view.DrawTool;
 import beckerStructures.BeckerMap;
 import com.sun.javafx.geom.Vec2d;
 import my_project.control.Mouse;
+import my_project.model.modes.planet.entity.EntityPlayer;
 
 import java.awt.image.BufferedImage;
 
@@ -14,6 +15,7 @@ public class TileMap extends GraphicalObject {
     private Chunk[][] chunks;
     private Queue<Vec2d> renderPositions;
     private int renderDistance = 1;
+    private static EntityPlayer player;
 
     public TileMap(int mapSize){
         renderPositions = new Queue<>();
@@ -70,7 +72,7 @@ public class TileMap extends GraphicalObject {
     @Override
     public void draw(DrawTool drawTool){
 
-        getTileByPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y).highlight(true);
+        // getTileByPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y).highlight(true);
 
         addRenderPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y);
         for (int i = -renderDistance; i <= renderDistance; i++) {
@@ -122,7 +124,7 @@ public class TileMap extends GraphicalObject {
                         //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
                         System.out.print("X");
-                        //TODO SPAWN PLAYER ON  BLACK SQUARE
+                        player = new EntityPlayer("player", col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
                         break;
                     case "11111111111111110000000011111111": //magenta
                         //createTile(col, row, -1);
@@ -160,5 +162,8 @@ public class TileMap extends GraphicalObject {
                 }
             }
         }
+    }
+    public static EntityPlayer getPlayer(){
+        return player;
     }
 }

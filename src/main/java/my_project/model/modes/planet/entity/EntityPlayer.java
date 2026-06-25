@@ -84,10 +84,9 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
     @Override
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
-            drawTool.push();
-            drawTool.setScale(1);
-            drawTool.getGraphics2D().drawImage(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height, null);
-            drawTool.pop();
+
+            drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height);
+
         }
     }
 

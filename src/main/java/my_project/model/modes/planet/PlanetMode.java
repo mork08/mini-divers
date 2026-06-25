@@ -17,7 +17,7 @@ public class PlanetMode extends Mode {
     Vec2d cameraPosition;
     public PlanetMode(ModeController modeController) {
         super(modeController);
-
+        cameraPosition = new Vec2d();
     }
 
     @Override
@@ -32,6 +32,8 @@ public class PlanetMode extends Mode {
         drawTool.push();
         drawTool.setScale(4);
         drawTool.setFocalPoint(Config.WINDOW_WIDTH / 2, Config.WINDOW_HEIGHT / 2);
+        setCameraPosition(TileMap.getPlayer().getX(), TileMap.getPlayer().getY());
+        drawTool.setTranslate(-cameraPosition.x, -cameraPosition.y);
             if (operation != null) operation.draw(drawTool);
         drawTool.pop();
     }
@@ -58,6 +60,6 @@ public class PlanetMode extends Mode {
         controller.getCurrentPlanet().setOccupation("MiniEarth");
     }
     public void setCameraPosition(double x, double y) {
-        cameraPosition.set(x, y);
+        cameraPosition.set(Math.floor(x), Math.floor(y));
     }
 }
