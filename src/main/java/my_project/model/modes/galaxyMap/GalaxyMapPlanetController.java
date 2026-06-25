@@ -4,6 +4,7 @@ import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.*;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.view.DrawTool;
+import my_project.model.AStar;
 import my_project.model.AStarVertex;
 
 import java.awt.*;
@@ -224,7 +225,9 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                 }
 
                 cooldown = 1;
-                List<AStarVertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
+                //List<AStarVertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
+                AStar<GalaxyMapPlanet> aStar = new AStar<GalaxyMapPlanet>(planets, currentPlanet, planetList.getContent());
+                List<AStarVertex<GalaxyMapPlanet>> path = aStar.findPath();
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
                 while(path.hasAccess()) {

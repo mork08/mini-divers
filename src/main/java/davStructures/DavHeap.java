@@ -76,7 +76,7 @@ public class DavHeap <CT extends ComparableContent> {
 
         CT rootElement = heap.get(0);
         CT lastElement = heap.get(heap.getLength() - 1);
-        heap.set(heap.getLength()-1, null);
+        heap.delete(heap.getLength()-1);
 
         if (!isEmpty()){
             heap.set(0, lastElement);
@@ -87,13 +87,62 @@ public class DavHeap <CT extends ComparableContent> {
     }
 
     private void bubbleDown(int index){
+        int size = heap.getLength();
+        if (isMin){ // Min Heap
+            while (true){
+                int leftIndex =  leftChild(index);
+                int rightIndex =  rightChild(index);
+                int smallest = index;
+                //if(heap.get(smallest) == null) return;
+                System.out.println("SMALLEST: " + smallest);
+                // NEU: Prüfen ob Kind existiert (Index < size) BEVOR isLess aufgerufen wird!
+                if (leftIndex < size && heap.get(leftIndex) != null && heap.get(leftIndex).isLess(heap.get(smallest))){
+                    smallest = leftIndex;
+                }
+
+                if (rightIndex < size && heap.get(rightIndex) != null && heap.get(rightIndex).isLess(heap.get(smallest))){
+                    smallest = rightIndex;
+                }
+
+                if (index == smallest){ break; } // Heap property restored
+
+                swap(smallest, index);
+                index = smallest;
+            }
+
+        } else { // Max Heap
+            while (true){
+                int leftIndex =  leftChild(index);
+                int rightIndex =  rightChild(index);
+                int biggest = index;
+                System.out.println("BIGGEST: " + biggest);
+                // NEU: Prüfen ob Kind existiert
+                if (leftIndex < size && heap.get(leftIndex) != null && heap.get(leftIndex).isGreater(heap.get(biggest))){
+                    biggest = leftIndex;
+                }
+
+                if (rightIndex < size && heap.get(rightIndex) != null && heap.get(rightIndex).isGreater(heap.get(biggest))){
+                    biggest = rightIndex;
+                }
+
+                if (index == biggest){ break; } // Heap property restored
+
+                swap(biggest, index);
+                index = biggest;
+            }
+        }
+    }
+
+/*    private void bubbleDown(int index){
         // Bubble down to restore heap property
         if (isMin){ // It's a min heap
             while (true){
                 int leftIndex =  leftChild(index);
                 int rightIndex =  rightChild(index);
                 int smallest = index;
-
+                if (leftIndex >= heap.getLength()) break;
+                if (rightIndex <= heap.getLength()) break;
+                //if(heap.get(index) == null) return;
                 // Find the smallest out of current and its right and left child
                 if (heap.get(leftIndex).isLess(heap.get(index))){
                     smallest = leftIndex;
@@ -132,17 +181,17 @@ public class DavHeap <CT extends ComparableContent> {
                 index = biggest;
             }
         }
-    }
+    }*/
 
     private void bubbleUp(int index){
         // Bubble up (swap with parent as often as needed) to restore the heap property
         if (isMin){
-            while (index >= 0 && (heap.get(index).isLess(heap.get(parent(index))) || heap.get(index) == null)){
+            while (index > 0 && (heap.get(index) == null || heap.get(index).isLess(heap.get(parent(index))))){
                 swap(index, parent(index));
                 index = parent(index);
             }
         } else {
-            while (index >= 0 && (heap.get(index).isGreater(heap.get(index))) || heap.get(index) == null){
+            while (index > 0 && (heap.get(index) == null || heap.get(index).isGreater(heap.get(index)))){
                 swap(index, parent(index));
                 index = parent(index);
             }

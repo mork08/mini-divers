@@ -41,7 +41,7 @@ public class AStar <ContentType extends GraphicalObject>{
      * An unknown node is a vertex from the graph which is newly discovered during the algorithms runtime and becomes an open one.
      * @return the shortest path from the start vertex to the end vertex as a KAGO-List with AStarVertices.
      */
-    public List<AStarVertex> findPath(){
+    public List<AStarVertex<ContentType>> findPath(){
 
 
         DavHeap<AStarVertex<ContentType>> openNodes = new DavHeap<>(true);
@@ -53,7 +53,8 @@ public class AStar <ContentType extends GraphicalObject>{
             if (current == this.endNode) return reconstructPathFrom(current);
 
             closedNodes.append(current);
-            current.setMark(false);
+
+            //current.setMark(false);
 
             List<AStarVertex<ContentType>> neighbours = graph.getNeighbours(current);
             neighbours.toFirst();
@@ -123,11 +124,11 @@ public class AStar <ContentType extends GraphicalObject>{
      * @param current the node te reconstruction is initialized from
      * @return the path as a KAGO-List
      */
-    private List<AStarVertex> reconstructPathFrom(AStarVertex current){
+    private List<AStarVertex<ContentType>> reconstructPathFrom(AStarVertex current){
         if (current == null ) return new List<>();
         if (current != endNode) throw new IllegalArgumentException("Path reconstruction needs to start with endNode");
 
-        List<AStarVertex> list = new List<>();
+        List<AStarVertex<ContentType>> list = new List<>();
 
         while (current != null){
             list.append(current);
