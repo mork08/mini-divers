@@ -50,4 +50,11 @@ public class BeckerList<ContentType> {
         expand(array.length + 1);
         array[array.length-1] = content;
     }
+
+    public boolean isInside(ContentType content){
+        for (int i = 0; i < getLength(); i++){
+            if (array[i] == content) return true;
+        }
+        return false;
+    }
 }

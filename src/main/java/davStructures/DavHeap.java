@@ -60,12 +60,12 @@ public class DavHeap <CT extends ComparableContent> {
 
         // Bubble up (swap with parent as often as needed) to restore the heap property
         if (isMin){
-            while (currentIndex >= 0 && heap.get(currentIndex).isLess(heap.get(parent(currentIndex))) ){
+            while (currentIndex >= 0 && (heap.get(currentIndex).isLess(heap.get(parent(currentIndex))) || heap.get(currentIndex) == null)){
                 swap(currentIndex, parent(currentIndex));
                 currentIndex = parent(currentIndex);
             }
         } else {
-            while (currentIndex >= 0 && heap.get(currentIndex).isGreater(heap.get(currentIndex))){
+            while (currentIndex >= 0 && (heap.get(currentIndex).isGreater(heap.get(currentIndex))) || heap.get(currentIndex) == null){
                 swap(currentIndex, parent(currentIndex));
                 currentIndex = parent(currentIndex);
             }
@@ -76,7 +76,7 @@ public class DavHeap <CT extends ComparableContent> {
      * @return the content with the min or max value
      */
     public CT getRoot(){
-        if (heap.isEmpty()) throw new RuntimeException("Heap is empty");
+        if (heap.getLength() == 0) throw new RuntimeException("Heap is empty");
         return heap.get(0);
     }
 
@@ -84,14 +84,13 @@ public class DavHeap <CT extends ComparableContent> {
      * @return the content with the min or max value and remove it
      */
     public CT extractRoot(){
-        if (heap.isEmpty()) throw new RuntimeException("Heap is empty");
+        if (heap.getLength() == 0) throw new RuntimeException("Heap is empty");
 
         CT rootElement = heap.get(0);
         CT lastElement = heap.get(heap.getLength() - 1);
-        heap.toLast();
-        heap.remove();
+        heap.set(heap.getLength()-1, null);
 
-        if (!heap.isEmpty()){
+        if (!isEmpty()){
             heap.set(0, lastElement);
             int currentIndex = 0;
 
@@ -149,12 +148,13 @@ public class DavHeap <CT extends ComparableContent> {
      * @return whether the heap is empty
      */
     public boolean isEmpty() {
-        return heap.isEmpty();
+        return heap.getLength() == 0;
     }
 
-    /*
-     For understanding a possible implementation:
+    public void updatePosition(CT pObject){
+        // Find object inside the heap
 
-    */
+        // beckerlist
+    }
 
 }
