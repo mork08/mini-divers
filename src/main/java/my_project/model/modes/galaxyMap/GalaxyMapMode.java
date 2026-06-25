@@ -1,13 +1,14 @@
 package my_project.model.modes.galaxyMap;
 
+import KAGO_framework.control.ViewController;
 import KAGO_framework.view.DrawTool;
 import my_project.Config;
 import my_project.control.ModeController;
 import my_project.control.Mouse;
 import my_project.model.modes.*;
-import my_project.view.InputManager;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class GalaxyMapMode extends Mode {
@@ -52,12 +53,12 @@ public class GalaxyMapMode extends Mode {
     @Override
     public void update(double dt) {
         double speed = 600;
-        if(InputManager.isPressed("w")) translateY +=  dt * speed / scale;
-        if(InputManager.isPressed("s")) translateY -=  dt * speed / scale;
-        if(InputManager.isPressed("d")) translateX -=  dt * speed / scale;
-        if(InputManager.isPressed("a")) translateX +=  dt * speed / scale;
-        if(InputManager.isPressed("e")) scale += dt * scale;
-        if(InputManager.isPressed("q")) scale -= dt * scale;
+        if(ViewController.isKeyDown(KeyEvent.VK_W)) translateY +=  dt * speed / scale;
+        if(ViewController.isKeyDown(KeyEvent.VK_S)) translateY -=  dt * speed / scale;
+        if(ViewController.isKeyDown(KeyEvent.VK_D)) translateX -=  dt * speed / scale;
+        if(ViewController.isKeyDown(KeyEvent.VK_A)) translateX +=  dt * speed / scale;
+        if(ViewController.isKeyDown(KeyEvent.VK_E)) scale += dt * scale;
+        if(ViewController.isKeyDown(KeyEvent.VK_Q)) scale -= dt * scale;
         galaxyMapPlanetController.update(dt);
         spaceShip.update(dt);
     }
