@@ -525,4 +525,15 @@ public class DrawTool {
         return image;
     }
 
+    public static BufferedImage getNewResourceImage(String path) {
+        BufferedImage image;
+        try {
+            image = ImageIO.read(DrawTool.class.getResource(path));
+        } catch (IOException e) {
+            if (Config.INFO_MESSAGES) System.out.println("Laden eines Bildes fehlgeschlagen: " + path);
+            return null;
+        }
+        return image;
+    }
+
 }

@@ -2,6 +2,7 @@ package my_project.model.modes.planet;
 
 import KAGO_framework.view.DrawTool;
 import my_project.model.modes.planet.Tilesystem.TileMap;
+import my_project.model.modes.planet.entity.EntityManager;
 import my_project.model.modes.planet.missions.Mission;
 
 public class Operation {
@@ -24,9 +25,11 @@ public class Operation {
         if(mission.isCompleted()){
             extract();
         }
+        EntityManager.updateAll(dt);
     }
     public void draw(DrawTool dt){
         tileMap.draw(dt);
+        EntityManager.drawAll(dt);
     }
     public void extract(){
 
