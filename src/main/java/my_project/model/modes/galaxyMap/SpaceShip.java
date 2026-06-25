@@ -13,7 +13,7 @@ public class SpaceShip extends GraphicalObject {
     double degrees = 0;
     boolean orbit = true;
     double speed = 200;
-    private List<Vertex<Planet>> path;
+    private List<Vertex<GalaxyMapPlanet>> path;
 
     public SpaceShip(GalaxyMapMode galaxyMapMode) {
         this.galaxyMapMode = galaxyMapMode;
@@ -46,14 +46,14 @@ public class SpaceShip extends GraphicalObject {
                       return;
                 }
             }
-            Planet p = path.getContent().getContent();
+            GalaxyMapPlanet p = path.getContent().getContent();
             degrees = Math.atan2(p.getY() - y - image.getHeight()/2, p.getX() - x - image.getWidth()/2);
             x += Math.cos(degrees) * speed*dt;
             y += Math.sin(degrees) * speed*dt;
         }
     }
 
-    public void moveOnPath(List<Vertex<Planet>> path) {
+    public void moveOnPath(List<Vertex<GalaxyMapPlanet>> path) {
         this.path = path;
         this.path.toFirst();
         this.path.next();

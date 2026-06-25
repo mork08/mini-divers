@@ -36,48 +36,8 @@ public class GalaxyMapPlanetController extends GraphicalObject {
         planetEdgeList = planets.getEdges();
 
         currentPlanet = planets.getVertex("0");
-        mapMode.setCurrentPlanet(currentPlanet.getContent());
+        galaxyMapMode.setCurrentPlanet(currentPlanet.getContent());
         spreadOccupation();
-    }
-
-    private void initiatePlanetInGraph() {
-        for(int i = 0;i < planetCount;i++) {
-            Vertex<GalaxyMapPlanet> planet = new Vertex<>(String.valueOf(i));
-            boolean fitting = false;
-            while(!fitting) {
-                fitting = true;
-                double r = planetSpawnRadius * Math.sqrt(Math.random());
-                double alpha = 2 * Math.PI * Math.random();
-                GalaxyMapPlanet newGalaxyMapPlanet = new GalaxyMapPlanet(r * Math.cos(alpha) + 500, r * Math.sin(alpha) + 500, GalaxyMapPlanetInfoContainer.getPlanetSize());
-                planetList = planets.getVertices();
-                planetList.toFirst();
-                while(!planetList.isEmpty() && planetList.hasAccess()) {
-                    GalaxyMapPlanet checkingGalaxyMapPlanet = planetList.getContent().getContent();
-                    if(newGalaxyMapPlanet.getDistanceTo(checkingGalaxyMapPlanet) < (newGalaxyMapPlanet.getRadius() + checkingGalaxyMapPlanet.getRadius()) * 2) {
-                        fitting = false;
-                        break;
-                    }
-                    planetList.next();
-                }
-                if(fitting) {
-                    planet.setContent(newGalaxyMapPlanet);
-                    planets.addVertex(planet);
-                }
-            }
-        }
-        planetList = planets.getVertices();
-    }
-
-    private void addEdgesToGraph() {
-        for(int i = 0;i < planetCount;i++) {
-            for (int j = 0; j < planetCount; j++) {
-                if(i == j) continue;
-                double distance = planets.getVertex(String.valueOf(i)).getContent().getDistanceTo(planets.getVertex(String.valueOf(j)).getContent());
-                if(distance < 700 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 2) {
-                    planets.addEdge(new Edge<GalaxyMapPlanet>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
-                }
-            }
-        }
     }
 
     //TODO: When going to GalaxyMapPlanet, animate Path with Edges (A*)
@@ -124,7 +84,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     public void update(double dt) {
         galaxyMapMode.setCurrentPlanet(currentPlanet.getContent());
 
-        if(mapMode.getSpaceShip().getReady()) cooldown = 0;
+        if(galaxyMapMode.getSpaceShip().getReady()) cooldown = 0;
         if(easeIn) radius -= dt * 10;
         else radius += dt * 10;
         if(radius < 2) easeIn = false;
@@ -133,17 +93,17 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
     private void initiatePlanetInGraph() {
         for(int i = 0;i < planetCount;i++) {
-            Vertex<Planet> planet = new Vertex<>(String.valueOf(i));
+            Vertex<GalaxyMapPlanet> planet = new Vertex<>(String.valueOf(i));
             boolean fitting = false;
             while(!fitting) {
                 fitting = true;
                 double r = planetSpawnRadius * Math.sqrt(Math.random());
                 double alpha = 2 * Math.PI * Math.random();
-                Planet newPlanet = new Planet(r * Math.cos(alpha) + 500, r * Math.sin(alpha) + 500, PlanetInfoContainer.getPlanetSize());
+                GalaxyMapPlanet newPlanet = new GalaxyMapPlanet(r * Math.cos(alpha) + 500, r * Math.sin(alpha) + 500, GalaxyMapPlanetInfoContainer.getPlanetSize());
                 planetList = planets.getVertices();
                 planetList.toFirst();
                 while(!planetList.isEmpty() && planetList.hasAccess()) {
-                    Planet checkingPlanet = planetList.getContent().getContent();
+                    GalaxyMapPlanet checkingPlanet = planetList.getContent().getContent();
                     if(newPlanet.getDistanceTo(checkingPlanet) < (newPlanet.getRadius() + checkingPlanet.getRadius()) * 2) {
                         fitting = false;
                         break;
@@ -165,7 +125,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                 if(i == j) continue;
                 double distance = planets.getVertex(String.valueOf(i)).getContent().getDistanceTo(planets.getVertex(String.valueOf(j)).getContent());
                 if(distance < 700 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 2) {
-                    planets.addEdge(new Edge<Planet>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
+                    planets.addEdge(new Edge<GalaxyMapPlanet>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
                 }
             }
         }
@@ -270,7 +230,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                     path.next();
                     if(path.hasAccess()) planets.getEdge(current, path.getContent()).setMark(true);
                 }
-                mapMode.getSpaceShip().moveOnPath(path);
+                galaxyMapMode.getSpaceShip().moveOnPath(path);
                 currentPlanet = planetList.getContent();
                 return;
             }
