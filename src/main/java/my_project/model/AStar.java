@@ -3,10 +3,8 @@ package my_project.model;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.Graph;
 import KAGO_framework.model.abitur.datenstrukturen.List;
-import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import beckerStructures.BeckerList;
 import davStructures.DavHeap;
-import my_project.model.modes.map.Planet;
 
 /**
  * The AStar algorithm finds the shortest path in a Graph from the startNode to the endNode <br>
@@ -16,16 +14,16 @@ import my_project.model.modes.map.Planet;
  * @param <ContentType> the contentType of the Objects inside the graph
  */
 public class AStar <ContentType extends GraphicalObject>{
-    private Graph<ContentType, AStarVertex<ContentType>> graph;
-    private AStarVertex<ContentType> startNode;
-    private AStarVertex<ContentType> endNode;
+    private final Graph<ContentType, AStarVertex<ContentType>> graph;
+    private final AStarVertex<ContentType> startNode;
+    private final AStarVertex<ContentType> endNode;
 
     public AStar(Graph<ContentType, AStarVertex<ContentType>> graph, AStarVertex<ContentType> start, AStarVertex<ContentType> end){
         this.graph = graph;
 
         this.startNode = start;
         startNode.setDistance(0);
-        startNode.setHeuristic(((GraphicalObject)start.getContent()).getDistanceTo((GraphicalObject)end.getContent()));
+        startNode.setHeuristic(start.getContent().getDistanceTo(end.getContent()));
         startNode.setParent(null);
 
         this.endNode = end;
@@ -43,7 +41,7 @@ public class AStar <ContentType extends GraphicalObject>{
      * @return the shortest path from the start vertex to the end vertex as a KAGO-List with AStarVertices.
      */
     public List<AStarVertex> findPath(){
-        DavHeap<AStarVertex<ContentType>> openNodes = new DavHeap(true);
+        DavHeap<AStarVertex<ContentType>> openNodes = new DavHeap<>(true);
         openNodes.add(startNode);
         BeckerList<AStarVertex> closedNodes = new BeckerList<>();
 
@@ -56,26 +54,21 @@ public class AStar <ContentType extends GraphicalObject>{
 
             List<AStarVertex<ContentType>> neighbours = graph.getNeighbours(current);
             neighbours.toFirst();
-            outer:
             while (neighbours.hasAccess()){
                 AStarVertex<ContentType> nbr = neighbours.getContent();
 
                 // check if nbr is unknown or closed
-                ContentType currentPlanet = nbr.getContent();
-                ContentType nbrPlanet = endNode.getContent();
+                ContentType currentObject = nbr.getContent();
+                ContentType nbrObject = endNode.getContent();
                 double weight = graph.getEdge(current,nbr).getWeight();
 
                 if (!nbr.isMarked()){ // TODO lieber isMarked für closed, um nicht immer durchsuchen zu müssen?
-                    closedNodes.toFirst();
-                    while (closedNodes.hasAccess()){
-                        if (closedNodes.getContent() == nbr) continue outer; // Skips closed neighbour
-                        closedNodes.next();
-                    }
+                    if (closedNodes.contains(nbr)) continue; // Skips closed neighbour
 
                     // if this is reached, nbr is unknown
                     openNodes.add(nbr);
                     nbr.setDistance(current.getDistance() + weight);
-                    nbr.setHeuristic(currentPlanet.getDistanceTo(nbrPlanet));
+                    nbr.setHeuristic(currentObject.getDistanceTo(nbrObject));
                     nbr.setParent(current);
                     nbr.setMark(true);
 
@@ -86,8 +79,7 @@ public class AStar <ContentType extends GraphicalObject>{
                         nbr.setParent(current);
                         nbr.setDistance(current.getDistance() + weight);
                         nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
-                        // TODO heap aktualisieren!!!
-
+                        openNodes.updatePosition(nbr, true);
                     }
                 }
 
@@ -98,6 +90,11 @@ public class AStar <ContentType extends GraphicalObject>{
         return reconstructPathFrom(null); // return empty if path not found
     }
 
+    /**
+     * Changes the path data from a líst into an array.
+     * @param list The list, e.g. returned by findPath()
+     * @return the data now in an array
+     */
     public AStarVertex[] listToArray(List<AStarVertex> list){
         if (list == null || list.isEmpty()) return new AStarVertex[0];
 
@@ -118,7 +115,12 @@ public class AStar <ContentType extends GraphicalObject>{
         return path;
     }
 
-    public List<AStarVertex> reconstructPathFrom(AStarVertex current){
+    /**
+     * Recunstructs the path beginning from the end node.  If the endNode wasn't found, an empty list is returned.
+     * @param current the node te reconstruction is initialized from
+     * @return the path as a KAGO-List
+     */
+    private List<AStarVertex> reconstructPathFrom(AStarVertex current){
         if (current == null ) return new List<>();
         if (current != endNode) throw new IllegalArgumentException("Path reconstruction needs to start with endNode");
         List<AStarVertex> list = new List<>();
