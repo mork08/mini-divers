@@ -2,7 +2,7 @@ package my_project.model.modes.planet.entity;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.view.DrawTool;
-import my_project.model.modes.planet.collisionSystem.Collider;
+import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
 import my_project.model.spritesheetSystem.animation.entity.EntityState;
@@ -25,7 +25,7 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
                     32,
                     CharacterAnimationState.IDLE_DOWN
             ),
-            new Collider(x, y, width, height),
+            new Cage(x,y,10,10,1,2),
             x,
             y,
             width,
@@ -36,8 +36,10 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
 
     @Override
     public void update(double dt) {
+        colliderCage.update(dt);
         super.update(dt);
         this.walk();
+
     }
 
     private void walk() {
@@ -65,10 +67,10 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
             this.direction = EntityDirection.RIGHT;
         }
 
-        this.collider.setLinVel(velX, velY);
+        this.colliderCage.setVelocity(velX, velY);
 
-        this.x = this.collider.getX();
-        this.y = this.collider.getY();
+        this.x = this.colliderCage.getX()+colliderCage.getWidth()/2;
+        this.y = this.colliderCage.getY()+colliderCage.getHeight()/2;
 
         EntityState state = velX == 0 && velY == 0
                 ? EntityState.IDLE
@@ -85,8 +87,8 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
 
-            drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height);
-
+            drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX()-this.width/2, (int) this.getY()-this.height/2, (int) this.width, (int) this.height);
+            colliderCage.draw(drawTool);
         }
     }
 

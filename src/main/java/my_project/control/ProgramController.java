@@ -39,6 +39,10 @@ public class ProgramController {
         this.viewController = viewController;
     }
 
+    public static double clamp(int i, int i1, double v) {
+        return Math.max(i, Math.min(i1, v));
+    }
+
     /**
      * Diese Methode wird genau ein mal nach Programmstart aufgerufen. Hier sollte also alles geregelt werden,
      * was zu diesem Zeipunkt passieren muss.

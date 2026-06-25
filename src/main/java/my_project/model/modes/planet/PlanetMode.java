@@ -6,7 +6,6 @@ import my_project.Config;
 import my_project.control.ModeController;
 import my_project.model.modes.Mode;
 import my_project.model.modes.planet.Tilesystem.TileMap;
-import my_project.model.modes.planet.collisionSystem.CollisionManager;
 import my_project.model.modes.planet.missions.ExterminationMission;
 
 import java.awt.*;
@@ -23,7 +22,6 @@ public class PlanetMode extends Mode {
     @Override
     public void update(double dt) {
         super.update(dt);
-        CollisionManager.update(dt);
         operation.update(dt);
     }
 
