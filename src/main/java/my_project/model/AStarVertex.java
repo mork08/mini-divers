@@ -12,6 +12,7 @@ public class AStarVertex<ContentType> extends Vertex<ContentType> implements Com
     private double cost;
     private AStarVertex parent;
     private AStarVertex<ContentType> prev;
+    private Status status = Status.UNDISCOVERED;
 
     public AStarVertex(String pID){
         super(pID);
@@ -39,9 +40,12 @@ public class AStarVertex<ContentType> extends Vertex<ContentType> implements Com
         heuristic = 0.00;
         cost = 0.00;
         parent = null;
+        status = Status.UNDISCOVERED;
     }
 
     public void setPrev(AStarVertex<ContentType> pPrev){prev = pPrev;}
+    public void setStatus(Status status){this.status = status;}
+    public Status getStatus(){return status;}
 
     public AStarVertex<ContentType> getPrev(){return prev;}
 
@@ -53,4 +57,6 @@ public class AStarVertex<ContentType> extends Vertex<ContentType> implements Com
 
     @Override
     public boolean isEqual(AStarVertex otherNode){return cost == otherNode.cost;}
+
+    public enum Status{UNDISCOVERED, OPEN, CLOSED}
 }
