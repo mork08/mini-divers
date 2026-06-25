@@ -21,6 +21,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     private boolean easeIn = true;
     private double radius = 5;
     private DrawTool drawTool;
+    private double cooldown = 0;
 
     private String[] occupations = {"Terminis", "Iluminis", "MiniBots"};
     private double occupationBudget = 20000;
@@ -35,7 +36,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
         planetEdgeList = planets.getEdges();
 
         currentPlanet = planets.getVertex("0");
-        galaxyMapMode.setCurrentPlanet(currentPlanet.getContent());
+        mapMode.setCurrentPlanet(currentPlanet.getContent());
         spreadOccupation();
     }
 
@@ -123,11 +124,54 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     public void update(double dt) {
         galaxyMapMode.setCurrentPlanet(currentPlanet.getContent());
 
+        if(mapMode.getSpaceShip().getReady()) cooldown = 0;
         if(easeIn) radius -= dt * 10;
         else radius += dt * 10;
         if(radius < 2) easeIn = false;
         if(radius > 10) easeIn = true;
     }
+
+    private void initiatePlanetInGraph() {
+        for(int i = 0;i < planetCount;i++) {
+            Vertex<Planet> planet = new Vertex<>(String.valueOf(i));
+            boolean fitting = false;
+            while(!fitting) {
+                fitting = true;
+                double r = planetSpawnRadius * Math.sqrt(Math.random());
+                double alpha = 2 * Math.PI * Math.random();
+                Planet newPlanet = new Planet(r * Math.cos(alpha) + 500, r * Math.sin(alpha) + 500, PlanetInfoContainer.getPlanetSize());
+                planetList = planets.getVertices();
+                planetList.toFirst();
+                while(!planetList.isEmpty() && planetList.hasAccess()) {
+                    Planet checkingPlanet = planetList.getContent().getContent();
+                    if(newPlanet.getDistanceTo(checkingPlanet) < (newPlanet.getRadius() + checkingPlanet.getRadius()) * 2) {
+                        fitting = false;
+                        break;
+                    }
+                    planetList.next();
+                }
+                if(fitting) {
+                    planet.setContent(newPlanet);
+                    planets.addVertex(planet);
+                }
+            }
+        }
+        planetList = planets.getVertices();
+    }
+
+    private void addEdgesToGraph() {
+        for(int i = 0;i < planetCount;i++) {
+            for (int j = 0; j < planetCount; j++) {
+                if(i == j) continue;
+                double distance = planets.getVertex(String.valueOf(i)).getContent().getDistanceTo(planets.getVertex(String.valueOf(j)).getContent());
+                if(distance < 700 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 2) {
+                    planets.addEdge(new Edge<Planet>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
+                }
+            }
+        }
+    }
+
+    //TODO: When going to Planet, animate Path with Edges (A*)
 
     private void connectIsland() {
         planets.setAllVertexMarks(false);
@@ -204,6 +248,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     }
 
     public void checkForContactOnClick(MouseEvent e) {
+        if(cooldown > 0) return;
         double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
         double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
         planetList.toFirst();
@@ -215,6 +260,8 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                     galaxyMapMode.startMission();
                     return;
                 }
+
+                cooldown = 1;
                 List<Vertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
@@ -223,7 +270,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                     path.next();
                     if(path.hasAccess()) planets.getEdge(current, path.getContent()).setMark(true);
                 }
-
+                mapMode.getSpaceShip().moveOnPath(path);
                 currentPlanet = planetList.getContent();
                 return;
             }
