@@ -32,7 +32,7 @@ public class Tile extends GraphicalObject {
 
     @Override
     public void draw(DrawTool dt){
-        adjustHeight();
+
         update(0); //TODO man sieht hier direkt das Problem, ne?;
         visualTileRepresentation.drawAt(dt, x, y);
         highlighted = false;
@@ -41,10 +41,10 @@ public class Tile extends GraphicalObject {
     public void update(double dt) {
         if(highlighted){
             if(Mouse.isDown(0)){
-                levelHeight = 0;
+                setLevelHeight(0);
             }
             if(Mouse.isDown(1)){
-                levelHeight = -1;
+                setLevelHeight(-1);
             }
         }
     }
@@ -92,7 +92,8 @@ public class Tile extends GraphicalObject {
             for (int i = 0; i < tiles.length; i++) {
                 if (tiles[i] != null) {
                     if (tiles[i].levelHeight == -1) {
-                        this.levelHeight = 0;
+                        setLevelHeight(0);
+
                         return;
                     }
                 }
@@ -107,5 +108,9 @@ public class Tile extends GraphicalObject {
     }
     public void setLevelHeight(int levelHeight) {
         this.levelHeight = levelHeight;
+        Tile[] tiles = getRelatives();
+        for (Tile tile : tiles) {
+            if(tile != null ) tile.adjustHeight();
+        }
     }
 }

@@ -23,8 +23,8 @@ public class GalaxyMapMode extends Mode {
         super(modeController);
         galaxyMapPlanetController = new GalaxyMapPlanetController(this);
         spaceShip = new SpaceShip(this);
-        translateX = -currentGalaxyMapPlanet.getX() + 500;
-        translateY = -currentGalaxyMapPlanet.getY() + 500;
+        translateX = -currentGalaxyMapPlanet.getX();
+        translateY = -currentGalaxyMapPlanet.getY();
     }
 
     @Override

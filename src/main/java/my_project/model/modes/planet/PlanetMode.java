@@ -23,7 +23,7 @@ public class PlanetMode extends Mode {
         drawTool.push();
         drawTool.setScale(4);
         drawTool.setFocalPoint(Config.WINDOW_WIDTH / 2, Config.WINDOW_HEIGHT / 2);
-            operation.draw(drawTool);
+            if (operation != null) operation.draw(drawTool);
         drawTool.pop();
     }
     @Override
@@ -40,6 +40,7 @@ public class PlanetMode extends Mode {
     public void launch() {
         cameraPosition = new Vec2d(0,0);
         if (controller.getCurrentPlanet() != null) {
+            System.out.println("Planet: " + controller.getCurrentPlanet().getPlanetName());
             operation = new Operation(this, controller.getCurrentPlanet().getTerrainType(), controller.getCurrentPlanet().getOccupation(), new ExterminationMission());
 
         }
