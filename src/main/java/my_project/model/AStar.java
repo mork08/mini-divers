@@ -7,6 +7,8 @@ import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import beckerStructures.BeckerList;
 import davStructures.DavHeap;
 
+import javax.net.ssl.SSLEngineResult;
+
 /**
  * The AStar algorithm finds the shortest path in a Graph from the startNode to the endNode <br>
  * For reasons of efficiency and clarity the algorithm uses the vertices from the graph for information storage. <br><br>
@@ -46,14 +48,14 @@ public class AStar <ContentType extends GraphicalObject>{
 
         DavHeap<AStarVertex<ContentType>> openNodes = new DavHeap<>(true);
         openNodes.add(startNode);
-        BeckerList<AStarVertex> closedNodes = new BeckerList<>();
+        //BeckerList<AStarVertex> closedNodes = new BeckerList<>();
 
         while (!openNodes.isEmpty()){
             AStarVertex current = openNodes.extractRoot(); // Node gets deleted out of openNodes as soon as it gets examined.
             if (current == this.endNode) return reconstructPathFrom(current);
 
-            closedNodes.append(current);
-            current.setMark(false);
+            //closedNodes.append(current);
+            current.setStatus(AStarVertex.Status.CLOSED);
 
             List<AStarVertex<ContentType>> neighbours = graph.getNeighbours(current);
             neighbours.toFirst();
@@ -65,25 +67,22 @@ public class AStar <ContentType extends GraphicalObject>{
                 ContentType nbrObject = endNode.getContent();
                 double weight = graph.getEdge(current,nbr).getWeight();
 
-                if (!nbr.isMarked()){ // TODO lieber isMarked für closed, um nicht immer durchsuchen zu müssen?
-                    if (closedNodes.contains(nbr)) continue; // Skips closed neighbour
-
-                    // if this is reached, nbr is unknown
-                    openNodes.add(nbr);
-                    nbr.setDistance(current.getDistance() + weight);
-                    nbr.setHeuristic(currentObject.getDistanceTo(nbrObject));
-                    nbr.setParent(current);
-                    nbr.setMark(true);
-
-                } else { // Node to this neighbour vertex is in openNodes
-
+                //if (closedNodes.contains(nbr)) continue; // Skips closed neighbour
+                if (nbr.getStatus() == AStarVertex.Status.CLOSED) continue; // Skips closed neighbour
+                else if (nbr.getStatus() == AStarVertex.Status.OPEN) {
                     double tentativeCost = current.getDistance() + weight;
-                    if (tentativeCost < nbr.getDistance()){
+                    if (tentativeCost < nbr.getDistance()) {
                         nbr.setParent(current);
                         nbr.setDistance(current.getDistance() + weight);
                         nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
                         openNodes.updatePosition(nbr, true);
                     }
+                } else { // if this is reached, nbr is unknown
+                    openNodes.add(nbr);
+                    nbr.setDistance(current.getDistance() + weight);
+                    nbr.setHeuristic(currentObject.getDistanceTo(nbrObject));
+                    nbr.setParent(current);
+                    nbr.setStatus(AStarVertex.Status.OPEN);
                 }
 
                 neighbours.next();
