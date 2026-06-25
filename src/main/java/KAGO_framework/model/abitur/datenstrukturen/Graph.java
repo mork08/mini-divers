@@ -1,6 +1,7 @@
 package KAGO_framework.model.abitur.datenstrukturen;
 
 import KAGO_framework.model.abitur.datenstrukturen.Edge;
+import my_project.model.AStarVertex;
 
 /**
  * <p>
@@ -22,9 +23,9 @@ import KAGO_framework.model.abitur.datenstrukturen.Edge;
  * @author Qualitaets- und UnterstuetzungsAgentur - Landesinstitut fuer Schule
  * @version Oktober 2015
  */
-public class Graph<CT>{
-  private List<Vertex<CT>> vertices;
-  private List<Edge<CT>> edges;
+public class Graph<CT, V extends Vertex<CT>>{
+  private List<V> vertices;
+  private List<Edge<CT, V>> edges;
 
   /**
    * Ein Objekt vom Typ Graph wird erstellt. Der von diesem Objekt 
@@ -32,16 +33,16 @@ public class Graph<CT>{
    */
   public Graph(){
     //Leere Listen fuer Knoten und Kanten erstellen.
-    vertices = new List<Vertex<CT>>();
-    edges = new List<Edge<CT>>();
+    vertices = new List<V>();
+    edges = new List<>();
   }
 
   /**
    * Die Anfrage liefert eine neue Liste aller Knotenobjekte vom Typ List<Vertex>.
    */
-  public List<Vertex<CT>> getVertices(){
+  public List<V> getVertices(){
     //Eine neue Liste mit allen Vertex-Objekten erstellen.
-    List<Vertex<CT>> result = new List<Vertex<CT>>();
+    List<V> result = new List<>();
     vertices.toFirst();
     while (vertices.hasAccess()){
       result.append(vertices.getContent());
@@ -56,9 +57,9 @@ public class Graph<CT>{
   /**
    * Die Anfrage liefert eine neue Liste aller Kantenobjekte vom Typ List<Edge>.
    */
-  public List<Edge<CT>> getEdges(){
+  public List<Edge<CT, V>> getEdges(){
     //Eine neue Liste mit allen Edge-Objekten erstellen.
-    List<Edge<CT>> result = new List<Edge<CT>>();
+    List<Edge<CT, V>> result = new List<>();
     edges.toFirst();
     while (edges.hasAccess()){
       result.append(edges.getContent());
@@ -74,9 +75,9 @@ public class Graph<CT>{
    * Die Anfrage liefert das Knotenobjekt mit pID als ID. Ist ein solchen Knotenobjekt nicht im Graphen enthalten,
    * wird null zurueckgeliefert.
    */
-  public Vertex<CT> getVertex(String pID){
+  public V getVertex(String pID){
     //Vertex-Objekt mit pID als ID suchen.
-    Vertex<CT> result = null;
+    V result = null;
     vertices.toFirst();
     while (vertices.hasAccess() && result == null){
       if (vertices.getContent().getID().equals(pID)){
@@ -94,7 +95,7 @@ public class Graph<CT>{
    * Knoten mit demselben ID-Eintrag wie pVertex im Graphen gibt und pVertex eine ID ungleich null hat. 
    * Ansonsten passiert nichts.
    */
-  public void addVertex(Vertex<CT> pVertex){
+  public void addVertex(V pVertex){
     //Pruefen, ob der Vertex existiert und eine ID hat.
     if (pVertex != null && pVertex.getID() != null) {
       //Pruefen, ob nicht schon ein Vertex mit gleicher ID enthalten ist.
@@ -118,10 +119,10 @@ public class Graph<CT>{
    * Der Auftrag fuegt die Kante pEdge in den Graphen ein, sofern beide durch die Kante verbundenen Knoten
    * im Graphen enthalten sind, nicht identisch sind und noch keine Kante zwischen den Knoten existiert. Ansonsten passiert nichts.
    */
-  public void addEdge(Edge<CT> pEdge){
+  public void addEdge(Edge<CT, V> pEdge){
     //Pruefen, ob pEdge exisitert.
     if (pEdge != null){  
-      Vertex<CT>[] vertexPair = pEdge.getVertices();
+      V[] vertexPair = (V[]) pEdge.getVertices();
       
       //Einfuegekriterien pruefen.
       if (vertexPair[0] != null && vertexPair[1] != null && 
@@ -130,7 +131,7 @@ public class Graph<CT>{
       this.getEdge(vertexPair[0], vertexPair[1]) == null && 
       vertexPair[0] != vertexPair[1]){
         //Kante einfuegen.
-        edges.append(pEdge); 
+        edges.append(pEdge);
       }
     }
   }
@@ -139,11 +140,11 @@ public class Graph<CT>{
    * Der Auftrag entfernt den Knoten pVertex aus dem Graphen und loescht alle Kanten, die mit ihm inzident sind.
    * Ist der Knoten pVertex nicht im Graphen enthalten, passiert nichts.
    */
-  public void removeVertex(Vertex<CT> pVertex){
+  public void removeVertex(V pVertex){
     //Inzidente Kanten entfernen.
     edges.toFirst();
     while (edges.hasAccess()){
-      Vertex<CT>[] akt = edges.getContent().getVertices();
+      V[] akt = (V[]) edges.getContent().getVertices();
       if (akt[0] == pVertex || akt[1] == pVertex){
         edges.remove();
       } else {
@@ -165,7 +166,7 @@ public class Graph<CT>{
    * Der Auftrag entfernt die Kante pEdge aus dem Graphen. Ist die Kante pEdge nicht 
    * im Graphen enthalten, passiert nichts.
    */
-  public void removeEdge(Edge<CT> pEdge){
+  public void removeEdge(Edge<CT, V> pEdge){
     //Kante aus Kantenliste des Graphen entfernen.
     edges.toFirst();
     while (edges.hasAccess()){
@@ -234,15 +235,15 @@ public class Graph<CT>{
    * pVertex keine Nachbarn in diesem Graphen oder ist gar nicht in diesem Graphen enthalten, so 
    * wird eine leere Liste zurueckgeliefert.
    */
-  public List<Vertex<CT>> getNeighbours(Vertex<CT> pVertex){
-    List<Vertex<CT>> result = new List<Vertex<CT>>();
+  public List<V> getNeighbours(V pVertex){
+    List<V> result = new List<V>();
     
     //Alle Kanten durchlaufen.
     edges.toFirst();
     while (edges.hasAccess()){
       
       //Wenn ein Knoten der Kante pVertex ist, den anderen als Nachbarn in die Ergebnisliste einfuegen.
-      Vertex<CT>[] vertexPair = edges.getContent().getVertices();
+      V[] vertexPair = (V[]) edges.getContent().getVertices();
       if (vertexPair[0] == pVertex) {
         result.append(vertexPair[1]);
       } else { 
@@ -260,15 +261,15 @@ public class Graph<CT>{
    * pVertex keine inzidenten Kanten in diesem Graphen oder ist gar nicht in diesem Graphen enthalten, so 
    * wird eine leere Liste zurueckgeliefert.
    */
-  public List<Edge<CT>> getEdges(Vertex<CT> pVertex){
-    List<Edge<CT>> result = new List<Edge<CT>>();
+  public List<Edge<CT, V>> getEdges(V pVertex){
+    List<Edge<CT, V>> result = new List<>();
     
     //Alle Kanten durchlaufen.
     edges.toFirst();
     while (edges.hasAccess()){
       
       //Wenn ein Knoten der Kante pVertex ist, dann Kante als inzidente Kante in die Ergebnisliste einfuegen.
-      Vertex<CT>[] vertexPair = edges.getContent().getVertices();
+      V[] vertexPair = (V[]) edges.getContent().getVertices();
       if (vertexPair[0] == pVertex) {
         result.append(edges.getContent());
       } else{ 
@@ -287,15 +288,15 @@ public class Graph<CT>{
    * im Graphen enthalten oder gibt es keine Kante, die beide Knoten verbindet, so wird null 
    * zurueckgeliefert.
    */
-  public Edge<CT> getEdge(Vertex<CT> pVertex, Vertex<CT> pAnotherVertex){
-    Edge<CT> result = null;
+  public Edge<CT, V> getEdge(V pVertex, V pAnotherVertex){
+    Edge<CT, V> result = null;
     
     //Kanten durchsuchen, solange keine passende gefunden wurde.
     edges.toFirst();
     while (edges.hasAccess() && result == null){
       
       //Pruefen, ob die Kante pVertex und pAnotherVertex verbindet.
-      Vertex<CT>[] vertexPair = edges.getContent().getVertices();
+      V[] vertexPair = (V[]) edges.getContent().getVertices();
       if ((vertexPair[0] == pVertex && vertexPair[1] == pAnotherVertex) ||
       (vertexPair[0] == pAnotherVertex && vertexPair[1] == pVertex)) {
         //Kante als Ergebnis merken.
@@ -324,7 +325,7 @@ public class Graph<CT>{
   public void setPrevToNull(){
     vertices.toFirst();
     while(vertices.hasAccess()){
-      vertices.getContent().setPrev(null);
+      ((AStarVertex)vertices.getContent()).setPrev(null); // Achtung: Nur für dieses Projekt anwendbar
       vertices.next();
     }
   }

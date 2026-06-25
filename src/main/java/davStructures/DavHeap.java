@@ -1,114 +1,171 @@
 package davStructures;
 
-import KAGO_framework.model.abitur.datenstrukturen.BinarySearchTree;
 import KAGO_framework.model.abitur.datenstrukturen.ComparableContent;
+import beckerStructures.BeckerList;
 
 /**
- * This class is either a min heap or a max heap created with an Abitur-BST.
- * Use it for fancy Priority Queues.
- * David Glusmann
+ * Ein Heap ordnet Elemente in einem Binärbaum nach ihrer Größe.
+ * Die Wurzel ist das kleinste (min heap) oder das größte Element (max heap). <br>
+ * Gespeichert wird in einem dynamischen Array, weil der Baum lückenlos ist.
+ * Referenzen auf Kinder bleiben so erspart.
+ * @param <CT> Der Datentyp der gespeicherten Objekte, die vergleichbar sein müssen (implements ComparableContent)
  */
-public class DavHeap<CT extends ComparableContent<CT>> {
-    private final boolean isMin;
-    private HeapNode<CT> node;
+public class DavHeap <CT extends ComparableContent> {
+    private boolean isMin;
+    private BeckerList<CT> heap;
 
-    private class HeapNode<CT extends ComparableContent<CT>>{
-        private CT content;
-        private DavHeap<CT> left, right;
-
-        public HeapNode(boolean isMin, CT pContent){
-            this.content = pContent;
-            left = new DavHeap<CT>(isMin);
-            right = new DavHeap<CT>(isMin);
-        }
+    public DavHeap(boolean isMin) {
+        this.isMin = isMin;
+        this.heap = new BeckerList<>();
     }
 
     /**
-     * Creates an empty heap.
-     * @param isMin true if it's a min heap, otherwise it's a max heap
+     * @return parents index of node behind index i
      */
-    public DavHeap(boolean isMin){
-        this.isMin = isMin;
-        node = null;
+    private int parent(int i){
+        return (i - 1) / 2;
     }
 
     /**
-     * Creates a heap with a CT-content and no children.
-     * @param isMin true if it's a min heap, otherwise it's a max heap
-     * @param pContent the content
+     * @return left childs index of node behind index i
      */
-    public DavHeap(boolean isMin, CT pContent){
-        this.isMin = isMin;
-        node = new HeapNode<>(isMin, pContent);
+    private int leftChild(int i) {
+        return 2 * i + 1;
     }
 
-    public boolean isEmpty() {
-        return this.node == null;
+    /**
+     * @return right childs index of node behind index i
+     */
+    private int rightChild(int i) {
+        return 2 * i + 2;
     }
 
-    public CT getFirst(){
-        return node.content;
+    /**
+     * Swaps the Objects of the nodes behind indices i and j
+     */
+    private void swap(int i, int j){
+        CT temp = heap.get(i);
+        heap.set(i, heap.get(j));
+        heap.set(j, temp);
     }
 
-    public void add(CT c){
-        if (c == null) return;
-        if (isEmpty()) node = new HeapNode<>(isMin, c);
+    /**
+     * Insterts an element according to the min or max heap property
+     * @param element
+     */
+    public void add(CT element){
+        // Insert element at the first unfilled position (at the end, as it's a complete tree)
+        heap.append(element);
 
-        if (isMin){
+        bubbleUp(heap.getLength() - 1);
+    }
 
-        } else {
+    /**
+     * @return the content with the min or max value
+     */
+    public CT getRoot(){
+        if (heap.getLength() == 0) throw new RuntimeException("Heap is empty");
+        return heap.get(0);
+    }
 
+    /**
+     * @return the content with the min or max value and remove it
+     */
+    public CT extractRoot(){
+        if (heap.getLength() == 0) throw new RuntimeException("Heap is empty");
+
+        CT rootElement = heap.get(0);
+        CT lastElement = heap.get(heap.getLength() - 1);
+        heap.set(heap.getLength()-1, null);
+
+        if (!isEmpty()){
+            heap.set(0, lastElement);
+            bubbleDown(0);
         }
+
+        return rootElement;
     }
 
-    /*public void insert(ContentType pContent) {
-        if (pContent != null) {
-            if (isEmpty()) {
-                this.node = new BinarySearchTree.BSTNode<ContentType>(pContent);
-            } else if (pContent.isLess(this.node.content)) {
-                this.node.left.insert(pContent);
-            } else if(pContent.isGreater(this.node.content)) {
-                this.node.right.insert(pContent);
+    private void bubbleDown(int index){
+        // Bubble down to restore heap property
+        if (isMin){ // It's a min heap
+            while (true){
+                int leftIndex =  leftChild(index);
+                int rightIndex =  rightChild(index);
+                int smallest = index;
+
+                // Find the smallest out of current and its right and left child
+                if (heap.get(leftIndex).isLess(heap.get(index))){
+                    smallest = leftIndex;
+                }
+
+                if (heap.get(rightIndex).isLess(heap.get(index))){
+                    smallest = rightIndex;
+                }
+
+                if (index == smallest){ break; } // Heap property is restored because current isn't bigger than its children
+
+                // If heap property is still unrestored, swap with smaller child
+                swap(smallest, index);
+                index = smallest;
+            }
+
+        } else { // It's a max heap
+            while (true){
+                int leftIndex =  leftChild(index);
+                int rightIndex =  rightChild(index);
+                int biggest = index;
+
+                // Find the biggest out of current and its right and left child
+                if (heap.get(leftIndex).isGreater(heap.get(index))){
+                    biggest = leftIndex;
+                }
+
+                if (heap.get(rightIndex).isGreater(heap.get(index))){
+                    biggest = rightIndex;
+                }
+
+                if (index == biggest){ break; } // Heap property is restored because current isn't smaller than its children
+
+                // If heap property is still unrestored, swap with bigger child
+                swap(biggest, index);
+                index = biggest;
             }
         }
-    }*/
+    }
 
-    /*
-    2. Wie findet man den nächsten freien Platz?
+    private void bubbleUp(int index){
+        // Bubble up (swap with parent as often as needed) to restore the heap property
+        if (isMin){
+            while (index >= 0 && (heap.get(index).isLess(heap.get(parent(index))) || heap.get(index) == null)){
+                swap(index, parent(index));
+                index = parent(index);
+            }
+        } else {
+            while (index >= 0 && (heap.get(index).isGreater(heap.get(index))) || heap.get(index) == null){
+                swap(index, parent(index));
+                index = parent(index);
+            }
+        }
+    }
 
-    Das hängt komplett davon ab, wie du deinen Baum im Speicher aufbaust:
-
-    Variante A:
-    Verwendung eines Arrays / einer Liste (Der Standardweg)
-    Wenn du den Heap in einem Array speicherst, ist das Finden des nächsten freien Platzes extrem einfach:
-    Es ist immer der nächste freie Index am Ende des Arrays (array.length bzw. list.size()).
-    Durch die mathematische Struktur des Heaps kannst du die Positionen im Array ohne Zeiger (Pointer) berechnen.
-    Für einen Knoten am Index i gilt:
-    Linkes Kind: 2 * i + 1
-    Rechtes Kind: 2 * i + 2
-    Elternknoten: (i - 1) / 2 (Integer-Division)
-    Das Array füllt sich automatisch perfekt von links nach rechts.
-
-    Variante B:
-    Verwendung von echten Knoten-Objekten (mit left und right Pointern)
-    Wenn du den Baum mit echten Objekten und Zeigern programmierst, ist es schwieriger, die nächste freie Lücke von oben nach unten zu finden.
-    Es gibt dafür zwei gängige mathematische Tricks:
-
-    Trick 1: Der Binär-Pfad (Über die Elementanzahl)
-    Die Gesamtzahl der Elemente nach dem Einfügen verrät dir den exakten Weg von der Wurzel zur neuen Lücke.
-    Nimm die neue Anzahl der Elemente (z. B. 6 Elemente im Baum).
-    Wandle diese Zahl in Binärcode um: \(6 = 110_2\).
-    Ignoriere die erste 1 (sie steht für die Wurzel).
-    Lies die restlichen Bits von links nach rechts:
-    1 bedeutet Gehe nach rechts, 0 bedeutet Gehe nach links.
-    Pfad für das 6. Element: Erst rechts, dann links.
-    Dort ist dein freier Platz.
-
-    Trick 2: Level-Order-Traversal (Breitensuche)
-    Du startest an der Wurzel und nutzt eine Warteschlange (Queue), um den Baum Ebene für Ebene von links nach rechts zu prüfen.
-    Der erste Knoten, der kein linkes oder kein rechtes Kind hat, ist der Elternknoten für deinen neuen Platz.
-    Dieser Weg ist allerdings langsamer (\(O(n)\)).
+    /**
+     * @return whether the heap is empty
      */
+    public boolean isEmpty() {
+        return heap.getLength() == 0;
+    }
 
+    /**
+     * Updates the position of the given object if it gets a new value inside the heap property. If it is not inside the heap nothing happens.
+     * @param pObject the object to be updated
+     * @param gotSmaller whether the comparable value of the object got smaller or bigger
+     */
+    public void updatePosition(CT pObject, boolean gotSmaller){
+        int index = heap.getIndex(pObject);
+        if (index == -1) return;
+        if (isMin && gotSmaller || !isMin && !gotSmaller) bubbleUp(index);
+        if (isMin && !gotSmaller || !isMin && gotSmaller) bubbleDown(index);
+    }
 
 }

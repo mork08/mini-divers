@@ -23,7 +23,6 @@ public class Vertex<CT>{
   private CT content;
   private double pathDistance;
   //private double distance;
-  private Vertex<CT> prev;
   
   /**
   * Ein neues Objekt vom Typ Vertex wird erstellt. Seine Markierung hat den Wert false.
@@ -60,6 +59,4 @@ public class Vertex<CT>{
   public double getPathDistance(){return pathDistance;}
   //public void setDistance(double pDistance){distance = pDistance;}
   //public double getDistance(){return distance;}
-  public void setPrev(Vertex<CT> pPrev){prev = pPrev;}
-  public Vertex<CT> getPrev(){return prev;}
 }

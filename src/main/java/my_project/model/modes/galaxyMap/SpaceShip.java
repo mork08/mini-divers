@@ -4,6 +4,7 @@ import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import KAGO_framework.view.DrawTool;
+import my_project.model.AStarVertex;
 
 import java.awt.image.BufferedImage;
 
@@ -13,7 +14,7 @@ public class SpaceShip extends GraphicalObject {
     double degrees = 0;
     boolean orbit = true;
     double speed = 200;
-    private List<Vertex<GalaxyMapPlanet>> path;
+    private List<AStarVertex<GalaxyMapPlanet>> path;
 
     public SpaceShip(GalaxyMapMode galaxyMapMode) {
         this.galaxyMapMode = galaxyMapMode;
@@ -53,7 +54,7 @@ public class SpaceShip extends GraphicalObject {
         }
     }
 
-    public void moveOnPath(List<Vertex<GalaxyMapPlanet>> path) {
+    public void moveOnPath(List<AStarVertex<GalaxyMapPlanet>> path) {
         this.path = path;
         this.path.toFirst();
         this.path.next();

@@ -17,8 +17,8 @@ package KAGO_framework.model.abitur.datenstrukturen;
  * @author Qualitaets- und UnterstuetzungsAgentur - Landesinstitut fuer Schule
  * @version Oktober 2015
  */
-public class Edge<CT>{
-  private Vertex<CT>[] vertices;
+public class Edge<CT, V extends Vertex<CT>>{
+  private V[] vertices;
   private double weight;
   private boolean mark;
   
@@ -27,8 +27,9 @@ public class Edge<CT>{
   * repraesentierte Kante verbindet die Knoten pVertex und pAnotherVertex mit der 
   * Gewichtung pWeight. Ihre Markierung hat den Wert false.
   */
-  public Edge(Vertex<CT> pVertex, Vertex<CT> pAnotherVertex, double pWeight){
-    vertices = new Vertex[2];
+  @SuppressWarnings("unchecked")
+  public Edge(V pVertex, V pAnotherVertex, double pWeight) {
+    vertices = (V[]) new Vertex[2];
     vertices[0] = pVertex;
     vertices[1] = pAnotherVertex;
     weight = pWeight;
@@ -39,13 +40,16 @@ public class Edge<CT>{
   * Die Anfrage gibt die beiden Knoten, die durch die Kante verbunden werden, als neues Feld vom Typ Vertex zurueck. Das Feld hat 
   * genau zwei Eintraege mit den Indexwerten 0 und 1.
   */
-  public Vertex<CT>[] getVertices(){
-    Vertex<CT>[] result = new Vertex[2];
-    result[0] = vertices[0]; 
+  @SuppressWarnings("unchecked")
+  public Vertex[] getVertices() {
+    // Erstellt ein Object-Array und castet es zu V[]
+    V[] result = (V[]) new Vertex[2];
+    result[0] = vertices[0];
     result[1] = vertices[1];
     return result;
   }
-  
+
+
   /**
   * Der Auftrag setzt das Gewicht der Kante auf pWeight.
   */
