@@ -3,6 +3,7 @@ package my_project.view;
 import KAGO_framework.model.InteractiveGraphicalObject;
 import my_project.control.ProgramController;
 import my_project.model.modes.galaxyMap.GalaxyMapMode;
+import my_project.model.modes.planet.entity.EntityManager;
 
 import java.awt.event.KeyEvent;
 
@@ -37,6 +38,8 @@ public class InputManager extends InteractiveGraphicalObject {
             GalaxyMapMode.setScale(1);}
         else if(key == KeyEvent.VK_MINUS){
             GalaxyMapMode.setScale(-1);}
+
+        EntityManager.keypressedCallback(key);
     }
 
     @Override
