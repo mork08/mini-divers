@@ -106,6 +106,7 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
 
         return null;
     }
+
     public void damage(double damage) {
         health -= damage;
     }

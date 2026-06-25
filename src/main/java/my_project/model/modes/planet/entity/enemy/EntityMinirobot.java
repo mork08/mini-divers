@@ -38,8 +38,7 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
 
     @Override
     public void update(double dt) {
-        if (target == null) {setTarget(TileMap.getPlayer());}
+        if (target == null) setTarget(TileMap.getPlayer());
         super.update(dt);
-        //System.out.println("UPDATE");
     }
 }
