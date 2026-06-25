@@ -11,6 +11,7 @@ public class AStarVertex<ContentType> extends Vertex<ContentType> implements Com
     private double heuristic;
     private double cost;
     private AStarVertex parent;
+    private AStarVertex<ContentType> prev;
 
     public AStarVertex(String pID){
         super(pID);
@@ -30,12 +31,19 @@ public class AStarVertex<ContentType> extends Vertex<ContentType> implements Com
         this.cost = this.distance + this.heuristic;
     }
 
-    public double getCost() {
-        return cost;
-    }
-
     public double getDistance(){return distance;}
     public AStarVertex getParent(){return parent;}
+
+    public void resetVertex(){
+        distance = 0.00;
+        heuristic = 0.00;
+        cost = 0.00;
+        parent = null;
+    }
+
+    public void setPrev(AStarVertex<ContentType> pPrev){prev = pPrev;}
+
+    public AStarVertex<ContentType> getPrev(){return prev;}
 
     @Override
     public boolean isGreater(AStarVertex otherNode){return cost > otherNode.cost;}

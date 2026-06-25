@@ -12,12 +12,12 @@ import java.util.Objects;
 
 public class GalaxyMapPlanetController extends GraphicalObject {
     public Graph<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>> planets;
-    private List<Vertex<GalaxyMapPlanet>> planetList;
-    private List<Edge<GalaxyMapPlanet>> planetEdgeList;
+    private List<AStarVertex<GalaxyMapPlanet>> planetList;
+    private List<Edge<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>>> planetEdgeList;
     private int planetCount = 400;
     private int planetSpawnRadius = 5000;
     private GalaxyMapMode galaxyMapMode;
-    private Vertex<GalaxyMapPlanet> currentPlanet;
+    private AStarVertex<GalaxyMapPlanet> currentPlanet;
 
     private boolean easeIn = true;
     private double radius = 5;
@@ -126,7 +126,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                 if(i == j) continue;
                 double distance = planets.getVertex(String.valueOf(i)).getContent().getDistanceTo(planets.getVertex(String.valueOf(j)).getContent());
                 if(distance < 700 + (int)(Math.random()*200) && (int)(Math.random() * 100) < 2) {
-                    planets.addEdge(new Edge<GalaxyMapPlanet>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
+                    planets.addEdge(new Edge<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>>(planets.getVertex(String.valueOf(i)), planets.getVertex(String.valueOf(j)), distance));
                 }
             }
         }
@@ -137,12 +137,12 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     private void connectIsland() {
         planets.setAllVertexMarks(false);
         planetList.toFirst();
-        List<Vertex<GalaxyMapPlanet>> island = new List<>();
+        List<AStarVertex<GalaxyMapPlanet>> island = new List<>();
         modifiedBFS(island, planetList.getContent());
         while(!planets.allVerticesMarked()) {
             planetList.toFirst();
             double minDistance = Double.MAX_VALUE;
-            Vertex<GalaxyMapPlanet>[] connectionVertices = new Vertex[2];
+            AStarVertex<GalaxyMapPlanet>[] connectionVertices = new AStarVertex[2];
             while(planetList.hasAccess()) {
                 if (!planetList.getContent().isMarked()) {
                     island.toFirst();
@@ -160,15 +160,15 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                 planetList.next();
             }
 
-            List<Vertex<GalaxyMapPlanet>> tempIsland = new List<>();
+            List<AStarVertex<GalaxyMapPlanet>> tempIsland = new List<>();
             modifiedBFS(tempIsland, connectionVertices[1]);
 
             island.concat(tempIsland);
-            planets.addEdge(new Edge<GalaxyMapPlanet>(connectionVertices[0], connectionVertices[1], minDistance));
+            planets.addEdge(new Edge<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>>(connectionVertices[0], connectionVertices[1], minDistance));
         }
 /*
         double minDistance = Double.MAX_VALUE;
-        Vertex<GalaxyMapPlanet>[] connectionVertices = new Vertex[2];
+        AStarVertex<GalaxyMapPlanet>[] connectionVertices = new AStarVertex[2];
         connectionVertices[0] = planetList.getContent();
         connectionVertices[1] = planetList.getContent();
         island.toFirst();
@@ -188,15 +188,15 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 */
     }
 
-    private void modifiedBFS(List<Vertex<GalaxyMapPlanet>> island, Vertex<GalaxyMapPlanet> start) {
-        Queue<Vertex<GalaxyMapPlanet>> queue = new Queue<>();
+    private void modifiedBFS(List<AStarVertex<GalaxyMapPlanet>> island, AStarVertex<GalaxyMapPlanet> start) {
+        Queue<AStarVertex<GalaxyMapPlanet>> queue = new Queue<>();
         queue.enqueue(start);
         while(!queue.isEmpty()) {
 
             island.append(queue.front());
             queue.front().setMark(true);
 
-            List<Vertex<GalaxyMapPlanet>> list = planets.getNeighbours(queue.front());
+            List<AStarVertex<GalaxyMapPlanet>> list = planets.getNeighbours(queue.front());
             list.toFirst();
             while(list.getContent() != null && (!list.isEmpty() || list.hasAccess())) {
                 if(!list.getContent().isMarked()) {
@@ -223,11 +223,11 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                 }
 
                 cooldown = 1;
-                List<Vertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
+                List<AStarVertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
                 while(path.hasAccess()) {
-                    Vertex<GalaxyMapPlanet> current = path.getContent();
+                    AStarVertex<GalaxyMapPlanet> current = path.getContent();
                     path.next();
                     if(path.hasAccess()) planets.getEdge(current, path.getContent()).setMark(true);
                 }
@@ -262,7 +262,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
             double tempBudget = occupationBudget;
             //planetList.getContent().getContent().setOccupation(occupations[i]);
             planets.setAllVertexMarks(false);
-            Queue<Vertex<GalaxyMapPlanet>> queue = new Queue<>();
+            Queue<AStarVertex<GalaxyMapPlanet>> queue = new Queue<>();
             while(!planetList.getContent().getContent().getOccupation().equals("MiniEarth")) {
                 planetList.next();
             }
@@ -272,7 +272,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
                 queue.front().setMark(true);
 
-                List<Vertex<GalaxyMapPlanet>> neighbours = planets.getNeighbours(queue.front());
+                List<AStarVertex<GalaxyMapPlanet>> neighbours = planets.getNeighbours(queue.front());
                 neighbours.toFirst();
                 while(neighbours.getContent() != null && (!neighbours.isEmpty() || neighbours.hasAccess())) {
                     if(!neighbours.getContent().isMarked() && neighbours.getContent().getContent().getOccupation().equals("MiniEarth")) {
@@ -294,17 +294,17 @@ public class GalaxyMapPlanetController extends GraphicalObject {
         }
     }
 
-    public List<Vertex<GalaxyMapPlanet>> dijkstra(Graph<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>> pGraph, Vertex<GalaxyMapPlanet> startVertex, Vertex<GalaxyMapPlanet> pZiel) {
+    public List<AStarVertex<GalaxyMapPlanet>> dijkstra(Graph<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>> pGraph, AStarVertex<GalaxyMapPlanet> startVertex, AStarVertex<GalaxyMapPlanet> pZiel) {
         pGraph.setAllVertexMarks(false);
         pGraph.setDistanceForAll(Double.MAX_VALUE);
         pGraph.setPrevToNull();
         startVertex.setPathDistance(0);
-        List<Vertex<GalaxyMapPlanet>> list = new List<>();
+        List<AStarVertex<GalaxyMapPlanet>> list = new List<>();
         list.append(startVertex);
 
         while(!list.isEmpty()) {
             list.toFirst();
-            Vertex<GalaxyMapPlanet> smallestVertex = list.getContent();
+            AStarVertex<GalaxyMapPlanet> smallestVertex = list.getContent();
             while(list.hasAccess()) {
                 if(list.getContent().getPathDistance() < smallestVertex.getPathDistance()) {
                     smallestVertex = list.getContent();
@@ -324,7 +324,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
             smallestVertex.setMark(true);
             if(smallestVertex == pZiel) break;
 
-            List<Vertex<GalaxyMapPlanet>> neighbors = pGraph.getNeighbours(smallestVertex);
+            List<AStarVertex<GalaxyMapPlanet>> neighbors = pGraph.getNeighbours(smallestVertex);
             neighbors.toFirst();
             while(neighbors.hasAccess()) {
                 if(!neighbors.getContent().isMarked()) {
@@ -339,14 +339,14 @@ public class GalaxyMapPlanetController extends GraphicalObject {
             }
         }
 
-        Stack<Vertex<GalaxyMapPlanet>> stack = new Stack<>();
-        Vertex<GalaxyMapPlanet> backTracker = pZiel;
+        Stack<AStarVertex<GalaxyMapPlanet>> stack = new Stack<>();
+        AStarVertex<GalaxyMapPlanet> backTracker = pZiel;
         stack.push(backTracker);
         while(backTracker.getPrev() != null) {
             backTracker = backTracker.getPrev();
             stack.push(backTracker);
         }
-        List<Vertex<GalaxyMapPlanet>> path = new List<>();
+        List<AStarVertex<GalaxyMapPlanet>> path = new List<>();
         while(!stack.isEmpty()) {
             path.append(stack.top());
             stack.pop();

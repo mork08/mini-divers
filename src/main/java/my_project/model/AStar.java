@@ -3,6 +3,7 @@ package my_project.model;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.Graph;
 import KAGO_framework.model.abitur.datenstrukturen.List;
+import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import beckerStructures.BeckerList;
 import davStructures.DavHeap;
 
@@ -41,6 +42,8 @@ public class AStar <ContentType extends GraphicalObject>{
      * @return the shortest path from the start vertex to the end vertex as a KAGO-List with AStarVertices.
      */
     public List<AStarVertex> findPath(){
+
+
         DavHeap<AStarVertex<ContentType>> openNodes = new DavHeap<>(true);
         openNodes.add(startNode);
         BeckerList<AStarVertex> closedNodes = new BeckerList<>();
@@ -123,15 +126,36 @@ public class AStar <ContentType extends GraphicalObject>{
     private List<AStarVertex> reconstructPathFrom(AStarVertex current){
         if (current == null ) return new List<>();
         if (current != endNode) throw new IllegalArgumentException("Path reconstruction needs to start with endNode");
+
         List<AStarVertex> list = new List<>();
 
-        while (endNode.getParent() != null){
-            list.append(current.getParent());
+        while (current != null){
+            list.append(current);
             current = current.getParent();
+        }
+
+        Stack<AStarVertex> stack = new Stack<>();
+        list.toFirst();
+        while (list.hasAccess()){
+            stack.push(list.getContent());
+            list.next();
+        }
+
+        list = new List<>();
+        while (!stack.isEmpty()){
+            list.append(stack.top());
+            stack.pop();
         }
 
         return list;
     }
+
+
+    public void resetVertices(){
+        List<AStarVertex<ContentType>> vertices = graph.getVertices();
+
+    }
+
 }
 
 /*
