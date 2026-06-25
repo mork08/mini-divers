@@ -24,6 +24,8 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     private DrawTool drawTool;
     private double cooldown = 0;
 
+    private double mouseX = 0, mouseY = 0;
+
     private String[] occupations = {"Terminis", "Iluminis", "MiniBots"};
     private double occupationBudget = 20000;
 
@@ -210,8 +212,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
     public void checkForContactOnClick(MouseEvent e) {
         if(cooldown > 0) return;
-        double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
-        double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
+
         planetList.toFirst();
         while(planetList.hasAccess()) {
             GalaxyMapPlanet p = planetList.getContent().getContent();
@@ -241,8 +242,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
     public void checkForHover(MouseEvent e) {
         if(drawTool == null) return;
-        double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
-        double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
+
         planetList.toFirst();
         while(planetList.hasAccess()) {
             GalaxyMapPlanet p = planetList.getContent().getContent();
@@ -292,6 +292,10 @@ public class GalaxyMapPlanetController extends GraphicalObject {
             }
             planetList.next();
         }
+    }
+    public void setMousePos(double x, double y) {
+        mouseX = x;
+        mouseY = y;
     }
 
     public List<AStarVertex<GalaxyMapPlanet>> dijkstra(Graph<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>> pGraph, AStarVertex<GalaxyMapPlanet> startVertex, AStarVertex<GalaxyMapPlanet> pZiel) {
