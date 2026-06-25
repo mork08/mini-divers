@@ -1,6 +1,8 @@
 package my_project.model.modes.planet;
 
 import KAGO_framework.view.DrawTool;
+import com.sun.javafx.geom.Vec2d;
+import my_project.Config;
 import my_project.control.ModeController;
 import my_project.model.modes.Mode;
 import my_project.model.modes.planet.Tilesystem.TileMap;
@@ -11,6 +13,7 @@ import java.awt.*;
 public class PlanetMode extends Mode {
     TileMap tileMap;
     Operation operation;
+    Vec2d cameraPosition;
     public PlanetMode(ModeController modeController) {
         super(modeController);
 
@@ -19,6 +22,7 @@ public class PlanetMode extends Mode {
     public void draw(DrawTool drawTool) {
         drawTool.push();
         drawTool.setScale(4);
+        drawTool.setFocalPoint(Config.WINDOW_WIDTH / 2, Config.WINDOW_HEIGHT / 2);
             operation.draw(drawTool);
         drawTool.pop();
     }
@@ -34,6 +38,7 @@ public class PlanetMode extends Mode {
 
     @Override
     public void launch() {
+        cameraPosition = new Vec2d(0,0);
         if (controller.getCurrentPlanet() != null) {
             operation = new Operation(this, controller.getCurrentPlanet().getTerrainType(), controller.getCurrentPlanet().getOccupation(), new ExterminationMission());
 
@@ -41,5 +46,8 @@ public class PlanetMode extends Mode {
     }
     public void freePlanet() {
         controller.getCurrentPlanet().setOccupation("MiniEarth");
+    }
+    public void setCameraPosition(double x, double y) {
+        cameraPosition.set(x, y);
     }
 }

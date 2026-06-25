@@ -1,8 +1,11 @@
 package my_project.model.modes.galaxyMap;
 
 import KAGO_framework.view.DrawTool;
+import my_project.Config;
 import my_project.control.ModeController;
+import my_project.control.Mouse;
 import my_project.model.modes.*;
+import my_project.view.InputManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -26,10 +29,19 @@ public class GalaxyMapMode extends Mode {
 
     @Override
     public void draw(DrawTool drawTool) {
+        drawTool.setTranslateAndScale(0,0,1,1);
+        drawTool.setFocalPoint(0,0);
         drawTool.setCurrentColor(new Color(0,0,0));
-        drawTool.drawFilledRectangle(0-drawTool.getTranslationX(),0-drawTool.getTranslationY(),1000/drawTool.getScaleX(),1000/drawTool.getScaleY());
-        galaxyMapPlanetController.draw(drawTool);
-        spaceShip.draw(drawTool);
+        drawTool.drawFilledRectangle(0,0,Config.WINDOW_WIDTH,Config.WINDOW_HEIGHT);
+        drawTool.push();
+            drawTool.setScale(scale);
+            drawTool.setTranslate(translateX, translateY);
+            drawTool.setFocalPoint(Config.WINDOW_WIDTH / 2, Config.WINDOW_HEIGHT / 2);
+            galaxyMapPlanetController.draw(drawTool);
+            drawTool.setCurrentColor(new Color(0, 255, 13));
+            drawTool.drawFilledRectangle(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y, 1,1);
+            galaxyMapPlanetController.setMousePos(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y);
+        spaceShip.draw(drawTool);drawTool.pop();
     }
 
     @Override
@@ -39,17 +51,13 @@ public class GalaxyMapMode extends Mode {
 
     @Override
     public void update(double dt) {
-        if(xTranslationDirection != 0) {
-            translateX += xTranslationDirection * dt * 600 / scale;
-        }
-        if(yTranslationDirection != 0) {
-            translateY += yTranslationDirection * dt * 600 / scale;
-        }
-        if(scaleDirection != 0) {
-            scale += scaleDirection * dt * 1 * scale;
-            translateX -= (scaleDirection  * 50/scale) / 3;
-            translateY -= (scaleDirection  * 50/scale) / 3;
-        }
+        double speed = 600;
+        if(InputManager.isPressed("w")) translateY +=  dt * speed / scale;
+        if(InputManager.isPressed("s")) translateY -=  dt * speed / scale;
+        if(InputManager.isPressed("d")) translateX -=  dt * speed / scale;
+        if(InputManager.isPressed("a")) translateX +=  dt * speed / scale;
+        if(InputManager.isPressed("e")) scale += dt * scale;
+        if(InputManager.isPressed("q")) scale -= dt * scale;
         galaxyMapPlanetController.update(dt);
         spaceShip.update(dt);
     }

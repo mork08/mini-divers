@@ -4,6 +4,7 @@ import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.*;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.view.DrawTool;
+import my_project.control.Mouse;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -22,6 +23,9 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     private double radius = 5;
     private DrawTool drawTool;
     private double cooldown = 0;
+
+    private double mouseX = 0;
+    private double mouseY = 0;
 
     private String[] occupations = {"Terminis", "Iluminis", "MiniBots"};
     private double occupationBudget = 20000;
@@ -46,8 +50,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     public void draw(DrawTool drawTool) {
         this.drawTool = drawTool;
 
-        drawTool.setTranslate(GalaxyMapMode.getTranslateX(),  GalaxyMapMode.getTranslateY());
-        drawTool.setScale(GalaxyMapMode.getScale());
+
 
         //Draw Edges
         planetEdgeList.toFirst();
@@ -209,13 +212,11 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
     public void checkForContactOnClick(MouseEvent e) {
         if(cooldown > 0) return;
-        double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
-        double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
         planetList.toFirst();
         while(planetList.hasAccess()) {
             GalaxyMapPlanet p = planetList.getContent().getContent();
             if(Math.sqrt( Math.pow(mouseX-p.getX(), 2) + Math.pow(mouseY-p.getY(),2)) <= p.getRadius()) {
-                //System.out.println(mouseX+","+mouseY+","+p.getRadius());
+                System.out.println(mouseX+","+mouseY+","+p.getRadius());
                 if(currentPlanet == planetList.getContent()) {
                     galaxyMapMode.startMission();
                     return;
@@ -240,8 +241,6 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
     public void checkForHover(MouseEvent e) {
         if(drawTool == null) return;
-        double mouseX = (e.getX()/drawTool.getScaleX()) - drawTool.getTranslationX();
-        double mouseY = (e.getY()/drawTool.getScaleY()) - drawTool.getTranslationY();
         planetList.toFirst();
         while(planetList.hasAccess()) {
             GalaxyMapPlanet p = planetList.getContent().getContent();
@@ -253,6 +252,11 @@ public class GalaxyMapPlanetController extends GraphicalObject {
             planetList.next();
         }
     }
+
+    public void setMousePos(double x, double y) {
+        mouseX = x;
+        mouseY = y;
+    };
 
     private void spreadOccupation() {
         planetList.toFirst();

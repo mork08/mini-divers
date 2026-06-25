@@ -44,7 +44,7 @@ public class Mouse extends InteractiveGraphicalObject {
         return position;
     }
     public static Vec2d getTranslatedPosition() {
-        return new Vec2d((position.x- focusOffset.x/scale.x) - offset.x, (position.y-focusOffset.y/scale.y) - offset.y);
+        return new Vec2d((position.x-focusOffset.x)/scale.x - offset.x, (position.y-focusOffset.y)/scale.y - offset.y);
     }
     public static boolean isDown(int b) {
         return button[b];
