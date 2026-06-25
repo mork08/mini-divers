@@ -38,10 +38,8 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
 
     @Override
     public void update(double dt) {
-        //colliderCage.update(dt);
         super.update(dt);
         this.walk();
-
     }
 
     private void walk() {
@@ -97,11 +95,8 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
     @Override
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
-
             drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX() - this.width / 2, (int) this.getY() - this.height / 2, (int) this.width, (int) this.height);
             colliderCage.draw(drawTool);
         }
     }
 }
-
-
