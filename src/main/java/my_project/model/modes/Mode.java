@@ -1,9 +1,14 @@
 package my_project.model.modes;
 
 import KAGO_framework.view.DrawTool;
+import my_project.control.ModeController;
 
 public abstract class Mode {
     private String wantedMode;
+    protected ModeController controller;
+    public Mode(ModeController modeController) {
+        controller = modeController;
+    }
     public void update(double dt){
 
     }
