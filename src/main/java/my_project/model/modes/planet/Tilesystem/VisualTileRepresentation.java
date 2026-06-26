@@ -3,12 +3,10 @@ package my_project.model.modes.planet.Tilesystem;
 import KAGO_framework.view.DrawTool;
 import my_project.model.spritesheetSystem.*;
 
-import java.awt.image.BufferedImage;
-
 public class VisualTileRepresentation {
     private Tile tile;
     private static final int BORDER_SIZE = 8;
-    private static PlanetSheet planetSheet = TileTextureContainer.getMars();
+    private static PlanetSheet planetSheet = TileTextureContainer.getSandy();
     public VisualTileRepresentation(Tile tile){
         setTile(tile);
     }
@@ -154,6 +152,23 @@ public class VisualTileRepresentation {
                 dt.drawImage(currentHeightSheet.getCorner("downRight", heightDifferenceRight, heightDifferenceDown, heightDifferenceDownRight), x + Tile.TILE_SIZE - BORDER_SIZE, y + Tile.TILE_SIZE - BORDER_SIZE);
                 dt.drawImage(currentHeightSheet.getCorner("downLeft", heightDifferenceDown, heightDifferenceLeft, heightDifferenceDownLeft), x, y + Tile.TILE_SIZE - BORDER_SIZE);
             }
+        }
+    }
+    public static void setTerrain(String terrainType){
+        switch (terrainType){
+            case "sandy":
+                planetSheet = TileTextureContainer.getSandy();
+                break;
+                case "earthlike":
+                    planetSheet = TileTextureContainer.getEarthlike();
+                    break;
+            case "rocky":
+                planetSheet = TileTextureContainer.getRocky();
+                break;
+                default:
+                    planetSheet = TileTextureContainer.getDebugPlanet();
+                    break;
+
         }
     }
 }

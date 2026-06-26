@@ -2,6 +2,7 @@ package my_project.model.modes.planet;
 
 import KAGO_framework.view.DrawTool;
 import my_project.model.modes.planet.Tilesystem.TileMap;
+import my_project.model.modes.planet.Tilesystem.VisualTileRepresentation;
 import my_project.model.modes.planet.entity.EntityManager;
 import my_project.model.modes.planet.missions.Mission;
 import my_project.model.newerColliderSystem.CollisionHandler;
@@ -18,6 +19,7 @@ public class Operation {
         this.terrainType = terrainType;
         this.occupation = occupation;
         this.planetMode = planetMode;
+        VisualTileRepresentation.setTerrain(terrainType);
         CollisionHandler.setOperation(Operation.this);
     }
     public TileMap getTilemap() {
