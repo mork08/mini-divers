@@ -116,6 +116,7 @@ public class GraphicalObject implements Drawable {
      * @return True, falls eine Kollision besteht, sonst false.
      */
     public boolean collidesWith(GraphicalObject gO){
+        if(gO == null) return false;
         if(radius == 0){
             if(gO.getRadius() == 0){
                 if ( x < gO.getX()+gO.getWidth() && x + width > gO.getX() && y < gO.getY() + gO.getHeight() && y + height > gO.getY() ) return true;

@@ -26,4 +26,24 @@ public class EntityManager {
     public static void keypressedCallback(int key) {
         EntityManager.entities.forEach((e, i) -> e.keypressed(key));
     }
+
+    public static BeckerList<Entity<?>> getEntities() {
+        return entities;
+    }
+    public static BeckerList<Entity<?>> getNearbyEntities(double x, double y, double distance) {
+        BeckerList<Entity<?>> returning = new BeckerList<>();
+        for (int i = 0; i < entities.getCapacity(); i++) {
+            Entity<?> e = entities.get(i);
+            if (e != null) {
+                double dx = e.getX() - x;
+                double dy = e.getY() - y;
+                double dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < distance) {
+                    returning.append(e);
+                }
+            }
+
+        }
+        return returning;
+    }
 }

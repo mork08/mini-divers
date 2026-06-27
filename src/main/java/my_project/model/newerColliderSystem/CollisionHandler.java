@@ -27,7 +27,7 @@ public class CollisionHandler {
             for (int y = 0; y <= heightInTiles; y++) {
                 Tile tile = operation.getTileMap().getTileByPosition(collider.getX() + x * Tile.TILE_SIZE, collider.getY() + y * Tile.TILE_SIZE);
                 boolean collides = collider.collidesWith(tile);
-                boolean isSolid = (tile.getLevelHeight() != 0);
+                boolean isSolid = tile != null ? (tile.getLevelHeight() != 0) : false;
                 //System.out.println("collides at " +Terrain.convertPositionToBlockGrid(block.getX(), block.getY()).x+"|"+ Terrain.convertPositionToBlockGrid(block.getX(), block.getY()).y+": "+ collides);
                 //System.out.println(block.getClass().getSimpleName());
                 if (collides && isSolid) {

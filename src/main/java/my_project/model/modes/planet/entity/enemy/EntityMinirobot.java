@@ -1,5 +1,6 @@
 package my_project.model.modes.planet.entity.enemy;
 
+import my_project.model.modes.planet.Tilesystem.TileMap;
 import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
@@ -27,6 +28,7 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
             100
         );
         this.direction = EntityDirection.DOWN;
+        this.health = 50;
     }
 
     @Override
@@ -36,7 +38,8 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
 
     @Override
     public void update(double dt) {
+        if (target == null) {setTarget(TileMap.getPlayer());}
         super.update(dt);
-        System.out.println("UPDATE");
+        //System.out.println("UPDATE");
     }
 }

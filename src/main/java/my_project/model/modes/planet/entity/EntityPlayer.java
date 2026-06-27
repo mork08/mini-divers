@@ -2,6 +2,7 @@ package my_project.model.modes.planet.entity;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.view.DrawTool;
+import beckerStructures.BeckerList;
 import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
@@ -32,11 +33,12 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
                 height
         );
         this.direction = EntityDirection.DOWN;
+        this.health = 100;
     }
 
     @Override
     public void update(double dt) {
-        colliderCage.update(dt);
+        //colliderCage.update(dt);
         super.update(dt);
         this.walk();
 
@@ -65,6 +67,15 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
         if (ViewController.isKeyDown(KeyEvent.VK_D)) {
             velX += speed;
             this.direction = EntityDirection.RIGHT;
+        }
+
+        if (ViewController.isKeyDown(KeyEvent.VK_SPACE)) {
+            BeckerList<Entity<?>> victims = EntityManager.getNearbyEntities(this.x, this.y, 64);
+            for (int i = 0; i < victims.getCapacity(); i++) {
+                if (victims.get(i)!= this) {
+                    victims.get(i).damage(100);
+                }
+            }
         }
 
         this.colliderCage.setVelocity(velX, velY);

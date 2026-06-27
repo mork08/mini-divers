@@ -15,6 +15,7 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
     protected final AnimationRenderer renderer;
     //protected final Collider collider;
     protected final Cage colliderCage;
+    protected double health;
     protected double x;
     protected double y;
     protected double width;
@@ -44,8 +45,12 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
             this.renderer.update(dt);
         }
         if (this.colliderCage != null) {
+            colliderCage.update(dt);
             this.x = this.colliderCage.getX();
             this.y = this.colliderCage.getY();
+        }
+        if (health <= 0){
+            EntityManager.unregister(this);
         }
     }
 
@@ -100,5 +105,8 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
         }
 
         return null;
+    }
+    public void damage(double damage) {
+        health -= damage;
     }
 }
