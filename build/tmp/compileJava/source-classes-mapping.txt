@@ -10,8 +10,8 @@ KAGO_framework/view/simple_gui/ButtonHandler.java
 KAGO_framework/model/abitur/datenstrukturen/BinarySearchTree.java
  KAGO_framework.model.abitur.datenstrukturen.BinarySearchTree
  KAGO_framework.model.abitur.datenstrukturen.BinarySearchTree$BSTNode
-KAGO_framework/model/GraphicalObject.java
- KAGO_framework.model.GraphicalObject
+my_project/model/modes/galaxyMap/SpaceShip.java
+ my_project.model.modes.galaxyMap.SpaceShip
 my_project/model/spritesheetSystem/QuadSheet.java
  my_project.model.spritesheetSystem.QuadSheet
 KAGO_framework/view/DrawFrame.java
@@ -22,8 +22,8 @@ MainProgram.java
  MainProgram
 my_project/model/spritesheetSystem/SpriteSheet.java
  my_project.model.spritesheetSystem.SpriteSheet
-KAGO_framework/control/package-info.java
- KAGO_framework.control.package-info
+KAGO_framework/model/abitur/datenstrukturen/Graph.java
+ KAGO_framework.model.abitur.datenstrukturen.Graph
 KAGO_framework/model/abitur/datenbanken/msaccess/QueryResult.java
  KAGO_framework.model.abitur.datenbanken.msaccess.QueryResult
 KAGO_framework/model/InteractiveGraphicalObject.java
@@ -41,16 +41,20 @@ KAGO_framework/view/simple_gui/Label.java
  KAGO_framework.view.simple_gui.Label
 KAGO_framework/control/Interactable.java
  KAGO_framework.control.Interactable
+my_project/model/spritesheetSystem/animation/states/CharacterAnimationState.java
+ my_project.model.spritesheetSystem.animation.states.CharacterAnimationState
 my_project/control/ProgramController.java
  my_project.control.ProgramController
+my_project/model/spritesheetSystem/animation/entity/EntityState.java
+ my_project.model.spritesheetSystem.animation.entity.EntityState
 KAGO_framework/model/abitur/datenbanken/sqllite/DatabaseConnector.java
  KAGO_framework.model.abitur.datenbanken.sqllite.DatabaseConnector
+my_project/model/spritesheetSystem/animation/AnimationRenderer.java
+ my_project.model.spritesheetSystem.animation.AnimationRenderer
 KAGO_framework/model/abitur/datenstrukturen/Edge.java
  KAGO_framework.model.abitur.datenstrukturen.Edge
 my_project/control/Mouse.java
  my_project.control.Mouse
-my_project/model/modes/planet/collisionSystem/Collider.java
- my_project.model.modes.planet.collisionSystem.Collider
 my_project/model/modes/galaxyMap/GalaxyMapPlanetInfoContainer.java
  my_project.model.modes.galaxyMap.GalaxyMapPlanetInfoContainer
 KAGO_framework/view/DrawTool.java
@@ -58,6 +62,8 @@ KAGO_framework/view/DrawTool.java
  KAGO_framework.view.DrawTool$Translation
 KAGO_framework/model/abitur/datenstrukturen/Vertex.java
  KAGO_framework.model.abitur.datenstrukturen.Vertex
+my_project/model/newerColliderSystem/Cage.java
+ my_project.model.newerColliderSystem.Cage
 KAGO_framework/model/abitur/package-info.java
  KAGO_framework.model.abitur.package-info
 KAGO_framework/model/abitur/netz/Server.java
@@ -65,12 +71,16 @@ KAGO_framework/model/abitur/netz/Server.java
  KAGO_framework.model.abitur.netz.Server$ClientMessageHandler
  KAGO_framework.model.abitur.netz.Server$ClientMessageHandler$ClientSocketWrapper
  KAGO_framework.model.abitur.netz.Server$NewConnectionHandler
+my_project/model/modes/planet/entity/EntityManager.java
+ my_project.model.modes.planet.entity.EntityManager
 KAGO_framework/model/abitur/netz/Connection.java
  KAGO_framework.model.abitur.netz.Connection
 my_project/model/modes/planet/Tilesystem/VisualTileRepresentation.java
  my_project.model.modes.planet.Tilesystem.VisualTileRepresentation
 my_project/model/modes/planet/Operation.java
  my_project.model.modes.planet.Operation
+my_project/model/spritesheetSystem/animation/RangeInt.java
+ my_project.model.spritesheetSystem.animation.RangeInt
 KAGO_framework/model/Sound.java
  KAGO_framework.model.Sound
  KAGO_framework.model.Sound$1
@@ -81,8 +91,10 @@ KAGO_framework/model/abitur/datenbanken/msaccess/DatabaseConnector.java
  KAGO_framework.model.abitur.datenbanken.msaccess.DatabaseConnector
 my_project/view/InputManager.java
  my_project.view.InputManager
-KAGO_framework/control/DatabaseController.java
- KAGO_framework.control.DatabaseController
+my_project/model/AStar.java
+ my_project.model.AStar
+my_project/model/spritesheetSystem/animation/entity/IEntityAnimationState.java
+ my_project.model.spritesheetSystem.animation.entity.IEntityAnimationState
 KAGO_framework/model/abitur/datenstrukturen/Queue.java
  KAGO_framework.model.abitur.datenstrukturen.Queue
  KAGO_framework.model.abitur.datenstrukturen.Queue$QueueNode
@@ -95,6 +107,8 @@ KAGO_framework/control/NetworkController.java
  KAGO_framework.control.NetworkController
  KAGO_framework.control.NetworkController$1
  KAGO_framework.control.NetworkController$NetworkClient
+my_project/model/modes/planet/entity/EntityPlayer.java
+ my_project.model.modes.planet.entity.EntityPlayer
 KAGO_framework/control/SoundController.java
  KAGO_framework.control.SoundController
  KAGO_framework.control.SoundController$SoundData
@@ -102,12 +116,18 @@ KAGO_framework/view/simple_gui/GIFPainter.java
  KAGO_framework.view.simple_gui.GIFPainter
 my_project/model/modes/Mode.java
  my_project.model.modes.Mode
+my_project/model/modes/planet/entity/enemy/EntityMinirobot.java
+ my_project.model.modes.planet.entity.enemy.EntityMinirobot
 KAGO_framework/view/package-info.java
  KAGO_framework.view.package-info
 my_project/model/modes/planet/Tilesystem/TileTextureContainer.java
  my_project.model.modes.planet.Tilesystem.TileTextureContainer
 KAGO_framework/view/simple_gui/Button.java
  KAGO_framework.view.simple_gui.Button
+my_project/model/spritesheetSystem/animation/Animation.java
+ my_project.model.spritesheetSystem.animation.Animation
+my_project/model/newerColliderSystem/Collider.java
+ my_project.model.newerColliderSystem.Collider
 davStructures/DavHeap.java
  davStructures.DavHeap
 KAGO_framework/model/abitur/datenstrukturen/ComparableContent.java
@@ -116,37 +136,44 @@ my_project/model/modes/galaxyMap/GalaxyMapPlanet.java
  my_project.model.modes.galaxyMap.GalaxyMapPlanet
 my_project/model/modes/planet/Tilesystem/TileMap.java
  my_project.model.modes.planet.Tilesystem.TileMap
-my_project/model/modes/start/StartMode.java
- my_project.model.modes.start.StartMode
+my_project/model/modes/galaxyMap/GalaxyMapMode.java
+ my_project.model.modes.galaxyMap.GalaxyMapMode
 beckerStructures/BeckerMap.java
  beckerStructures.BeckerMap
  beckerStructures.BeckerMap$MapNode
 KAGO_framework/control/Drawable.java
  KAGO_framework.control.Drawable
-my_project/model/modes/planet/collisionSystem/CollisionManager.java
- my_project.model.modes.planet.collisionSystem.CollisionManager
 KAGO_framework/model/abitur/netz/Client.java
  KAGO_framework.model.abitur.netz.Client
  KAGO_framework.model.abitur.netz.Client$MessageHandler
  KAGO_framework.model.abitur.netz.Client$MessageHandler$SocketWrapper
 my_project/Config.java
  my_project.Config
-KAGO_framework/model/abitur/datenbanken/mysql/DatabaseConnector.java
- KAGO_framework.model.abitur.datenbanken.mysql.DatabaseConnector
+my_project/model/AStarVertex.java
+ my_project.model.AStarVertex
+ my_project.model.AStarVertex$Status
+my_project/model/spritesheetSystem/animation/states/MinirobotAnimationState.java
+ my_project.model.spritesheetSystem.animation.states.MinirobotAnimationState
 KAGO_framework/view/DrawingPanel.java
  KAGO_framework.view.DrawingPanel
 beckerStructures/BeckerList.java
  beckerStructures.BeckerList
 my_project/model/modes/planet/Tilesystem/Chunk.java
  my_project.model.modes.planet.Tilesystem.Chunk
+my_project/model/spritesheetSystem/animation/entity/EntityDirection.java
+ my_project.model.spritesheetSystem.animation.entity.EntityDirection
 my_project/control/ModeController.java
  my_project.control.ModeController
+my_project/model/newerColliderSystem/CollisionHandler.java
+ my_project.model.newerColliderSystem.CollisionHandler
 my_project/model/House.java
  my_project.model.House
 KAGO_framework/model/abitur/datenbanken/mysql/QueryResult.java
  KAGO_framework.model.abitur.datenbanken.mysql.QueryResult
-my_project/model/spritesheetSystem/TileSheet.java
- my_project.model.spritesheetSystem.TileSheet
+my_project/model/modes/planet/entity/Entity.java
+ my_project.model.modes.planet.entity.Entity
+my_project/model/modes/galaxyMap/GalaxyMapPlanetController.java
+ my_project.model.modes.galaxyMap.GalaxyMapPlanetController
 KAGO_framework/model/package-info.java
  KAGO_framework.model.package-info
 my_project/model/spritesheetSystem/PlanetSheet.java
@@ -154,20 +181,23 @@ my_project/model/spritesheetSystem/PlanetSheet.java
 KAGO_framework/model/abitur/datenstrukturen/Stack.java
  KAGO_framework.model.abitur.datenstrukturen.Stack
  KAGO_framework.model.abitur.datenstrukturen.Stack$StackNode
+my_project/model/modes/planet/entity/enemy/EntityEnemy.java
+ my_project.model.modes.planet.entity.enemy.EntityEnemy
 KAGO_framework/view/ProgramView.java
  KAGO_framework.view.ProgramView
 my_project/model/modes/planet/missions/ExtractionMission.java
  my_project.model.modes.planet.missions.ExtractionMission
-my_project/model/AStarVertex.java
- my_project.model.AStarVertex
- my_project.model.AStarVertex$Status
-my_project/model/modes/galaxyMap/SpaceShip.java
- my_project.model.modes.galaxyMap.SpaceShip
-my_project/model/modes/galaxyMap/GalaxyMapMode.java
- my_project.model.modes.galaxyMap.GalaxyMapMode
-KAGO_framework/model/abitur/datenstrukturen/Graph.java
- KAGO_framework.model.abitur.datenstrukturen.Graph
-my_project/model/AStar.java
- my_project.model.AStar
-my_project/model/modes/galaxyMap/GalaxyMapPlanetController.java
- my_project.model.modes.galaxyMap.GalaxyMapPlanetController
+my_project/model/spritesheetSystem/animation/IAnimationState.java
+ my_project.model.spritesheetSystem.animation.IAnimationState
+my_project/model/spritesheetSystem/TileSheet.java
+ my_project.model.spritesheetSystem.TileSheet
+KAGO_framework/control/DatabaseController.java
+ KAGO_framework.control.DatabaseController
+KAGO_framework/control/package-info.java
+ KAGO_framework.control.package-info
+my_project/model/modes/start/StartMode.java
+ my_project.model.modes.start.StartMode
+KAGO_framework/model/GraphicalObject.java
+ KAGO_framework.model.GraphicalObject
+KAGO_framework/model/abitur/datenbanken/mysql/DatabaseConnector.java
+ KAGO_framework.model.abitur.datenbanken.mysql.DatabaseConnector

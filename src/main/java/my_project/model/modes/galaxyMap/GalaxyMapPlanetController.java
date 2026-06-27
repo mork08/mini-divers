@@ -225,8 +225,8 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                 }
 
                 cooldown = 1;
-                List<AStarVertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
-                //List<AStarVertex<GalaxyMapPlanet>> path = new AStar(planets, currentPlanet, planetList.getContent()).findPath();
+                //List<AStarVertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
+                List<AStarVertex<GalaxyMapPlanet>> path = new AStar(planets, currentPlanet, planetList.getContent()).findPath();
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
                 while(path.hasAccess()) {

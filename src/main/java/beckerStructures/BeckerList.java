@@ -57,7 +57,9 @@ public class BeckerList<ContentType> {
         if (i >= 0 && i < this.array.length){
             this.currentIndex = i;
             this.array[i] = content;
-            this.length++;
+            if (this.array[i] == null && content != null) {
+                this.length++;
+            }
 
         } else if (i>=0) {
             expand(i);
