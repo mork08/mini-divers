@@ -136,6 +136,10 @@ public class TileMap extends GraphicalObject {
                         //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
                         System.out.print(":");
+                        if (Math.random() < 0.2) {
+                            System.out.print("Summoned robot");
+                            new EntityMinirobot("minirob"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+                        }
                         break;
                     case "11111111111111111111111100000000": //yellow
                         //createTile(col, row, 1);
@@ -146,8 +150,6 @@ public class TileMap extends GraphicalObject {
                         //objective spawn point
                         //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
-                        System.out.print("Summoned robot");
-                        new EntityMinirobot("minirob"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
 
                         System.out.print("Y");
                         //TODO SPAWN OBJECTIVE

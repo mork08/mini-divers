@@ -51,9 +51,7 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
 
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
-            drawTool.push();
             drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height);
-            drawTool.pop();
         }
     }
 
