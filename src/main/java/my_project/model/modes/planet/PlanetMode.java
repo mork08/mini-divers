@@ -6,6 +6,8 @@ import my_project.Config;
 import my_project.control.ModeController;
 import my_project.model.modes.Mode;
 import my_project.model.modes.planet.Tilesystem.TileMap;
+import my_project.model.modes.planet.collisionSystem.CollisionManager;
+import my_project.model.modes.planet.entity.enemy.EntityMinirobot;
 import my_project.model.modes.planet.missions.ExterminationMission;
 
 import java.awt.*;
@@ -22,6 +24,7 @@ public class PlanetMode extends Mode {
     @Override
     public void update(double dt) {
         super.update(dt);
+        CollisionManager.update(dt);
         operation.update(dt);
     }
 
@@ -37,12 +40,15 @@ public class PlanetMode extends Mode {
     }
     @Override
     public void drawUI(DrawTool drawTool) {
+        int x = 900;
         drawTool.setCurrentColor(new Color(0, 0, 0));
-        drawTool.drawFilledRectangle(50,100,200,300);
+        drawTool.drawFilledRectangle(x - 20,100,200,300);
         drawTool.setCurrentColor(new Color(255, 255, 255));
-        drawTool.drawText(60, 150, "Planet: " + controller.getCurrentPlanet().getPlanetName());
-        drawTool.drawText(60, 170, "Occupation: " + controller.getCurrentPlanet().getOccupation());
-        drawTool.drawText(60, 190, "Terrain: " + controller.getCurrentPlanet().getTerrainType());
+        drawTool.drawText(x, 150, "Planet: " + controller.getCurrentPlanet().getPlanetName());
+        drawTool.drawText(x, 170, "Occupation: " + controller.getCurrentPlanet().getOccupation());
+        drawTool.drawText(x, 190, "Terrain: " + controller.getCurrentPlanet().getTerrainType());
+        drawTool.drawText(x, 210, "X: " + TileMap.getPlayer().getX());
+        drawTool.drawText(x, 230, "Y: " + TileMap.getPlayer().getY());
     }
 
     @Override
@@ -51,7 +57,7 @@ public class PlanetMode extends Mode {
         if (controller.getCurrentPlanet() != null) {
             System.out.println("Planet: " + controller.getCurrentPlanet().getPlanetName());
             operation = new Operation(this, controller.getCurrentPlanet().getTerrainType(), controller.getCurrentPlanet().getOccupation(), new ExterminationMission());
-
+            new EntityMinirobot("test", 10, 10, 32, 32).setTarget(TileMap.getPlayer());
         }
     }
     public void freePlanet() {
