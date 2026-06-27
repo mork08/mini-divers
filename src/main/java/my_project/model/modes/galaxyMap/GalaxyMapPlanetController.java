@@ -4,6 +4,7 @@ import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.*;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.view.DrawTool;
+import my_project.model.AStar;
 import my_project.model.AStarVertex;
 
 import java.awt.*;
@@ -225,6 +226,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
 
                 cooldown = 1;
                 List<AStarVertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
+                //List<AStarVertex<GalaxyMapPlanet>> path = new AStar(planets, currentPlanet, planetList.getContent()).findPath();
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
                 while(path.hasAccess()) {
@@ -301,7 +303,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
     public List<AStarVertex<GalaxyMapPlanet>> dijkstra(Graph<GalaxyMapPlanet, AStarVertex<GalaxyMapPlanet>> pGraph, AStarVertex<GalaxyMapPlanet> startVertex, AStarVertex<GalaxyMapPlanet> pZiel) {
         pGraph.setAllVertexMarks(false);
         pGraph.setDistanceForAll(Double.MAX_VALUE);
-        pGraph.setPrevToNull();
+        pGraph.setParentToNull();
         startVertex.setPathDistance(0);
         List<AStarVertex<GalaxyMapPlanet>> list = new List<>();
         list.append(startVertex);
@@ -335,8 +337,8 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                     double newDistance = smallestVertex.getPathDistance() + pGraph.getEdge(smallestVertex, neighbors.getContent()).getWeight();
                     if(neighbors.getContent().getPathDistance() > newDistance) {
                         neighbors.getContent().setPathDistance(newDistance);
-                        if(neighbors.getContent().getPrev() == null) list.append(neighbors.getContent());
-                        neighbors.getContent().setPrev(smallestVertex);
+                        if(neighbors.getContent().getParent() == null) list.append(neighbors.getContent());
+                        neighbors.getContent().setParent(smallestVertex);
                     }
                 }
                 neighbors.next();
@@ -346,8 +348,8 @@ public class GalaxyMapPlanetController extends GraphicalObject {
         Stack<AStarVertex<GalaxyMapPlanet>> stack = new Stack<>();
         AStarVertex<GalaxyMapPlanet> backTracker = pZiel;
         stack.push(backTracker);
-        while(backTracker.getPrev() != null) {
-            backTracker = backTracker.getPrev();
+        while(backTracker.getParent() != null) {
+            backTracker = backTracker.getParent();
             stack.push(backTracker);
         }
         List<AStarVertex<GalaxyMapPlanet>> path = new List<>();

@@ -10,8 +10,7 @@ public class AStarVertex<ContentType> extends Vertex<ContentType> implements Com
     private double distance;
     private double heuristic;
     private double cost;
-    private AStarVertex parent;
-    private AStarVertex<ContentType> prev;
+    private AStarVertex<ContentType>  parent;
     private Status status = Status.UNDISCOVERED;
 
     public AStarVertex(String pID){
@@ -43,11 +42,8 @@ public class AStarVertex<ContentType> extends Vertex<ContentType> implements Com
         status = Status.UNDISCOVERED;
     }
 
-    public void setPrev(AStarVertex<ContentType> pPrev){prev = pPrev;}
     public void setStatus(Status status){this.status = status;}
     public Status getStatus(){return status;}
-
-    public AStarVertex<ContentType> getPrev(){return prev;}
 
     @Override
     public boolean isGreater(AStarVertex otherNode){return cost > otherNode.cost;}

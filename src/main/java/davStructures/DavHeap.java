@@ -9,6 +9,7 @@ import beckerStructures.BeckerList;
  * Gespeichert wird in einem dynamischen Array, weil der Baum lückenlos ist.
  * Referenzen auf Kinder bleiben so erspart.
  * @param <CT> Der Datentyp der gespeicherten Objekte, die vergleichbar sein müssen (implements ComparableContent)
+ * @autor David Glusmann
  */
 public class DavHeap <CT extends ComparableContent> {
     private boolean isMin;
@@ -54,17 +55,15 @@ public class DavHeap <CT extends ComparableContent> {
      * @param element
      */
     public void add(CT element){
-        // Insert element at the first unfilled position (at the end, as it's a complete tree)
-        heap.append(element);
-
-        bubbleUp(heap.getLength() - 1);
+        heap.append(element); // Insert element at the first unfilled position (at the end, as it's a complete tree)
+        bubbleUp(heap.getLength() - 1); // restore heap property
     }
 
     /**
      * @return the content with the min or max value
      */
     public CT getRoot(){
-        if (heap.getLength() == 0) throw new RuntimeException("Heap is empty");
+        if (heap.getLength() == 0) return null;
         return heap.get(0);
     }
 
@@ -72,17 +71,14 @@ public class DavHeap <CT extends ComparableContent> {
      * @return the content with the min or max value and remove it
      */
     public CT extractRoot(){
-        if (heap.getLength() == 0) throw new RuntimeException("Heap is empty");
+        if (heap.getLength() == 0) return null;
 
         CT rootElement = heap.get(0);
-        CT lastElement = heap.get(heap.getLength() - 1);
-        heap.set(heap.getLength()-1, null);
-
+        CT lastElement = heap.remove(heap.getLength() - 1);
         if (!isEmpty()){
             heap.set(0, lastElement);
             bubbleDown(0);
         }
-
         return rootElement;
     }
 
@@ -95,17 +91,17 @@ public class DavHeap <CT extends ComparableContent> {
                 int smallest = index;
 
                 // Find the smallest out of current and its right and left child
-                if (heap.get(leftIndex).isLess(heap.get(index))){
+                if (leftIndex < heap.getLength() && heap.get(leftIndex).isLess(heap.get(index))){
                     smallest = leftIndex;
                 }
 
-                if (heap.get(rightIndex).isLess(heap.get(index))){
+                if (rightIndex < heap.getLength() && heap.get(rightIndex).isLess(heap.get(smallest))){
                     smallest = rightIndex;
                 }
 
-                if (index == smallest){ break; } // Heap property is restored because current isn't bigger than its children
+                if (index == smallest){ break; } // Heap property is restored because current is smaller than its children
 
-                // If heap property is still unrestored, swap with smaller child
+                // If heap property is still not restored, swap with smaller child
                 swap(smallest, index);
                 index = smallest;
             }
@@ -117,32 +113,36 @@ public class DavHeap <CT extends ComparableContent> {
                 int biggest = index;
 
                 // Find the biggest out of current and its right and left child
-                if (heap.get(leftIndex).isGreater(heap.get(index))){
+                if (leftIndex < heap.getLength() && heap.get(leftIndex).isGreater(heap.get(index))){
                     biggest = leftIndex;
                 }
 
-                if (heap.get(rightIndex).isGreater(heap.get(index))){
+                if (rightIndex < heap.getLength() && heap.get(rightIndex).isGreater(heap.get(biggest))){
                     biggest = rightIndex;
                 }
 
-                if (index == biggest){ break; } // Heap property is restored because current isn't smaller than its children
+                if (index == biggest){ break; } // Heap property is restored because current is bigger than its children
 
-                // If heap property is still unrestored, swap with bigger child
+                // If heap property is still not restored, swap with bigger child
                 swap(biggest, index);
                 index = biggest;
             }
         }
     }
 
+    /**
+     * Swaps object with parent as often as needed to restore the heap property
+     * @param index the index whose object is to be bubbled up
+     *
+     */
     private void bubbleUp(int index){
-        // Bubble up (swap with parent as often as needed) to restore the heap property
         if (isMin){
-            while (index >= 0 && (heap.get(index).isLess(heap.get(parent(index))) || heap.get(index) == null)){
+            while (index > 0 && (heap.get(index).isLess(heap.get(parent(index))))){
                 swap(index, parent(index));
                 index = parent(index);
             }
         } else {
-            while (index >= 0 && (heap.get(index).isGreater(heap.get(index))) || heap.get(index) == null){
+            while (index > 0 && (heap.get(index).isGreater(heap.get(parent(index))))){
                 swap(index, parent(index));
                 index = parent(index);
             }

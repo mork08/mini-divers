@@ -1,6 +1,5 @@
 package KAGO_framework.model.abitur.datenstrukturen;
 
-import KAGO_framework.model.abitur.datenstrukturen.Edge;
 import my_project.model.AStarVertex;
 
 /**
@@ -322,10 +321,10 @@ public class Graph<CT, V extends Vertex<CT>>{
     }
   }
 
-  public void setPrevToNull(){
+  public void setParentToNull(){
     vertices.toFirst();
     while(vertices.hasAccess()){
-      ((AStarVertex)vertices.getContent()).setPrev(null); // Achtung: Nur für dieses Projekt anwendbar
+      ((AStarVertex)vertices.getContent()).setParent(null); // Achtung: Nur für dieses Projekt anwendbar
       vertices.next();
     }
   }
