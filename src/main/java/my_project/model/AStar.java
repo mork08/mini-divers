@@ -62,29 +62,27 @@ public class AStar <CT extends GraphicalObject>{
             neighbours.toFirst();
             while (neighbours.hasAccess()){
                 AStarVertex<CT> nbr = neighbours.getContent();
-
-                // check if nbr is closed or unknown
                 double weight = graph.getEdge(current,nbr).getWeight();
 
                 // if (closedNodes.contains(nbr)) continue; // Skips closed neighbour
-                if (nbr.getStatus() == AStarVertex.Status.CLOSED) continue; // Skips closed neighbour
+                // if (nbr.getStatus() == AStarVertex.Status.CLOSED) continue; // Skips closed neighbour
 
-                else if (nbr.getStatus() == AStarVertex.Status.OPEN) {
-                    double tentativeCost = current.getDistance() + weight;
-                    if (tentativeCost < nbr.getDistance()) {
+                if (!(nbr.getStatus() == AStarVertex.Status.CLOSED)){ // check status & skip node if closed
+                    if (nbr.getStatus() == AStarVertex.Status.OPEN) {
+                        double tentativeCost = current.getDistance() + weight;
+                        if (tentativeCost < nbr.getDistance()) {
+                            nbr.setDistance(current.getDistance() + weight);
+                            nbr.setParent(current);
+                            openNodes.updatePosition(neighbours.getContent(), true);
+                        }
+                    } else { // if this is reached, nbr is unknown
                         nbr.setDistance(current.getDistance() + weight);
+                        nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
                         nbr.setParent(current);
-                        openNodes.updatePosition(neighbours.getContent(), true);
+                        nbr.setStatus(AStarVertex.Status.OPEN);
+                        openNodes.add(nbr);
                     }
-
-                } else { // if this is reached, nbr is unknown
-                    nbr.setDistance(current.getDistance() + weight);
-                    nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
-                    nbr.setParent(current);
-                    nbr.setStatus(AStarVertex.Status.OPEN);
-                    openNodes.add(nbr);
                 }
-
                 neighbours.next();
             }
         }
@@ -97,6 +95,7 @@ public class AStar <CT extends GraphicalObject>{
         vertices.toFirst();
         while (vertices.hasAccess()){
             vertices.getContent().resetVertex();
+            vertices.next();
         }
     }
 
