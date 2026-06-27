@@ -1,7 +1,7 @@
 package my_project.model.modes.planet.entity.enemy;
 
-import my_project.model.modes.planet.collisionSystem.Collider;
 import my_project.model.modes.planet.entity.Entity;
+import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
 import my_project.model.spritesheetSystem.animation.entity.EntityState;
@@ -12,8 +12,8 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
     protected Entity<?> target;
     protected int range;
 
-    public EntityEnemy(String id, AnimationRenderer<T> renderer, Collider collider, double x, double y, double width, double height, int range) {
-        super(id, renderer, collider, x, y, width, height);
+    public EntityEnemy(String id, AnimationRenderer<T> renderer, Cage colliderCage, double x, double y, double width, double height, int range) {
+        super(id, renderer, colliderCage, x, y, width, height);
         this.range = range;
     }
 
@@ -24,7 +24,7 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
     }
 
     private void walkToTarget() {
-        if (this.target == null || this.collider == null) {
+        if (this.target == null || this.colliderCage == null) {
             return;
         }
 
@@ -37,7 +37,7 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
 
         this.updateDirectionToTarget(dx, dy);
         if (distance <= this.range) {
-            this.collider.setLinVel(0, 0);
+            this.colliderCage.setVelocity(0, 0);
             this.setIdleAnimation();
             return;
         }
@@ -48,10 +48,10 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
         double velX = dirX * speed;
         double velY = dirY * speed;
 
-        this.collider.setLinVel(velX, velY);
+        this.colliderCage.setVelocity(velX, velY);
 
-        this.x = this.collider.getX();
-        this.y = this.collider.getY();
+        this.x = this.colliderCage.getX();
+        this.y = this.colliderCage.getY();
 
         EntityState state = velX == 0 && velY == 0
                 ? EntityState.IDLE

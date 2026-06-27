@@ -1,6 +1,6 @@
 package my_project.model.modes.planet.entity.enemy;
 
-import my_project.model.modes.planet.collisionSystem.Collider;
+import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
 import my_project.model.spritesheetSystem.animation.entity.EntityState;
@@ -19,7 +19,7 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
                     32,
                     MinirobotAnimationState.IDLE_DOWN
             ),
-            new Collider(x, y, width, height),
+            new Cage(x, y, width, height, 1, 4),
             x,
             y,
             width,

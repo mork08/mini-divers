@@ -12,20 +12,18 @@ import java.awt.event.KeyEvent;
 
 public class EntityPlayer extends Entity<CharacterAnimationState> {
 
-    private EntityDirection direction;
-
     public EntityPlayer(String id, double x, double y, double width, double height) {
         super(
             id,
             new AnimationRenderer<>(
-                    "/graphic/entities/player.png",
-                    2,
-                    4,
-                    32,
-                    32,
-                    CharacterAnimationState.IDLE_DOWN
+                "/graphic/entities/player.png",
+                2,
+                4,
+                32,
+                32,
+                CharacterAnimationState.IDLE_DOWN
             ),
-            new Cage(x,y,10,10,1,2),
+            new Cage(x, y, width, height, 0,10),
             x,
             y,
             width,
@@ -36,10 +34,8 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
 
     @Override
     public void update(double dt) {
-        colliderCage.update(dt);
         super.update(dt);
         this.walk();
-
     }
 
     private void walk() {
@@ -69,8 +65,8 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
 
         this.colliderCage.setVelocity(velX, velY);
 
-        this.x = this.colliderCage.getX()+colliderCage.getWidth()/2;
-        this.y = this.colliderCage.getY()+colliderCage.getHeight()/2;
+        this.x = this.colliderCage.getX();
+        this.y = this.colliderCage.getY();
 
         EntityState state = velX == 0 && velY == 0
                 ? EntityState.IDLE
@@ -86,18 +82,8 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
     @Override
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
-
-            drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX()-this.width/2, (int) this.getY()-this.height/2, (int) this.width, (int) this.height);
+            drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height);
             colliderCage.draw(drawTool);
         }
-    }
-
-    private CharacterAnimationState getStateForEntityState(EntityDirection direction, EntityState state) {
-        for (CharacterAnimationState anim : CharacterAnimationState.values()) {
-            if (anim.getDirection() == direction && anim.getState() == state) {
-                return anim;
-            }
-        }
-        return null;
     }
 }

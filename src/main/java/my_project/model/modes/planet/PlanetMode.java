@@ -6,7 +6,6 @@ import my_project.Config;
 import my_project.control.ModeController;
 import my_project.model.modes.Mode;
 import my_project.model.modes.planet.Tilesystem.TileMap;
-import my_project.model.modes.planet.collisionSystem.CollisionManager;
 import my_project.model.modes.planet.entity.enemy.EntityMinirobot;
 import my_project.model.modes.planet.missions.ExterminationMission;
 
@@ -24,14 +23,14 @@ public class PlanetMode extends Mode {
     @Override
     public void update(double dt) {
         super.update(dt);
-        CollisionManager.update(dt);
+        //CollisionManager.update(dt);
         operation.update(dt);
     }
 
     @Override
     public void draw(DrawTool drawTool) {
         drawTool.push();
-        drawTool.setScale(4);
+        drawTool.setScale(3);
         drawTool.setFocalPoint(Config.WINDOW_WIDTH / 2, Config.WINDOW_HEIGHT / 2);
         setCameraPosition(TileMap.getPlayer().getX(), TileMap.getPlayer().getY());
         drawTool.setTranslate(-cameraPosition.x, -cameraPosition.y);

@@ -3,6 +3,7 @@ package my_project.model.modes.planet.entity;
 import KAGO_framework.view.DrawTool;
 import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
+import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
 import my_project.model.spritesheetSystem.animation.entity.EntityState;
 import my_project.model.spritesheetSystem.animation.entity.IEntityAnimationState;
 
@@ -12,12 +13,13 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
 
     protected final String id;
     protected final AnimationRenderer renderer;
-    //protected final Collider collider;
     protected final Cage colliderCage;
     protected double x;
     protected double y;
     protected double width;
     protected double height;
+
+    protected EntityDirection direction;
 
     public Entity(AnimationRenderer renderer, Cage colliderCage, double x, double y, double width, double height) {
         this(UUID.randomUUID().toString(), renderer, colliderCage, x, y, width, height);
@@ -26,9 +28,8 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
     public Entity(String id, AnimationRenderer<T> renderer, Cage colliderCage, double x, double y, double width, double height) {
         this.id = id;
         this.renderer = renderer;
-        //this.collider = collider;
-        //if (this.collider != null) CollisionManager.addCollider(this.collider);
         this.colliderCage = colliderCage;
+        //if (this.colliderCage != null) CollisionManager.addCollider(this.colliderCage);
         this.x = x;
         this.y = y;
         this.width = width;
@@ -49,9 +50,7 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
 
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
-            drawTool.push();
             drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height);
-            drawTool.pop();
         }
     }
 
@@ -60,6 +59,18 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
     public boolean isCurrentAnimation(EntityState state) {
         var anim = (IEntityAnimationState) this.renderer.getCurrentAnimation().getState();
         return anim.getState() == state;
+    }
+
+    protected T getStateForEntityState(EntityDirection direction, EntityState state) {
+        T[] values = (T[]) this.renderer.getCurrentAnimation().getState().getDeclaringClass().getEnumConstants();
+
+        for (T anim : values) {
+            if (anim.getDirection() == direction && anim.getState() == state) {
+                return anim;
+            }
+        }
+
+        return null;
     }
 
     public Cage getColliderCage() {
