@@ -7,6 +7,7 @@ import beckerStructures.BeckerMap;
 import com.sun.javafx.geom.Vec2d;
 import my_project.control.Mouse;
 import my_project.model.modes.planet.entity.EntityPlayer;
+import my_project.model.modes.planet.entity.enemy.EntityMinirobot;
 
 import java.awt.image.BufferedImage;
 
@@ -143,8 +144,11 @@ public class TileMap extends GraphicalObject {
                         break;
                     case "11111111000000001111111100000000": //green
                         //objective spawn point
-                        createTile(col, row, 0);
+                        //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
+                        System.out.print("Summoned robot");
+                        new EntityMinirobot("minirob"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+
                         System.out.print("Y");
                         //TODO SPAWN OBJECTIVE
                         break;

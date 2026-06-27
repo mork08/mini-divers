@@ -22,7 +22,7 @@ public class PlanetMode extends Mode {
     @Override
     public void update(double dt) {
         super.update(dt);
-        operation.update(dt);
+        if (operation != null) operation.update(dt);
     }
 
     @Override
@@ -30,7 +30,8 @@ public class PlanetMode extends Mode {
         drawTool.push();
         drawTool.setScale(4);
         drawTool.setFocalPoint(Config.WINDOW_WIDTH / 2, Config.WINDOW_HEIGHT / 2);
-        setCameraPosition(TileMap.getPlayer().getX(), TileMap.getPlayer().getY());
+        if (TileMap.getPlayer() != null) setCameraPosition(TileMap.getPlayer().getX(), TileMap.getPlayer().getY());
+
         drawTool.setTranslate(-cameraPosition.x, -cameraPosition.y);
             if (operation != null) operation.draw(drawTool);
         drawTool.pop();
