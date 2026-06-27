@@ -3,6 +3,7 @@ package my_project.model.modes.planet.entity;
 import KAGO_framework.view.DrawTool;
 import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
+import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
 import my_project.model.spritesheetSystem.animation.entity.EntityState;
 import my_project.model.spritesheetSystem.animation.entity.IEntityAnimationState;
 
@@ -18,6 +19,7 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
     protected double y;
     protected double width;
     protected double height;
+    protected EntityDirection direction;
 
     public Entity(AnimationRenderer renderer, Cage colliderCage, double x, double y, double width, double height) {
         this(UUID.randomUUID().toString(), renderer, colliderCage, x, y, width, height);
@@ -88,5 +90,17 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
 
     public double getHeight() {
         return this.height;
+    }
+
+    protected T getStateForEntityState(EntityDirection direction, EntityState state) {
+        T[] values = (T[]) this.renderer.getCurrentAnimation().getState().getDeclaringClass().getEnumConstants();
+
+        for (T anim : values) {
+            if (anim.getDirection() == direction && anim.getState() == state) {
+                return anim;
+            }
+        }
+
+        return null;
     }
 }
