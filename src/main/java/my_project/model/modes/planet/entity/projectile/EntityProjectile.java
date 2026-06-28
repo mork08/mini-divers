@@ -14,7 +14,7 @@ public class EntityProjectile extends Entity {
     private static final double MAX_LIFETIME = 3.0;
 
     private final Entity<?> target;
-    private final double damage;
+    protected final double damage;
 
     private double velocityX;
     private double velocityY;
@@ -91,6 +91,7 @@ public class EntityProjectile extends Entity {
                 this.getY() + this.getHeight() / 2,
                 this.getWidth() / 2
         );
+        drawTool.setLineWidth(4);
         drawTool.setCurrentColor(color);
         drawTool.drawCircle(
                 this.getX() + this.getWidth() / 2,

@@ -36,8 +36,7 @@ public class Operation {
         if (mission instanceof ExterminationMission) {
             mission.progress("setValue", (double) EntityEnemy.getDeathCounter() / ((ExterminationMission)mission).getKillAmountNeeded());
         }
-        if(mission.isCompleted() || ViewController.isKeyDown(KeyEvent.VK_ESCAPE)){
-            System.out.println("ho");
+        if(mission.isCompleted() ){
             extract();
         }
         EntityManager.updateAll(dt);

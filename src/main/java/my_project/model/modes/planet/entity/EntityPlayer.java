@@ -2,7 +2,8 @@ package my_project.model.modes.planet.entity;
 
 import KAGO_framework.control.ViewController;
 import KAGO_framework.view.DrawTool;
-import beckerStructures.BeckerList;
+import my_project.control.Mouse;
+import my_project.model.modes.planet.entity.projectile.EntityPlayerProjectile;
 import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
@@ -14,6 +15,15 @@ import java.awt.event.KeyEvent;
 
 public class EntityPlayer extends Entity<PlayerAnimationState> {
 
+    private double targetX;
+    private double targetY;
+
+    private int shotsPerMagazine = 70;
+    private int shotCounter = 70;
+    private double reloadCooldown = 2.6;
+    private double reloadTimer = 0.0;
+    private double shotCooldown = 0.05;
+    private double shotTimer = 0.0;
     public EntityPlayer(String id, double x, double y, double width, double height) {
         super(
                 id,
@@ -38,6 +48,23 @@ public class EntityPlayer extends Entity<PlayerAnimationState> {
     @Override
     public void update(double dt) {
         super.update(dt);
+        reloadTimer -= dt;
+        shotTimer -= dt;
+
+        if (ViewController.isKeyDown(KeyEvent.VK_SPACE)) {
+            if (reloadTimer < 0) {
+                if (shotTimer < 0) {
+                    new EntityPlayerProjectile(this.x, this.y, targetX, targetY, 15, new Color(44, 232, 245));
+                    shotTimer = shotCooldown;
+                    shotCounter--;
+                }
+            }
+        }
+        if (shotCounter < 0) {
+            reloadTimer = reloadCooldown;
+            shotCounter = shotsPerMagazine;
+        }
+
         this.walk();
     }
 
@@ -48,6 +75,9 @@ public class EntityPlayer extends Entity<PlayerAnimationState> {
     }
 
     private void walk() {
+
+
+
         double speed = 120;
         double velX = 0;
         double velY = 0;
@@ -72,15 +102,7 @@ public class EntityPlayer extends Entity<PlayerAnimationState> {
             this.direction = EntityDirection.RIGHT;
         }
 
-        if (ViewController.isKeyDown(KeyEvent.VK_SPACE)) {
-            BeckerList<Entity<?>> victims = EntityManager.getNearbyEntities(this.x, this.y, 64);
-            for (int i = 0; i < victims.getCapacity(); i++) {
-                Entity<?> vic = victims.get(i);
-                if (vic != null && vic != this) {
-                    vic.damage(100);
-                }
-            }
-        }
+
 
         this.colliderCage.setVelocity(velX, velY);
 
@@ -110,5 +132,7 @@ public class EntityPlayer extends Entity<PlayerAnimationState> {
 
             drawTool.drawImageToSize(this.renderer.getCurrentFrame(), drawX, drawY, (int) this.width, (int) this.height);
         }
+        targetX = Mouse.getTranslatedPosition().x;
+        targetY = Mouse.getTranslatedPosition().y;
     }
 }
