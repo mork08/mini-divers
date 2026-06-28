@@ -47,4 +47,8 @@ public class Operation {
     public TileMap getTileMap() {
         return tileMap;
     }
+
+    public Mission getMission() {
+        return mission;
+    }
 }

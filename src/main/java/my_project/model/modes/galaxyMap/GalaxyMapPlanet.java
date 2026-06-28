@@ -83,4 +83,7 @@ public class GalaxyMapPlanet extends GraphicalObject {
         return terrainType;
     }
 
+    public BufferedImage getPlanetCard() {
+        return planetCard;
+    }
 }

@@ -5,7 +5,7 @@ public class ExterminationMission extends Mission{
     public ExterminationMission() {
         killAmountNeeded = (int)(Math.random()*100-50);
         shortDescription = "Exterminate " + killAmountNeeded + " Enemies to thin their Numbers!";
-        longDescription = "Exterminate " + killAmountNeeded + " Enemies to thin their Numbers! (longer)";
+        longDescription = "Exterminate " + killAmountNeeded + " Enemies to thin their Numbers! ";
     }
 
     @Override

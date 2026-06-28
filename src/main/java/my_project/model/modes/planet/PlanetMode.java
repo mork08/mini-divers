@@ -39,11 +39,7 @@ public class PlanetMode extends Mode {
     @Override
     public void drawUI(DrawTool drawTool) {
         drawTool.setCurrentColor(new Color(0, 0, 0));
-        drawTool.drawFilledRectangle(50,100,200,300);
-        drawTool.setCurrentColor(new Color(255, 255, 255));
-        drawTool.drawText(60, 150, "Planet: " + controller.getCurrentPlanet().getPlanetName());
-        drawTool.drawText(60, 170, "Occupation: " + controller.getCurrentPlanet().getOccupation());
-        drawTool.drawText(60, 190, "Terrain: " + controller.getCurrentPlanet().getTerrainType());
+        operation.getMission().draw(drawTool, 50, 100, controller.getCurrentPlanet());
     }
 
     @Override

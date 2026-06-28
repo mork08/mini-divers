@@ -8,7 +8,7 @@ import my_project.model.spritesheetSystem.animation.entity.EntityState;
 import my_project.model.spritesheetSystem.animation.entity.IEntityAnimationState;
 
 public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> extends Entity<T> {
-
+    private static int deathCounter = 0;
     protected Entity<?> target;
     protected int range;
 
@@ -19,6 +19,9 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
 
     @Override
     public void update(double dt) {
+        if(health <= 0){
+            deathCounter++;
+        }
         super.update(dt);
         this.walkToTarget();
     }
@@ -91,5 +94,12 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
 
     public Entity<?> getTarget() {
         return this.target;
+    }
+
+    public static int getDeathCounter() {
+        return deathCounter;
+    }
+    public static void resetDeathCounter() {
+        deathCounter = 0;
     }
 }
