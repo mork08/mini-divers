@@ -25,7 +25,7 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
             id,
             new AnimationRenderer<>(
                     "/graphic/entities/minirobot.png",
-                    2,
+                    5,
                     4,
                     32,
                     32,

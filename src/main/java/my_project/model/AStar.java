@@ -6,6 +6,7 @@ import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Stack;
 import beckerStructures.BeckerList;
 import davStructures.DavHeap;
+import my_project.model.modes.galaxyMap.GalaxyMapPlanet;
 
 import javax.net.ssl.SSLEngineResult;
 
@@ -68,19 +69,24 @@ public class AStar <CT extends GraphicalObject>{
                 // if (nbr.getStatus() == AStarVertex.Status.CLOSED) continue; // Skips closed neighbour
 
                 if (!(nbr.getStatus() == AStarVertex.Status.CLOSED)){ // check status & skip node if closed
-                    if (nbr.getStatus() == AStarVertex.Status.OPEN) {
-                        double tentativeCost = current.getDistance() + weight;
-                        if (tentativeCost < nbr.getDistance()) {
-                            nbr.setDistance(current.getDistance() + weight);
-                            nbr.setParent(current);
-                            openNodes.updatePosition(neighbours.getContent(), true);
+                    if (nbr.getContent() instanceof GalaxyMapPlanet){
+                        if (((GalaxyMapPlanet)nbr.getContent()).getOccupation().equals("MiniEarth") || (nbr == endNode && ((GalaxyMapPlanet)current.getContent()).getOccupation().equals("MiniEarth"))){
+
+                            if (nbr.getStatus() == AStarVertex.Status.OPEN) {
+                                double tentativeCost = current.getDistance() + weight;
+                                if (tentativeCost < nbr.getDistance()) {
+                                    nbr.setDistance(current.getDistance() + weight);
+                                    nbr.setParent(current);
+                                    openNodes.updatePosition(neighbours.getContent(), true);
+                                }
+                            } else { // if this is reached, nbr is unknown
+                                nbr.setDistance(current.getDistance() + weight);
+                                nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
+                                nbr.setParent(current);
+                                nbr.setStatus(AStarVertex.Status.OPEN);
+                                openNodes.add(nbr);
+                            }
                         }
-                    } else { // if this is reached, nbr is unknown
-                        nbr.setDistance(current.getDistance() + weight);
-                        nbr.setHeuristic(nbr.getContent().getDistanceTo(endNode.getContent()));
-                        nbr.setParent(current);
-                        nbr.setStatus(AStarVertex.Status.OPEN);
-                        openNodes.add(nbr);
                     }
                 }
                 neighbours.next();

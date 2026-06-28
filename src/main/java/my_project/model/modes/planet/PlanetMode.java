@@ -6,6 +6,7 @@ import my_project.Config;
 import my_project.control.ModeController;
 import my_project.model.modes.Mode;
 import my_project.model.modes.planet.Tilesystem.TileMap;
+import my_project.model.modes.planet.entity.EntityManager;
 import my_project.model.modes.planet.entity.enemy.EntityMinirobot;
 import my_project.model.modes.planet.missions.ExterminationMission;
 
@@ -15,6 +16,7 @@ public class PlanetMode extends Mode {
     TileMap tileMap;
     Operation operation;
     Vec2d cameraPosition;
+    double deathTimer = 0;
     public PlanetMode(ModeController modeController) {
         super(modeController);
         cameraPosition = new Vec2d();
@@ -24,6 +26,14 @@ public class PlanetMode extends Mode {
     public void update(double dt) {
         super.update(dt);
         if (operation != null) operation.update(dt);
+        if (TileMap.getPlayer() == null || TileMap.getPlayer().getHealth() <= 0) {
+            deathTimer += dt;
+            System.out.println("death timer: " + deathTimer);
+        }
+        if (deathTimer >= 3){
+            launch();
+            deathTimer = 0;
+        }
     }
 
     @Override
@@ -46,6 +56,7 @@ public class PlanetMode extends Mode {
     @Override
     public void launch() {
         cameraPosition = new Vec2d(0,0);
+        EntityManager.getEntities().clear();
         if (controller.getCurrentPlanet() != null) {
             System.out.println("Planet: " + controller.getCurrentPlanet().getPlanetName());
             operation = new Operation(this, controller.getCurrentPlanet().getTerrainType(), controller.getCurrentPlanet().getOccupation(), new ExterminationMission());

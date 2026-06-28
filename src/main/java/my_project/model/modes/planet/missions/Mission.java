@@ -49,10 +49,11 @@ public abstract class Mission {
         drawTool.drawText(x + margin, topMargin + y, "Planet: " + planet.getPlanetName());
         drawTool.drawText(x + margin, topMargin + y + textLineHeight, "Occupation: " + planet.getOccupation());
         drawTool.drawText(x + margin, topMargin + y + textLineHeight * 2, "Terrain: " + planet.getTerrainType());
+        drawTool.drawText(x + margin, topMargin + y + textLineHeight * 4, shortDescription);
         drawTool.setCurrentColor(new Color(24, 20, 37));
         drawTool.drawFilledRectangle(x+margin, y+height-topMargin/2, width-margin*2, textLineHeight);
         drawTool.setCurrentColor(new Color(247, 118, 34));
-        drawTool.drawFilledRectangle(x+margin, y+height-topMargin/2, width-margin*2 * Math.min(1, completion), textLineHeight);
+        drawTool.drawFilledRectangle(x+margin, y+height-topMargin/2, (width-margin*2) * Math.min(1, completion), textLineHeight);
         drawTool.setCurrentColor(new Color(255, 255, 255));
         drawTool.drawRectangle(x+margin, y+height-topMargin/2, width-margin*2, textLineHeight);
 

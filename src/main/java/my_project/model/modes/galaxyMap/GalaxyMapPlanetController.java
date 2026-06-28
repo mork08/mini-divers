@@ -57,7 +57,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
         planetEdgeList.toFirst();
         while(planetEdgeList.hasAccess()) {
             if(planetEdgeList.getContent().isMarked()) {
-                drawTool.setCurrentColor(new Color(247, 118, 34));
+                drawTool.setCurrentColor(new Color(44, 232, 245));
                 drawTool.setLineWidth(8);
             }else {
                 drawTool.setCurrentColor(new Color(38, 43, 68));
@@ -237,6 +237,7 @@ public class GalaxyMapPlanetController extends GraphicalObject {
                 cooldown = 1;
                 //List<AStarVertex<GalaxyMapPlanet>> path = dijkstra(planets, currentPlanet, planetList.getContent());
                 List<AStarVertex<GalaxyMapPlanet>> path = new AStar(planets, currentPlanet, planetList.getContent()).findPath();
+                if(path.isEmpty()) {return;}
                 planets.setAllEdgeMarks(false);
                 path.toFirst();
                 while(path.hasAccess()) {

@@ -51,6 +51,7 @@ public class SpaceShip extends GraphicalObject {
             degrees = Math.atan2(p.getY() - y - image.getHeight()/2, p.getX() - x - image.getWidth()/2);
             x += Math.cos(degrees) * speed*dt;
             y += Math.sin(degrees) * speed*dt;
+
         }
     }
 

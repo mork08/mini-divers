@@ -39,9 +39,7 @@ public class GalaxyMapMode extends Mode {
             drawTool.setTranslate(translateX, translateY);
             drawTool.setFocalPoint(Config.WINDOW_WIDTH / 2, Config.WINDOW_HEIGHT / 2);
             galaxyMapPlanetController.draw(drawTool);
-            drawTool.setCurrentColor(new Color(0, 255, 13));
-            drawTool.drawFilledRectangle(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y, 1,1);
-            galaxyMapPlanetController.setMousePos(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y);
+           galaxyMapPlanetController.setMousePos(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y);
         spaceShip.draw(drawTool);drawTool.pop();
     }
 

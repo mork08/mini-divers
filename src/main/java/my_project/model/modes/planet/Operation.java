@@ -5,6 +5,8 @@ import KAGO_framework.view.DrawTool;
 import my_project.model.modes.planet.Tilesystem.TileMap;
 import my_project.model.modes.planet.Tilesystem.VisualTileRepresentation;
 import my_project.model.modes.planet.entity.EntityManager;
+import my_project.model.modes.planet.entity.enemy.EntityEnemy;
+import my_project.model.modes.planet.missions.ExterminationMission;
 import my_project.model.modes.planet.missions.Mission;
 import my_project.model.newerColliderSystem.CollisionHandler;
 
@@ -24,11 +26,15 @@ public class Operation {
         this.planetMode = planetMode;
         VisualTileRepresentation.setTerrain(terrainType);
         CollisionHandler.setOperation(Operation.this);
+        EntityEnemy.resetDeathCounter();
     }
     public TileMap getTilemap() {
         return tileMap;
     }
     public void update(double dt){
+        if (mission instanceof ExterminationMission) {
+            mission.progress("setValue", (double) EntityEnemy.getDeathCounter() / ((ExterminationMission)mission).getKillAmountNeeded());
+        }
         if(mission.isCompleted() || ViewController.isKeyDown(KeyEvent.VK_ESCAPE)){
             System.out.println("ho");
             extract();
@@ -39,6 +45,7 @@ public class Operation {
         tileMap.draw(dt);
         EntityManager.drawAll(dt);
     }
+
     public void extract(){
         planetMode.freePlanet();
     }
