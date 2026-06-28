@@ -44,8 +44,6 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
             return;
         }
 
-
-
         double dx = this.target.getX() - this.getX();
         double dy = this.target.getY() - this.getY();
 
