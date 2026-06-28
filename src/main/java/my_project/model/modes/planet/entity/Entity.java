@@ -13,7 +13,6 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
 
     protected final String id;
     protected final AnimationRenderer renderer;
-    //protected final Collider collider;
     protected final Cage colliderCage;
     protected double health;
     protected double x;
