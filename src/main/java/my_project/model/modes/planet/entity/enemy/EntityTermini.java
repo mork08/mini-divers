@@ -11,20 +11,20 @@ import my_project.model.spritesheetSystem.animation.states.MinirobotAnimationSta
 
 import java.awt.*;
 
-public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
+public class EntityTermini extends EntityEnemy<MinirobotAnimationState> {
 
     private static int OFFSET_TEXTURE_COLLIDER = 10;
-    private static final double FIRE_COOLDOWN = 3;
-    private static final double SHOOT_RANGE = 100;
-    private static final double DAMAGE = 5;
+    private static final double FIRE_COOLDOWN = 6;
+    private static final double SHOOT_RANGE = 80;
+    private static final double DAMAGE = 15;
 
     private double fireTimer = 5;
 
-    public EntityMinirobot(String id, double x, double y, double width, double height) {
+    public EntityTermini(String id, double x, double y, double width, double height) {
         super(
             id,
             new AnimationRenderer<>(
-                    "/graphic/entities/minirobot.png",
+                    "/graphic/entities/termini.png",
                     5,
                     4,
                     32,
@@ -36,10 +36,11 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
             y,
             width,
             height,
-            80
+            70
         );
         this.direction = EntityDirection.DOWN;
         this.health = 50;
+        this.speed = 80;
     }
 
     @Override
@@ -78,7 +79,7 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
                 targetPosition.y,
                 target,
                 DAMAGE,
-                new Color(255, 0, 68)
+                new Color(254, 174, 52)
         );
     }
 

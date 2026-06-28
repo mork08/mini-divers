@@ -19,7 +19,8 @@ public class Operation {
     String occupation;
     PlanetMode planetMode;
     public Operation(PlanetMode planetMode, String terrainType, String occupation, Mission mission) {
-        this.tileMap = new TileMap(8);
+        this.tileMap = new TileMap(8, occupation);
+
         this.mission = mission;
         this.terrainType = terrainType;
         this.occupation = occupation;

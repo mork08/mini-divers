@@ -7,7 +7,9 @@ import beckerStructures.BeckerMap;
 import com.sun.javafx.geom.Vec2d;
 import my_project.control.Mouse;
 import my_project.model.modes.planet.entity.EntityPlayer;
+import my_project.model.modes.planet.entity.enemy.EntityIllumini;
 import my_project.model.modes.planet.entity.enemy.EntityMinirobot;
+import my_project.model.modes.planet.entity.enemy.EntityTermini;
 
 import java.awt.image.BufferedImage;
 
@@ -17,8 +19,10 @@ public class TileMap extends GraphicalObject {
     private Queue<Vec2d> renderPositions;
     private int renderDistance = 1;
     private static EntityPlayer player;
+    private String occupation = "MiniEarth";
 
-    public TileMap(int mapSize){
+    public TileMap(int mapSize, String occupation) {
+        this.occupation = occupation;
         renderPositions = new Queue<>();
         this.mapSize = mapSize;
         chunks = new Chunk[mapSize][mapSize];
@@ -137,7 +141,17 @@ public class TileMap extends GraphicalObject {
                         System.out.print(":");
                         if (Math.random() < 0.01) {
                             System.out.print("Summoned robot");
-                            new EntityMinirobot("minirob"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+                            switch (occupation){// Terminis, Iluminis, MiniBots
+                                case "Terminis":
+                                    new EntityTermini("termini"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+                                break;
+                                case "Iluminis":
+                                    new EntityIllumini("illumini"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+                                    break;
+                                case "MiniBots":
+                                    new EntityMinirobot("minirob"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+                                break;
+                            }
                         }
                         break;
                     case "11111111111111111111111100000000": //yellow
@@ -169,5 +183,11 @@ public class TileMap extends GraphicalObject {
     }
     public static EntityPlayer getPlayer(){
         return player;
+    }
+    public String getOccupation(){
+        return occupation;
+    }
+    public void setOccupation(String occupation){
+        this.occupation = occupation;
     }
 }

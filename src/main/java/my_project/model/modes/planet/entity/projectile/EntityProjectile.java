@@ -19,8 +19,9 @@ public class EntityProjectile extends Entity {
     private double velocityX;
     private double velocityY;
     private double lifetime;
+    private Color color;
 
-    public EntityProjectile(double startX, double startY, double targetX, double targetY, Entity<?> target, double damage) {
+    public EntityProjectile(double startX, double startY, double targetX, double targetY, Entity<?> target, double damage, Color color) {
         super(
                 UUID.randomUUID().toString(),
                 null,
@@ -30,6 +31,8 @@ public class EntityProjectile extends Entity {
                 SIZE,
                 SIZE
         );
+
+        this.color = color;
 
         this.target = target;
         this.damage = damage;
@@ -82,13 +85,18 @@ public class EntityProjectile extends Entity {
 
     @Override
     public void draw(DrawTool drawTool) {
-        drawTool.setCurrentColor(Color.YELLOW);
+        drawTool.setCurrentColor(Color.WHITE);
         drawTool.drawFilledCircle(
                 this.getX() + this.getWidth() / 2,
                 this.getY() + this.getHeight() / 2,
                 this.getWidth() / 2
         );
-        drawTool.setCurrentColor(Color.WHITE);
+        drawTool.setCurrentColor(color);
+        drawTool.drawCircle(
+                this.getX() + this.getWidth() / 2,
+                this.getY() + this.getHeight() / 2,
+                this.getWidth() / 2
+        );
     }
 
     private boolean overlaps(Entity<?> other) {

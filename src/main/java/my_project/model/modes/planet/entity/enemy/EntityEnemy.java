@@ -12,6 +12,7 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
     private static int deathCounter = 0;
     protected Entity<?> target;
     protected int range;
+    double speed = 120;
 
     public EntityEnemy(String id, AnimationRenderer<T> renderer, Cage colliderCage, double x, double y, double width, double height, int range) {
         super(id, renderer, colliderCage, x, y, width, height);
@@ -43,7 +44,7 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
             return;
         }
 
-        double speed = 120;
+
 
         double dx = this.target.getX() - this.getX();
         double dy = this.target.getY() - this.getY();

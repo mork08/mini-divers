@@ -50,7 +50,7 @@ public class PlanetMode extends Mode {
     @Override
     public void drawUI(DrawTool drawTool) {
         drawTool.setCurrentColor(new Color(0, 0, 0));
-        operation.getMission().draw(drawTool, 50, 100, controller.getCurrentPlanet());
+        if (operation != null) operation.getMission().draw(drawTool, 50, 100, controller.getCurrentPlanet());
     }
 
     @Override
