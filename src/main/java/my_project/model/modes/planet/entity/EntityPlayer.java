@@ -7,11 +7,12 @@ import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
 import my_project.model.spritesheetSystem.animation.entity.EntityState;
-import my_project.model.spritesheetSystem.animation.states.CharacterAnimationState;
+import my_project.model.spritesheetSystem.animation.states.PlayerAnimationState;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
-public class EntityPlayer extends Entity<CharacterAnimationState> {
+public class EntityPlayer extends Entity<PlayerAnimationState> {
 
     private EntityDirection direction;
 
@@ -20,11 +21,11 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
                 id,
                 new AnimationRenderer<>(
                         "/graphic/entities/player.png",
-                        2,
+                        5,
                         4,
                         32,
                         32,
-                        CharacterAnimationState.IDLE_DOWN
+                        PlayerAnimationState.IDLE_DOWN
                 ),
                 new Cage(x, y, 10, 10, 1, 2),
                 x,
@@ -40,6 +41,12 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
     public void update(double dt) {
         super.update(dt);
         this.walk();
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        // TODO: Lose Screen
     }
 
     private void walk() {
@@ -70,8 +77,9 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
         if (ViewController.isKeyDown(KeyEvent.VK_SPACE)) {
             BeckerList<Entity<?>> victims = EntityManager.getNearbyEntities(this.x, this.y, 64);
             for (int i = 0; i < victims.getCapacity(); i++) {
-                if (victims.get(i)!= this) {
-                    victims.get(i).damage(100);
+                Entity<?> vic = victims.get(i);
+                if (vic != null && vic != this) {
+                    vic.damage(100);
                 }
             }
         }
@@ -85,18 +93,26 @@ public class EntityPlayer extends Entity<CharacterAnimationState> {
                 ? EntityState.IDLE
                 : EntityState.WALKING;
 
-        CharacterAnimationState animationState = getStateForEntityState(this.direction, state);
-
-        if (animationState != null) {
-            this.renderer.switchState(animationState);
-        }
+        var s = getStateForEntityState(this.direction, state);
+        System.out.println(s);
+        this.renderer.switchState(s);
     }
 
     @Override
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
-            drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX() - this.width / 2, (int) this.getY() - this.height / 2, (int) this.width, (int) this.height);
-            colliderCage.draw(drawTool);
+            int drawX = (int) (this.getX() - this.width / 2), drawY = (int) (this.getY() - this.height / 2);
+            int offsetX = -5;
+
+            drawTool.setCurrentColor(Color.DARK_GRAY);
+            drawTool.drawFilledRectangle(drawX - offsetX, drawY + 5, (this.width + offsetX * 2), 2);
+
+            drawTool.setCurrentColor(this.health < 60 ? this.health < 20 ? Color.RED : Color.YELLOW : Color.GREEN);
+            drawTool.drawFilledRectangle(drawX - offsetX, drawY + 5, (this.width + offsetX * 2) * (this.health / 100), 2);
+
+            drawTool.setCurrentColor(Color.WHITE);
+
+            drawTool.drawImageToSize(this.renderer.getCurrentFrame(), drawX, drawY, (int) this.width, (int) this.height);
         }
     }
 }

@@ -1,6 +1,7 @@
 package my_project.model.modes.planet.entity.enemy;
 
 import my_project.model.modes.planet.entity.Entity;
+import my_project.model.modes.planet.entity.EntityManager;
 import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
@@ -19,7 +20,17 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
 
     @Override
     public void update(double dt) {
-        super.update(dt);
+        if (this.renderer != null) {
+            if (!this.renderer.isRunning()) this.renderer.start();
+            this.renderer.update(dt);
+        }
+        if (this.colliderCage != null) {
+            colliderCage.update(dt);
+            this.adjustPositionToTexture();
+        }
+        if (this.health <= 0){
+            this.destroy();
+        }
         this.walkToTarget();
     }
 
@@ -35,10 +46,10 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
 
         double distance = Math.sqrt(dx * dx + dy * dy);
 
-        this.updateDirectionToTarget(dx, dy);
         if (distance <= this.range) {
             this.colliderCage.setVelocity(0, 0);
-            this.setIdleAnimation();
+            this.updateDirectionToTarget(dx, dy);
+            this.renderer.switchState(this.getStateForEntityState(this.direction, EntityState.IDLE));
             return;
         }
 
@@ -50,13 +61,13 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
 
         this.colliderCage.setVelocity(velX, velY);
 
-        this.x = this.colliderCage.getX();
-        this.y = this.colliderCage.getY();
+        this.adjustPositionToTexture();
 
-        EntityState state = velX == 0 && velY == 0
+        EntityState state = this.colliderCage.getVelocity().x == 0 && this.colliderCage.getVelocity().y == 0
                 ? EntityState.IDLE
                 : EntityState.WALKING;
 
+        this.updateDirectionToTarget(dx, dy);
         T animationState = getStateForEntityState(this.direction, state);
 
         if (animationState != null) {
@@ -64,7 +75,7 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
         }
     }
 
-    private void updateDirectionToTarget(double dx, double dy) {
+    protected void updateDirectionToTarget(double dx, double dy) {
         if (Math.abs(dx) > Math.abs(dy)) {
             if (dx > 0) {
                 this.direction = EntityDirection.RIGHT;
@@ -78,12 +89,11 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
 
             } else if (dy < 0) {
                 this.direction = EntityDirection.UP;
-
             }
         }
     }
 
-    protected abstract void setIdleAnimation();
+    protected abstract void adjustPositionToTexture();
 
     public void setTarget(Entity<?> target) {
         this.target = target;

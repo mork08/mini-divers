@@ -8,12 +8,9 @@ public class CollisionHandler {
 
     private static Operation operation;
 
-
     public static void setOperation(Operation o) {
         operation = o;
     }
-
-
 
     public static boolean collidesWithTile(Collider collider) {
         collider.getCage().updatePosition();
