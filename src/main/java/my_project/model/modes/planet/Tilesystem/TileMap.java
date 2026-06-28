@@ -124,8 +124,8 @@ public class TileMap extends GraphicalObject {
                         // Player spawn point
                         //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
-                        System.out.print("X");
-                        player = new EntityPlayer("player", 200, 200, 32, 32);
+                        player = new EntityPlayer("player", col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+                        // new EntityMinirobot("test-near-player", col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
                         break;
                     case "11111111111111110000000011111111": //magenta
                         //createTile(col, row, -1);
@@ -136,7 +136,7 @@ public class TileMap extends GraphicalObject {
                         //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
                         System.out.print(":");
-                        if (Math.random() < 0.2) {
+                        if (Math.random() < 0.01) {
                             System.out.print("Summoned robot");
                             new EntityMinirobot("minirob"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
                         }

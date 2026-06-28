@@ -23,10 +23,6 @@ public class EntityManager {
         EntityManager.entities.forEach((e, i) -> e.draw(drawTool));
     }
 
-    public static void keypressedCallback(int key) {
-        EntityManager.entities.forEach((e, i) -> e.keypressed(key));
-    }
-
     public static BeckerList<Entity<?>> getEntities() {
         return entities;
     }

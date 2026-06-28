@@ -163,4 +163,8 @@ public class Cage extends GraphicalObject {
     public void setVelocityY(double y) {
         this.velocity.y = y;
     }
+
+    public Vec2d getVelocity() {
+        return velocity;
+    }
 }
