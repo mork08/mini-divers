@@ -147,9 +147,8 @@ public class TileMap extends GraphicalObject {
                         break;
                     case "11111111000000001111111100000000": //green
                         //objective spawn point
-                        //createTile(col, row, 0);
+                        createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
-
                         System.out.print("Y");
                         //TODO SPAWN OBJECTIVE
                         break;
