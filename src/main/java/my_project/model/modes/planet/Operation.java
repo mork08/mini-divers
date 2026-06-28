@@ -1,11 +1,14 @@
 package my_project.model.modes.planet;
 
+import KAGO_framework.control.ViewController;
 import KAGO_framework.view.DrawTool;
 import my_project.model.modes.planet.Tilesystem.TileMap;
 import my_project.model.modes.planet.Tilesystem.VisualTileRepresentation;
 import my_project.model.modes.planet.entity.EntityManager;
 import my_project.model.modes.planet.missions.Mission;
 import my_project.model.newerColliderSystem.CollisionHandler;
+
+import java.awt.event.KeyEvent;
 
 public class Operation {
     TileMap tileMap;
@@ -26,7 +29,8 @@ public class Operation {
         return tileMap;
     }
     public void update(double dt){
-        if(mission.isCompleted()){
+        if(mission.isCompleted() || ViewController.isKeyDown(KeyEvent.VK_ESCAPE)){
+            System.out.println("ho");
             extract();
         }
         EntityManager.updateAll(dt);

@@ -57,12 +57,20 @@ public class GalaxyMapPlanetController extends GraphicalObject {
         planetEdgeList.toFirst();
         while(planetEdgeList.hasAccess()) {
             if(planetEdgeList.getContent().isMarked()) {
-                drawTool.setCurrentColor(new Color(122, 222, 253));
+                drawTool.setCurrentColor(new Color(247, 118, 34));
+                drawTool.setLineWidth(8);
             }else {
-                drawTool.setCurrentColor(new Color(43, 42, 42));
+                drawTool.setCurrentColor(new Color(38, 43, 68));
+                drawTool.setLineWidth(3);
             }
             Vertex<GalaxyMapPlanet>[] tempTwoPlanets = planetEdgeList.getContent().getVertices();
             drawTool.drawLine(tempTwoPlanets[0].getContent().getX(), tempTwoPlanets[0].getContent().getY(), tempTwoPlanets[1].getContent().getX(), tempTwoPlanets[1].getContent().getY());
+            if(planetEdgeList.getContent().isMarked()) {
+                drawTool.setCurrentColor(new Color(255, 255, 255));
+                drawTool.setLineWidth(2);
+                drawTool.drawLine(tempTwoPlanets[0].getContent().getX(), tempTwoPlanets[0].getContent().getY(), tempTwoPlanets[1].getContent().getX(), tempTwoPlanets[1].getContent().getY());
+            }
+
             planetEdgeList.next();
         }
 
@@ -219,7 +227,9 @@ public class GalaxyMapPlanetController extends GraphicalObject {
             GalaxyMapPlanet p = planetList.getContent().getContent();
             if(Math.sqrt( Math.pow(mouseX-p.getX(), 2) + Math.pow(mouseY-p.getY(),2)) <= p.getRadius()) {
                 //System.out.println(mouseX+","+mouseY+","+p.getRadius());
+
                 if(currentPlanet == planetList.getContent()) {
+                    if (currentPlanet.getContent().getOccupation().equals("MiniEarth")) return;
                     galaxyMapMode.startMission();
                     return;
                 }

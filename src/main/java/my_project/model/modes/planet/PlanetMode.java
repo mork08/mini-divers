@@ -57,6 +57,7 @@ public class PlanetMode extends Mode {
     }
     public void freePlanet() {
         controller.getCurrentPlanet().setOccupation("MiniEarth");
+        switchMode("Map");
     }
     public void setCameraPosition(double x, double y) {
         cameraPosition.set(Math.floor(x), Math.floor(y));

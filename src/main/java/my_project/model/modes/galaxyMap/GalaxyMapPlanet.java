@@ -34,19 +34,19 @@ public class GalaxyMapPlanet extends GraphicalObject {
         }
         switch (occupation) {
             case "MiniEarth":
-                drawTool.setCurrentColor(new Color(0, 166, 255));
+                drawTool.setCurrentColor(new Color(44, 232, 245));
                 break;
             case "Terminis":
-                drawTool.setCurrentColor(new Color(228, 149, 34));
+                drawTool.setCurrentColor(new Color(254, 174, 52));
                 break;
             case "Iluminis":
-                drawTool.setCurrentColor(new Color(122, 1, 181));
+                drawTool.setCurrentColor(new Color(104, 56, 108));
                 break;
             case "MiniBots":
-                drawTool.setCurrentColor(new Color(163, 7, 7));
+                drawTool.setCurrentColor(new Color(228, 59, 68));
                 break;
         }
-        //drawTool.drawFilledCircle(x ,y , radius);
+        drawTool.drawFilledCircle(x ,y , radius + 10);
         BufferedImage planetTexture = GalaxyMapPlanetInfoContainer.getPlanetTexture(terrainType, radius);
         if (planetTexture != null) drawTool.drawTransformedImage(planetTexture, x - planetTexture.getHeight() ,y - planetTexture.getHeight() , 0, 2);
     }
@@ -70,6 +70,7 @@ public class GalaxyMapPlanet extends GraphicalObject {
     }
     public void setOccupation(String occupation) {
         this.occupation = occupation;
+        planetCard = DrawTool.getNewImage("src/main/resources/graphic/" + occupation + ".png");
     }
     public String getOccupation() {
         return occupation;
