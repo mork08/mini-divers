@@ -56,19 +56,23 @@ public class BeckerList<ContentType> {
     public void set(int i, ContentType content){
         if (i >= 0 && i < this.array.length){
             this.currentIndex = i;
-            this.array[i] = content;
+
             if (this.array[i] == null && content != null) {
                 this.length++;
+            } else if (this.array[i] != null && content == null) {
+                this.length--;
             }
 
-        } else if (i>=0) {
-            expand(i);
+            this.array[i] = content;
+
+        } else if (i >= 0) {
+            expand(i + 1);
             set(i, content);
-            this.length++;
         }
     }
 
     private void expand(int newSize){
+        if (newSize <= this.array.length) return;
         ContentType[] newArray = (ContentType[]) new Object[newSize];
         System.arraycopy(this.array, 0, newArray, 0, this.array.length);
         this.array = newArray;

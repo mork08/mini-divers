@@ -31,7 +31,7 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
                     32,
                     MinirobotAnimationState.IDLE_DOWN
             ),
-            new Cage(x - OFFSET_TEXTURE_COLLIDER, y - OFFSET_TEXTURE_COLLIDER, 10, 10, 1, 2),
+            new Cage(x + OFFSET_TEXTURE_COLLIDER, y + OFFSET_TEXTURE_COLLIDER, 10, 10, 1, 2),
             x,
             y,
             width,
@@ -80,14 +80,6 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
                 DAMAGE,
                 new Color(255, 0, 68)
         );
-    }
-
-    @Override
-    public void draw(DrawTool drawTool) {
-        super.draw(drawTool);
-        drawTool.setCurrentColor(Color.CYAN);
-        //drawTool.drawFilledCircle(this.getProjectileStart().x, this.getProjectileStart().y, 1);
-        drawTool.setCurrentColor(Color.WHITE);
     }
 
     public Vec2d getProjectileStart() {
