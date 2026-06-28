@@ -42,7 +42,7 @@ public class EntityPlayer extends Entity<PlayerAnimationState> {
                 height
         );
         this.direction = EntityDirection.DOWN;
-        this.health = 100;
+        this.health = 150;
     }
 
     @Override
