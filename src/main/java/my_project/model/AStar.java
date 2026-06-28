@@ -115,16 +115,10 @@ public class AStar <CT extends GraphicalObject>{
 
         List<AStarVertex<CT>> list = new List<>();
 
-        while (current != null){
-            list.append(current);
-            current = current.getParent();
-        }
-
         Stack<AStarVertex> stack = new Stack<>();
-        list.toFirst();
-        while (list.hasAccess()){
-            stack.push(list.getContent());
-            list.next();
+        while (current != null){
+            stack.push(current);
+            current = current.getParent();
         }
 
         list = new List<>();
