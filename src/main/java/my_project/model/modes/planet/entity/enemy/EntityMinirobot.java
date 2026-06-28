@@ -25,13 +25,13 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
             id,
             new AnimationRenderer<>(
                     "/graphic/entities/minirobot.png",
-                    2,
+                    5,
                     4,
                     32,
                     32,
                     MinirobotAnimationState.IDLE_DOWN
             ),
-            new Cage(x - OFFSET_TEXTURE_COLLIDER, y - OFFSET_TEXTURE_COLLIDER, 10, 10, 1, 2),
+            new Cage(x + OFFSET_TEXTURE_COLLIDER, y + OFFSET_TEXTURE_COLLIDER, 10, 10, 1, 2),
             x,
             y,
             width,
@@ -79,14 +79,6 @@ public class EntityMinirobot extends EntityEnemy<MinirobotAnimationState> {
                 target,
                 DAMAGE
         );
-    }
-
-    @Override
-    public void draw(DrawTool drawTool) {
-        super.draw(drawTool);
-        drawTool.setCurrentColor(Color.CYAN);
-        drawTool.drawFilledCircle(this.getProjectileStart().x, this.getProjectileStart().y, 1);
-        drawTool.setCurrentColor(Color.WHITE);
     }
 
     public Vec2d getProjectileStart() {

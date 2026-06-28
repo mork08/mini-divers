@@ -1,7 +1,6 @@
 package my_project.model.modes.planet.entity.enemy;
 
 import my_project.model.modes.planet.entity.Entity;
-import my_project.model.modes.planet.entity.EntityManager;
 import my_project.model.newerColliderSystem.Cage;
 import my_project.model.spritesheetSystem.animation.AnimationRenderer;
 import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
@@ -12,6 +11,7 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
     private static int deathCounter = 0;
     protected Entity<?> target;
     protected int range;
+    private boolean waitingInRange = false;
 
     public EntityEnemy(String id, AnimationRenderer<T> renderer, Cage colliderCage, double x, double y, double width, double height, int range) {
         super(id, renderer, colliderCage, x, y, width, height);
@@ -20,22 +20,23 @@ public abstract class EntityEnemy<T extends Enum<T> & IEntityAnimationState> ext
 
     @Override
     public void update(double dt) {
-        if(health <= 0){
+        if (this.health <= 0) {
             deathCounter++;
+            this.destroy();
+            return;
         }
-        super.update(dt);
+
+        this.walkToTarget();
+
         if (this.renderer != null) {
             if (!this.renderer.isRunning()) this.renderer.start();
             this.renderer.update(dt);
         }
+
         if (this.colliderCage != null) {
-            colliderCage.update(dt);
+            this.colliderCage.update(dt);
             this.adjustPositionToTexture();
         }
-        if (this.health <= 0){
-            this.destroy();
-        }
-        this.walkToTarget();
     }
 
     private void walkToTarget() {

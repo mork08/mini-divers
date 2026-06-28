@@ -124,6 +124,7 @@ public class TileMap extends GraphicalObject {
                         //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
                         player = new EntityPlayer("player", col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+
                         // new EntityMinirobot("test-near-player", col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
                         break;
                     case "11111111111111110000000011111111": //magenta

@@ -1,11 +1,13 @@
 package my_project.model.modes.galaxyMap;
 
+import KAGO_framework.control.ViewController;
 import KAGO_framework.model.GraphicalObject;
 import KAGO_framework.model.abitur.datenstrukturen.List;
 import KAGO_framework.model.abitur.datenstrukturen.Vertex;
 import KAGO_framework.view.DrawTool;
 import my_project.model.AStarVertex;
 
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 public class SpaceShip extends GraphicalObject {
@@ -37,6 +39,10 @@ public class SpaceShip extends GraphicalObject {
             degrees += dt * 40;
             if(degrees > 360) degrees -= 360;
         }else {
+            if (ViewController.isKeyDown(KeyEvent.VK_SPACE)) {
+                skip();
+                return;
+            }
             if(this.getDistanceTo(path.getContent().getContent()) < 33) {
                 x = path.getContent().getContent().getX() - image.getWidth() / 2;
                 y = path.getContent().getContent().getY() - image.getHeight() / 2;
@@ -59,6 +65,13 @@ public class SpaceShip extends GraphicalObject {
         this.path.toFirst();
         this.path.next();
         orbit = false;
+    }
+
+    private void skip() {
+        orbit = true;
+        this.path.toLast();
+        x = path.getContent().getContent().getX();
+        y = path.getContent().getContent().getY();
     }
 
     public boolean getReady() {
