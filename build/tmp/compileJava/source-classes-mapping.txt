@@ -41,8 +41,6 @@ KAGO_framework/view/simple_gui/Label.java
  KAGO_framework.view.simple_gui.Label
 KAGO_framework/control/Interactable.java
  KAGO_framework.control.Interactable
-my_project/model/spritesheetSystem/animation/states/CharacterAnimationState.java
- my_project.model.spritesheetSystem.animation.states.CharacterAnimationState
 my_project/control/ProgramController.java
  my_project.control.ProgramController
 my_project/model/spritesheetSystem/animation/entity/EntityState.java
@@ -101,6 +99,8 @@ KAGO_framework/model/abitur/datenstrukturen/Queue.java
 KAGO_framework/control/MainController.java
  KAGO_framework.control.MainController
  KAGO_framework.control.MainController$1
+my_project/model/modes/planet/entity/projectile/EntityProjectile.java
+ my_project.model.modes.planet.entity.projectile.EntityProjectile
 my_project/model/modes/planet/missions/Mission.java
  my_project.model.modes.planet.missions.Mission
 KAGO_framework/control/NetworkController.java
@@ -116,8 +116,8 @@ KAGO_framework/view/simple_gui/GIFPainter.java
  KAGO_framework.view.simple_gui.GIFPainter
 my_project/model/modes/Mode.java
  my_project.model.modes.Mode
-my_project/model/modes/planet/entity/enemy/EntityMinirobot.java
- my_project.model.modes.planet.entity.enemy.EntityMinirobot
+KAGO_framework/model/GraphicalObject.java
+ KAGO_framework.model.GraphicalObject
 KAGO_framework/view/package-info.java
  KAGO_framework.view.package-info
 my_project/model/modes/planet/Tilesystem/TileTextureContainer.java
@@ -134,8 +134,8 @@ KAGO_framework/model/abitur/datenstrukturen/ComparableContent.java
  KAGO_framework.model.abitur.datenstrukturen.ComparableContent
 my_project/model/modes/galaxyMap/GalaxyMapPlanet.java
  my_project.model.modes.galaxyMap.GalaxyMapPlanet
-my_project/model/modes/planet/Tilesystem/TileMap.java
- my_project.model.modes.planet.Tilesystem.TileMap
+KAGO_framework/model/abitur/datenbanken/mysql/DatabaseConnector.java
+ KAGO_framework.model.abitur.datenbanken.mysql.DatabaseConnector
 my_project/model/modes/galaxyMap/GalaxyMapMode.java
  my_project.model.modes.galaxyMap.GalaxyMapMode
 beckerStructures/BeckerMap.java
@@ -151,7 +151,6 @@ my_project/Config.java
  my_project.Config
 my_project/model/AStarVertex.java
  my_project.model.AStarVertex
- my_project.model.AStarVertex$Status
 my_project/model/spritesheetSystem/animation/states/MinirobotAnimationState.java
  my_project.model.spritesheetSystem.animation.states.MinirobotAnimationState
 KAGO_framework/view/DrawingPanel.java
@@ -189,6 +188,8 @@ my_project/model/modes/planet/missions/ExtractionMission.java
  my_project.model.modes.planet.missions.ExtractionMission
 my_project/model/spritesheetSystem/animation/IAnimationState.java
  my_project.model.spritesheetSystem.animation.IAnimationState
+my_project/model/spritesheetSystem/animation/states/PlayerAnimationState.java
+ my_project.model.spritesheetSystem.animation.states.PlayerAnimationState
 my_project/model/spritesheetSystem/TileSheet.java
  my_project.model.spritesheetSystem.TileSheet
 KAGO_framework/control/DatabaseController.java
@@ -197,7 +198,8 @@ KAGO_framework/control/package-info.java
  KAGO_framework.control.package-info
 my_project/model/modes/start/StartMode.java
  my_project.model.modes.start.StartMode
-KAGO_framework/model/GraphicalObject.java
- KAGO_framework.model.GraphicalObject
-KAGO_framework/model/abitur/datenbanken/mysql/DatabaseConnector.java
- KAGO_framework.model.abitur.datenbanken.mysql.DatabaseConnector
+my_project/model/modes/planet/Tilesystem/TileMap.java
+ my_project.model.modes.planet.Tilesystem.TileMap
+my_project/model/modes/planet/entity/enemy/EntityMinirobot.java
+ my_project.model.modes.planet.entity.enemy.EntityMinirobot
+ my_project.model.modes.planet.entity.enemy.EntityMinirobot$1

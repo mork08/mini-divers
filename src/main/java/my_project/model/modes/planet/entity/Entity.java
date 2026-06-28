@@ -13,7 +13,6 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
 
     protected final String id;
     protected final AnimationRenderer renderer;
-    //protected final Collider collider;
     protected final Cage colliderCage;
     protected double health;
     protected double x;
@@ -22,6 +21,8 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
     protected double height;
     protected EntityDirection direction;
 
+    private boolean destroy = false;
+
     public Entity(AnimationRenderer renderer, Cage colliderCage, double x, double y, double width, double height) {
         this(UUID.randomUUID().toString(), renderer, colliderCage, x, y, width, height);
     }
@@ -29,8 +30,6 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
     public Entity(String id, AnimationRenderer<T> renderer, Cage colliderCage, double x, double y, double width, double height) {
         this.id = id;
         this.renderer = renderer;
-        //this.collider = collider;
-        //if (this.collider != null) CollisionManager.addCollider(this.collider);
         this.colliderCage = colliderCage;
         this.x = x;
         this.y = y;
@@ -50,21 +49,29 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
             this.y = this.colliderCage.getY();
         }
         if (health <= 0){
-            EntityManager.unregister(this);
+            this.destroy();
         }
     }
 
     public void draw(DrawTool drawTool) {
         if (this.renderer != null && this.renderer.getCurrentFrame() != null) {
+            colliderCage.draw(drawTool);
             drawTool.drawImageToSize(this.renderer.getCurrentFrame(), (int) this.getX(), (int) this.getY(), (int) this.width, (int) this.height);
         }
     }
 
-    public void keypressed(int key) {}
-
     public boolean isCurrentAnimation(EntityState state) {
         var anim = (IEntityAnimationState) this.renderer.getCurrentAnimation().getState();
         return anim.getState() == state;
+    }
+
+    public void destroy() {
+        this.destroy = true;
+        EntityManager.unregister(this);
+    }
+
+    public boolean isDestroy() {
+        return this.destroy;
     }
 
     public Cage getColliderCage() {
@@ -103,9 +110,9 @@ public abstract class Entity<T extends Enum<T> & IEntityAnimationState> {
                 return anim;
             }
         }
-
         return null;
     }
+
     public void damage(double damage) {
         health -= damage;
     }

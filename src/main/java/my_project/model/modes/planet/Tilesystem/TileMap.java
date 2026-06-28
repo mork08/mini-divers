@@ -72,7 +72,6 @@ public class TileMap extends GraphicalObject {
     }
     @Override
     public void draw(DrawTool drawTool){
-        checkWallCollisions();
         // getTileByPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y).highlight(true);
 
         addRenderPosition(Mouse.getTranslatedPosition().x, Mouse.getTranslatedPosition().y);
@@ -124,8 +123,8 @@ public class TileMap extends GraphicalObject {
                         // Player spawn point
                         //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
-                        System.out.print("X");
                         player = new EntityPlayer("player", col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
+                        // new EntityMinirobot("test-near-player", col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
                         break;
                     case "11111111111111110000000011111111": //magenta
                         //createTile(col, row, -1);
@@ -136,7 +135,7 @@ public class TileMap extends GraphicalObject {
                         //createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
                         System.out.print(":");
-                        if (Math.random() < 0.2) {
+                        if (Math.random() < 0.01) {
                             System.out.print("Summoned robot");
                             new EntityMinirobot("minirob"+col+" "+row, col*Tile.TILE_SIZE, row*Tile.TILE_SIZE, 32, 32);
                         }
@@ -148,9 +147,8 @@ public class TileMap extends GraphicalObject {
                         break;
                     case "11111111000000001111111100000000": //green
                         //objective spawn point
-                        //createTile(col, row, 0);
+                        createTile(col, row, 0);
                         getTile(col, row).setLevelHeight(0);
-
                         System.out.print("Y");
                         //TODO SPAWN OBJECTIVE
                         break;
@@ -171,23 +169,5 @@ public class TileMap extends GraphicalObject {
     }
     public static EntityPlayer getPlayer(){
         return player;
-    }
-    public void checkWallCollisions(){
-        /*
-        if(getTileByPosition(player.getX(), player.getY()) != null) {
-            Tile[] playerTiles = getTileByPosition(player.getX(), player.getY()).getRelatives();
-
-            for (Tile tile : playerTiles) {
-                if (tile != null) {
-                    if (tile.collidesWith(player.getCollider())) {
-                        System.out.println("collides");
-                        CollisionManager.moveBackColliders(player.getCollider(), tile.getCollider());
-                    }
-
-                }
-            }
-        }
-
-         */
     }
 }
