@@ -34,7 +34,6 @@ public class Operation {
             extract();
         }
         EntityManager.updateAll(dt);
-
     }
     public void draw(DrawTool dt){
         tileMap.draw(dt);

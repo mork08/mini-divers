@@ -38,8 +38,6 @@ public class InputManager extends InteractiveGraphicalObject {
             GalaxyMapMode.setScale(1);}
         else if(key == KeyEvent.VK_MINUS){
             GalaxyMapMode.setScale(-1);}
-
-        EntityManager.keypressedCallback(key);
     }
 
     @Override

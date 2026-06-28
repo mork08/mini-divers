@@ -6,6 +6,7 @@ import my_project.Config;
 import my_project.control.ModeController;
 import my_project.model.modes.Mode;
 import my_project.model.modes.planet.Tilesystem.TileMap;
+import my_project.model.modes.planet.entity.enemy.EntityMinirobot;
 import my_project.model.modes.planet.missions.ExterminationMission;
 
 import java.awt.*;

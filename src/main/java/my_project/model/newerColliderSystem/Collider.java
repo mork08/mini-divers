@@ -33,7 +33,6 @@ public class Collider extends GraphicalObject {
 
     @Override
     public void update(double dt) {
-
         //DO NOT USE DT//
         //-------------//
         //System.out.println("Collider position: "+x+"|"+y);
@@ -50,7 +49,7 @@ public class Collider extends GraphicalObject {
         return collides;
     }
     public void updatePosition() {
-        if(direction.equals("up") ||direction.equals("down")) {
+        if(direction.equals("up") || direction.equals("down")) {
             width = cage.getWidth();
             height = thickness;
             x = cage.getX();

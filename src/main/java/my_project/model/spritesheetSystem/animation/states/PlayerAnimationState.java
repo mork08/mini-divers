@@ -5,15 +5,15 @@ import my_project.model.spritesheetSystem.animation.entity.EntityDirection;
 import my_project.model.spritesheetSystem.animation.entity.EntityState;
 import my_project.model.spritesheetSystem.animation.entity.IEntityAnimationState;
 
-public enum CharacterAnimationState implements IEntityAnimationState {
-    IDLE_LEFT(EntityDirection.LEFT, EntityState.IDLE, 0, new RangeInt(0, 0), 1, 0.5),
-    IDLE_UP(EntityDirection.UP, EntityState.IDLE, 0, new RangeInt(0, 0), 1, 0.5),
-    IDLE_RIGHT(EntityDirection.RIGHT, EntityState.IDLE, 0, new RangeInt(0, 0), 1, 0.5),
+public enum PlayerAnimationState implements IEntityAnimationState {
+    IDLE_LEFT(EntityDirection.LEFT, EntityState.IDLE, 0, new RangeInt(1, 1), 1, 0.5),
+    IDLE_UP(EntityDirection.UP, EntityState.IDLE, 0, new RangeInt(2, 2), 1, 0.5),
+    IDLE_RIGHT(EntityDirection.RIGHT, EntityState.IDLE, 0, new RangeInt(3, 3), 1, 0.5),
     IDLE_DOWN(EntityDirection.DOWN, EntityState.IDLE, 0, new RangeInt(0, 0), 1, 0.5),
 
-    WALK_LEFT(EntityDirection.LEFT, EntityState.WALKING, 1, new RangeInt(0, 3), 4, 0.4),
-    WALK_UP(EntityDirection.UP, EntityState.WALKING, 1, new RangeInt(0, 3), 4, 0.4),
-    WALK_RIGHT(EntityDirection.RIGHT, EntityState.WALKING, 1, new RangeInt(0, 3), 4, 0.4),
+    WALK_LEFT(EntityDirection.LEFT, EntityState.WALKING, 2, new RangeInt(0, 3), 4, 0.4),
+    WALK_UP(EntityDirection.UP, EntityState.WALKING, 3, new RangeInt(0, 3), 4, 0.4),
+    WALK_RIGHT(EntityDirection.RIGHT, EntityState.WALKING, 4, new RangeInt(0, 3), 4, 0.4),
     WALK_DOWN(EntityDirection.DOWN, EntityState.WALKING, 1, new RangeInt(0, 3), 4, 0.4);
 
     private final EntityDirection direction;
@@ -27,19 +27,19 @@ public enum CharacterAnimationState implements IEntityAnimationState {
     private final int frameWidth;
     private final int frameHeight;
 
-    CharacterAnimationState(EntityDirection direction, EntityState state, int rowIndex, RangeInt columnRange, int frames, double duration) {
+    PlayerAnimationState(EntityDirection direction, EntityState state, int rowIndex, RangeInt columnRange, int frames, double duration) {
         this(direction, state, rowIndex, columnRange, frames, duration, true);
     }
 
-    CharacterAnimationState(EntityDirection direction, EntityState state, int rowIndex, RangeInt columnRange, int frames, double duration, boolean loop) {
+    PlayerAnimationState(EntityDirection direction, EntityState state, int rowIndex, RangeInt columnRange, int frames, double duration, boolean loop) {
         this(direction, state, rowIndex, columnRange, frames, duration, loop, false);
     }
 
-    CharacterAnimationState(EntityDirection direction, EntityState state, int rowIndex, RangeInt columnRange, int frames, double duration, boolean loop, boolean reverse) {
+    PlayerAnimationState(EntityDirection direction, EntityState state, int rowIndex, RangeInt columnRange, int frames, double duration, boolean loop, boolean reverse) {
         this(direction, state, rowIndex, columnRange, frames, duration, loop, reverse, 0, 0);
     }
 
-    CharacterAnimationState(EntityDirection direction, EntityState state, int rowIndex, RangeInt columnRange, int frames, double duration, boolean loop, boolean reverse, int frameWidth, int frameHeight) {
+    PlayerAnimationState(EntityDirection direction, EntityState state, int rowIndex, RangeInt columnRange, int frames, double duration, boolean loop, boolean reverse, int frameWidth, int frameHeight) {
         this.direction = direction;
         this.state = state;
         this.rowIndex = rowIndex;
